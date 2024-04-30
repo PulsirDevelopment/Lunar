@@ -1,3 +1,3 @@
 ## Lunar  
 
-### Quality & efficient staff core.
+Quality & efficient staff core.
