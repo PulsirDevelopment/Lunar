@@ -21,8 +21,9 @@ public class Bungee {
 
         ByteArrayOutputStream msgbytes = new ByteArrayOutputStream();
         DataOutputStream msgout = new DataOutputStream(msgbytes);
+
         try {
-            msgout.writeUTF(message); // You can do anything you want with msgout
+            msgout.writeUTF(message);
         } catch (IOException exception){
             exception.printStackTrace();
         }

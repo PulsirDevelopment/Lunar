@@ -1,17 +1,28 @@
 package net.pulsir.lunar.listener;
 
-import net.pulsir.lunar.utils.bungee.Bungee;
-import net.pulsir.lunar.utils.bungee.message.ChannelType;
+import net.pulsir.lunar.Lunar;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
 
     @EventHandler
-    public void onJoin(AsyncPlayerChatEvent event) {
-        Bungee.sendMessage(event.getPlayer(), event.getMessage(), ChannelType.STAFF);
+    public void onJoin(PlayerJoinEvent event) {
+        if (event.getPlayer().hasPermission("lunar.staff")) {
+            Lunar.getInstance().getData().getStaffMembers().add(event.getPlayer().getUniqueId());
+        } else if (event.getPlayer().hasPermission("lunar.admin")) {
+            Lunar.getInstance().getData().getAdminMembers().add(event.getPlayer().getUniqueId());
+        } else if (event.getPlayer().hasPermission("lunar.owner")) {
+            Lunar.getInstance().getData().getOwnerMembers().add(event.getPlayer().getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Lunar.getInstance().getData().getStaffMembers().remove(event.getPlayer().getUniqueId());
+        Lunar.getInstance().getData().getAdminMembers().remove(event.getPlayer().getUniqueId());
+        Lunar.getInstance().getData().getOwnerMembers().remove(event.getPlayer().getUniqueId());
     }
 }

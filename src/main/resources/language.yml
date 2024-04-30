@@ -1,0 +1,14 @@
+NO-PERMISSIONS: "<red>No Permissions."
+
+STAFF-CHAT:
+  ENABLED: "<green>Staff Chat Enabled."
+  DISABLED: "<red>Staff Chat Disabled."
+  FORMAT: "<yellow>Staff <white>{player} - {message}"
+ADMIN-CHAT:
+  ENABLED: "<green>Admin Chat Enabled."
+  DISABLED: "<red>Admin Chat Disabled."
+  FORMAT: "<red>Admin <white>{player} - {message}"
+OWNER-CHAT:
+  ENABLED: "<green>Owner Chat Enabled."
+  DISABLED: "<red>Owner Chat Disabled."
+  FORMAT: "<dark_red>Owner <white>{player} - {message}"
