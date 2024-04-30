@@ -1,0 +1,4 @@
+name: Lunar
+version: '${version}'
+main: net.pulsir.lunar.Lunar
+api-version: '1.20'
