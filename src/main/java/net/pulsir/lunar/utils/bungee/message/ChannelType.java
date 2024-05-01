@@ -12,5 +12,4 @@ public enum ChannelType {
     ChannelType(String string) {
         this.string = string;
     }
-
 }

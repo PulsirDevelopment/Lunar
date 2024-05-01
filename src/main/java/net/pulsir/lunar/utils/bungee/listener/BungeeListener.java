@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class BungeeListener implements PluginMessageListener {
 
     @Override
@@ -18,11 +20,10 @@ public class BungeeListener implements PluginMessageListener {
         String subChannel = byteArrayDataInput.readUTF();
 
         if (subChannel.equalsIgnoreCase("StaffChannel")) {
-            String input = byteArrayDataInput.readUTF();
+            String input = byteArrayDataInput.readLine();
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("lunar.staff")) {
-                    onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(input));
-                    onlinePlayer.sendMessage((input));
+                    onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(input)));
                 }
             }
         } else if (subChannel.equalsIgnoreCase("AdminChannel")) {

@@ -1,0 +1,202 @@
+package net.pulsir.lunar.utils.staff;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.pulsir.lunar.Lunar;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class Staff {
+
+    private static ItemStack compass(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.compass.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.compass.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.compass.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.compass.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.compass.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack inspect(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.inspect.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.inspect.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.inspect.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.inspect.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.inspect.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack freeze(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.freeze.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.freeze.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.freeze.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.freeze.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.freeze.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack randomTP(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.random.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.random.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.random.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.random.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.random.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack online(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.online.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.online.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.online.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.online.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.online.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack wand(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.wand.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.wand.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.wand.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.wand.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.wand.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack vanish(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.vanish.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.vanish.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.vanish.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.vanish.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.vanish.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    private static ItemStack unvanish(){
+        ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-items.unvanish.item")));
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.unvanish.enchanted")) {
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.unvanish.enchants").forEach(enchant ->
+                    itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.unvanish.name"))).decoration(TextDecoration.ITALIC, false));
+        List<Component> lore = new ArrayList<>();
+        Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.unvanish.lore").forEach(line ->
+                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+
+        meta.lore(lore);
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    public static void items(Player player) {
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.compass.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.compass.slot"), compass());
+        }
+
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.inspect.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.inspect.slot"), inspect());
+        }
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.freeze.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.freeze.slot"), freeze());
+        }
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.random.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.random.slot"), randomTP());
+        }
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.online.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.online.slot"), online());
+        }
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.wand.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.wand.slot"), wand());
+        }
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("staff-items.vanish.enabled")) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.vanish.slot"), vanish());
+        }
+    }
+}

@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
+import net.pulsir.lunar.command.staff.StaffCommand;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.listener.ChatListener;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
@@ -61,6 +62,8 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCommand());
         Objects.requireNonNull(getCommand("adminchat")).setExecutor(new AdminChatCommand());
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());
+
+        Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCommand());
     }
 
     private void registerListeners(PluginManager pluginManager){

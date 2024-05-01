@@ -12,3 +12,7 @@ OWNER-CHAT:
   ENABLED: "<green>Owner Chat Enabled."
   DISABLED: "<red>Owner Chat Disabled."
   FORMAT: "<dark_red>Owner <white>{player} - {message}"
+
+STAFF-MODE:
+  ENABLED: "<green>Successfully enabled staff mode"
+  DISABLED: "<red>Successfully disabled staff mode"

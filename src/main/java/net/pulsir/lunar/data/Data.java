@@ -16,4 +16,7 @@ public class Data {
     private final Set<UUID> staffMembers = new HashSet<>();
     private final Set<UUID> adminMembers = new HashSet<>();
     private final Set<UUID> ownerMembers = new HashSet<>();
+
+    private final Set<UUID> staffMode = new HashSet<>();
+    private final Set<UUID> vanish = new HashSet<>();
 }

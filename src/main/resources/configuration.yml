@@ -1,1 +1,83 @@
 bungee: true
+
+force-vanish: true
+
+staff-items:
+  compass:
+    item: "COMPASS"
+    enchanted: false
+    enchants:
+      - ""
+    name: "<red>Teleportation Compass"
+    lore:
+      - ""
+      - "<white>Right click to go through walls"
+      - ""
+    slot: 0
+    action: "/thru"
+    enabled: true
+  inspect:
+    item: "BOOK"
+    enchanted: false
+    enchants:
+      - ""
+    name: "<red>Inspection Book"
+    lore:
+      - ""
+      - "<white>Right click to view player inventory."
+      - ""
+    slot: 1
+    action: "/inspect"
+    enabled: true
+  freeze:
+    item: "ICE"
+    enchanted: false
+    enchants:
+      - ""
+    name: "<red>Freeze Player"
+    lore:
+      - ""
+      - "<white>Right click to freeze player."
+      - ""
+    slot: 2
+    action: "/inspect"
+    enabled: true
+  random:
+    item: "CLOCK"
+    enchanted: false
+    enchants:
+      - ""
+    name: "<red>Random Teleport"
+    lore:
+      - ""
+      - "<white>Right click to teleport to random player."
+      - ""
+    slot: 8
+    action: "/randomtp"
+    enabled: true
+  online:
+    item: "DIAMOND"
+    enchanted: false
+    enchants:
+      - ""
+    name: "<red>Online Staff"
+    lore:
+      - ""
+      - "<white>Right click to view online staff."
+      - ""
+    slot: 7
+    action: "/online"
+    enabled: true
+  wand:
+    item: "WOODEN_HOE"
+    enchanted: false
+    enchants:
+      - ""
+    name: "<red>Wand"
+    lore:
+      - ""
+      - "<white>Right click to do the magic."
+      - ""
+    slot: 6
+    action: "/wand"
+    enabled: true

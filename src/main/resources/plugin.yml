@@ -9,3 +9,5 @@ commands:
     aliases: [ac]
   ownerchat:
     aliases: [oc]
+  staff:
+    aliases: [sc, mod]
