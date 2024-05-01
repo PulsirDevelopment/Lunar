@@ -1,6 +1,7 @@
 package net.pulsir.lunar.listener;
 
 import net.pulsir.lunar.Lunar;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -24,5 +25,13 @@ public class PlayerListener implements Listener {
         Lunar.getInstance().getData().getStaffMembers().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getAdminMembers().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getOwnerMembers().remove(event.getPlayer().getUniqueId());
+
+        if (Lunar.getInstance().getData().getInventories().containsKey(event.getPlayer().getUniqueId())) {
+            event.getPlayer().getInventory().clear();
+            event.getPlayer().setGameMode(GameMode.SURVIVAL);
+            event.getPlayer().getInventory().setContents(Lunar.getInstance().getData().getInventories().get(event.getPlayer().getUniqueId()));
+
+            Lunar.getInstance().getData().getInventories().remove(event.getPlayer().getUniqueId());
+        }
     }
 }

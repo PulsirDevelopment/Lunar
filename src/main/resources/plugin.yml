@@ -11,3 +11,4 @@ commands:
     aliases: [oc]
   staff:
     aliases: [sc, mod]
+  lunar:

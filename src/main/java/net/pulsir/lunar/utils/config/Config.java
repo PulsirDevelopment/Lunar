@@ -1,6 +1,7 @@
 package net.pulsir.lunar.utils.config;
 
 import lombok.Getter;
+import net.pulsir.lunar.Lunar;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -50,5 +51,4 @@ public class Config {
             throw new RuntimeException(e);
         }
     }
-
 }

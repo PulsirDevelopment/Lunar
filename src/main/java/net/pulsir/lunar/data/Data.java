@@ -1,10 +1,9 @@
 package net.pulsir.lunar.data;
 
 import lombok.Getter;
+import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class Data {
@@ -19,4 +18,6 @@ public class Data {
 
     private final Set<UUID> staffMode = new HashSet<>();
     private final Set<UUID> vanish = new HashSet<>();
+
+    private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
 }
