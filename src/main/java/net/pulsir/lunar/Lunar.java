@@ -6,8 +6,10 @@ import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.plugin.LunarCommand;
 import net.pulsir.lunar.command.staff.StaffCommand;
+import net.pulsir.lunar.command.staff.VanishCommand;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.listener.ChatListener;
+import net.pulsir.lunar.task.ActionBarTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
 import org.bukkit.Bukkit;
@@ -44,6 +46,8 @@ public final class Lunar extends JavaPlugin {
             Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
             Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         }
+
+        this.registerTasks();
     }
 
     @Override
@@ -63,6 +67,8 @@ public final class Lunar extends JavaPlugin {
         }
 
         getData().getInventories().clear();
+
+        instance = null;
     }
 
     private void loadConfiguration(){
@@ -82,9 +88,14 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());
 
         Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCommand());
+        Objects.requireNonNull(getCommand("vanish")).setExecutor(new VanishCommand());
     }
 
     private void registerListeners(PluginManager pluginManager){
         pluginManager.registerEvents(new ChatListener(), this);
+    }
+
+    private void registerTasks(){
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 0L ,20L);
     }
 }

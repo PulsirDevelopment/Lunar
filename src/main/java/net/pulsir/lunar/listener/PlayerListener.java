@@ -25,6 +25,7 @@ public class PlayerListener implements Listener {
         Lunar.getInstance().getData().getStaffMembers().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getAdminMembers().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getOwnerMembers().remove(event.getPlayer().getUniqueId());
+        Lunar.getInstance().getData().getVanish().remove(event.getPlayer().getUniqueId());
 
         if (Lunar.getInstance().getData().getInventories().containsKey(event.getPlayer().getUniqueId())) {
             event.getPlayer().getInventory().clear();

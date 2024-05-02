@@ -12,3 +12,6 @@ commands:
   staff:
     aliases: [sc, mod]
   lunar:
+    aliases: [plugin]
+  vanish:
+    aliases: [v]

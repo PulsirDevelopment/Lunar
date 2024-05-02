@@ -16,3 +16,9 @@ OWNER-CHAT:
 STAFF-MODE:
   ENABLED: "<green>Successfully enabled staff mode"
   DISABLED: "<red>Successfully disabled staff mode"
+
+VANISH:
+  ENABLED: "<green>Vanish has been enabled."
+  DISABLED: "<red>Vanish has been disabled."
+
+STAFF-BAR: "<light_purple>Chat<white>: {chat} <white>| <light_purple>Vanish<white>: {vanish} | <light_purple>Online<white>: {online}"

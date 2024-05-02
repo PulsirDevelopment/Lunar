@@ -69,7 +69,7 @@ staff-items:
     action: "/online"
     enabled: true
   wand:
-    item: "WOODEN_HOE"
+    item: "WOODEN_AXE"
     enchanted: false
     enchants:
       - ""
