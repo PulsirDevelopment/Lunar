@@ -9,11 +9,15 @@ import net.pulsir.lunar.command.staff.StaffCommand;
 import net.pulsir.lunar.command.staff.VanishCommand;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.listener.ChatListener;
+import net.pulsir.lunar.listener.PlayerListener;
+import net.pulsir.lunar.listener.StaffModeListener;
+import net.pulsir.lunar.listener.VanishListener;
 import net.pulsir.lunar.task.ActionBarTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -31,6 +35,8 @@ public final class Lunar extends JavaPlugin {
 
     private Config configuration;
     private Config language;
+
+    @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
 
     @Override
     public void onEnable() {
@@ -93,6 +99,9 @@ public final class Lunar extends JavaPlugin {
 
     private void registerListeners(PluginManager pluginManager){
         pluginManager.registerEvents(new ChatListener(), this);
+        pluginManager.registerEvents(new PlayerListener(), this);
+        pluginManager.registerEvents(new StaffModeListener(), this);
+        pluginManager.registerEvents(new VanishListener(), this);
     }
 
     private void registerTasks(){

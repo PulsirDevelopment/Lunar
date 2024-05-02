@@ -9,6 +9,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "compass");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.compass.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -42,6 +44,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "inspect");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.inspect.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -61,6 +64,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "freeze");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.freeze.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -80,6 +84,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "randomtp");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.random.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -99,6 +104,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "online");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.online.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -118,6 +124,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "wand");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.wand.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -137,6 +144,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "vanish");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.vanish.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
@@ -156,6 +164,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "unvanish");
         meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.unvanish.name"))).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();

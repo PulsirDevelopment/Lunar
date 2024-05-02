@@ -22,3 +22,6 @@ VANISH:
   DISABLED: "<red>Vanish has been disabled."
 
 STAFF-BAR: "<light_purple>Chat<white>: {chat} <white>| <light_purple>Vanish<white>: {vanish} | <light_purple>Online<white>: {online}"
+
+STAFF:
+  TELEPORTED: "<green>Successfully teleported to {player} location"
