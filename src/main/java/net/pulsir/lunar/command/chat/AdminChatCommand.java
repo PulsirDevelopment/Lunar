@@ -26,6 +26,7 @@ public class AdminChatCommand implements CommandExecutor {
             player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("ADMIN-CHAT.DISABLED"))));
         } else {
+            Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getAdminChat().add(player.getUniqueId());
             player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("ADMIN-CHAT.ENABLED"))));

@@ -26,6 +26,7 @@ public class StaffChatCommand implements CommandExecutor {
             player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("STAFF-CHAT.DISABLED"))));
         } else {
+            Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getStaffChat().add(player.getUniqueId());
             player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("STAFF-CHAT.ENABLED"))));

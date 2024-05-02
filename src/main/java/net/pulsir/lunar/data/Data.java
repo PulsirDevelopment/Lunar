@@ -20,4 +20,10 @@ public class Data {
     private final Set<UUID> vanish = new HashSet<>();
 
     private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
+
+    public void clearChat(UUID uuid) {
+        staffChat.remove(uuid);
+        adminChat.remove(uuid);
+        ownerChat.remove(uuid);
+    }
 }

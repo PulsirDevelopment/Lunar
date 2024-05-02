@@ -27,6 +27,7 @@ public class OwnerChatCommand implements CommandExecutor {
             player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("OWNER-CHAT.DISABLED"))));
         } else {
+            Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getOwnerChat().add(player.getUniqueId());
             player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("OWNER-CHAT.ENABLED"))));

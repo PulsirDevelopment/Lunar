@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
-import net.pulsir.lunar.command.plugin.LunarCommand;
 import net.pulsir.lunar.command.staff.StaffCommand;
 import net.pulsir.lunar.command.staff.VanishCommand;
 import net.pulsir.lunar.data.Data;
@@ -15,9 +14,7 @@ import net.pulsir.lunar.listener.VanishListener;
 import net.pulsir.lunar.task.ActionBarTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -69,6 +66,21 @@ public final class Lunar extends JavaPlugin {
                 player.setGameMode(GameMode.SURVIVAL);
                 player.getInventory().clear();
                 player.getInventory().setContents(getData().getInventories().get(player.getUniqueId()));
+                getData().getStaffMode().clear();
+
+                Location location = player.getLocation();
+
+                if (location.getBlock().getType().equals(Material.AIR)) {
+
+                    for (int i = location.getBlockY(); i > 1; i--) {
+                        Location newLocation = new Location(location.getWorld(), location.getBlockX(), i, location.getBlockZ());
+
+                        if (!newLocation.getBlock().getType().equals(Material.AIR)) {
+                            player.teleport(new Location(location.getWorld(), location.getBlockX(), i + 1, location.getBlockZ()));
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -88,7 +100,6 @@ public final class Lunar extends JavaPlugin {
     }
 
     private void registerCommands(){
-        Objects.requireNonNull(getCommand("lunar")).setExecutor(new LunarCommand());
         Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCommand());
         Objects.requireNonNull(getCommand("adminchat")).setExecutor(new AdminChatCommand());
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());

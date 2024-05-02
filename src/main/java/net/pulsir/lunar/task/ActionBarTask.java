@@ -17,15 +17,17 @@ public class ActionBarTask implements Runnable {
             int players = Bukkit.getOnlinePlayers().size();
             String staffChat =
                     Lunar.getInstance().getData().getStaffChat().contains(uuid) ? "Staff" :
-                    Lunar.getInstance().getData().getAdminChat().contains(uuid) ? "Admin" :
-                    Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? "Owner" :
-                            "Public";
+                            Lunar.getInstance().getData().getAdminChat().contains(uuid) ? "Admin" :
+                                    Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? "Owner" :
+                                            "Public";
 
-            Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar
-                            .getInstance().getLanguage().getConfiguration().getString("STAFF-BAR"))
-                    .replace("{vanish}", vanish)
-                    .replace("{online}", String.valueOf(players))
-                    .replace("{chat}", staffChat)));
+            if (Bukkit.getPlayer(uuid) != null && Objects.requireNonNull(Bukkit.getPlayer(uuid)).isOnline()) {
+                Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar
+                                .getInstance().getLanguage().getConfiguration().getString("STAFF-BAR"))
+                        .replace("{vanish}", vanish)
+                        .replace("{online}", String.valueOf(players))
+                        .replace("{chat}", staffChat)));
+            }
         }
     }
 }
