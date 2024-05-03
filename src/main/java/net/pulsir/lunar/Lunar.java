@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
+import net.pulsir.lunar.command.staff.FreezeCommand;
 import net.pulsir.lunar.command.staff.StaffCommand;
 import net.pulsir.lunar.command.staff.VanishCommand;
 import net.pulsir.lunar.data.Data;
@@ -106,6 +107,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCommand());
         Objects.requireNonNull(getCommand("vanish")).setExecutor(new VanishCommand());
+
+        Objects.requireNonNull(getCommand("freeze")).setExecutor(new FreezeCommand());
     }
 
     private void registerListeners(PluginManager pluginManager){

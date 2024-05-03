@@ -18,6 +18,7 @@ public class Data {
 
     private final Set<UUID> staffMode = new HashSet<>();
     private final Set<UUID> vanish = new HashSet<>();
+    private final Set<UUID> frozenPlayers = new HashSet<>();
 
     private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
 

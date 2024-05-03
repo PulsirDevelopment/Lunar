@@ -1,11 +1,11 @@
 package net.pulsir.lunar.listener;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,12 +13,15 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class StaffModeListener implements Listener {
 
@@ -73,5 +76,61 @@ public class StaffModeListener implements Listener {
                             .getConfiguration().getString("STAFF.TELEPORTED"))
                     .replace("{player}", randomPlayer.getName()))));
         }
+    }
+
+    @EventHandler
+    public void onOnlineStaff(PlayerInteractEvent event) {
+        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (!event.hasItem() || event.getItem() == null) return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+
+        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+
+        if (key == null || !key.equalsIgnoreCase("online")) return;
+
+        Inventory inventory = Bukkit.createInventory(event.getPlayer(),
+                Lunar.getInstance().getConfiguration().getConfiguration().getInt("online-inventory.size"),
+                MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-inventory.title"))));
+
+        for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+            String vanish = Lunar.getInstance().getData().getVanish().contains(uuid) ? "Enabled" : "Disabled";
+            ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                            .getConfiguration().getString("online-inventory.item-format.name"))
+                    .replace("{player}", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName()))).decoration(TextDecoration.ITALIC, false));
+            List<Component> lore = new ArrayList<>();
+            for (final String lines : Lunar.getInstance().getConfiguration().getConfiguration().getStringList("online-inventory.item-format.lore")) {
+                lore.add(MiniMessage.miniMessage().deserialize(lines
+                        .replace("{vanished}", vanish)).decoration(TextDecoration.ITALIC, false));
+            }
+
+            meta.lore(lore);
+            itemStack.setItemMeta(meta);
+            inventory.addItem(itemStack);
+        }
+
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("online-inventory.overlay")) {
+            for (int i = 0; i < inventory.getSize(); i++) {
+                if (inventory.getItem(i) == null) {
+                    inventory.setItem(i, new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration()
+                            .getConfiguration().getString("online-inventory.overlay-item"))));
+                }
+            }
+        }
+
+        event.getPlayer().openInventory(inventory);
+    }
+
+    @EventHandler
+    public void onEntityClick(PlayerInteractAtEntityEvent event) {
+        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+
+        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+
+        if (key == null || !key.equalsIgnoreCase("freeze")) return;
     }
 }

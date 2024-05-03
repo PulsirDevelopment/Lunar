@@ -81,3 +81,15 @@ staff-items:
     slot: 6
     action: "/wand"
     enabled: true
+
+online-inventory:
+  title: "<red>Online Staff"
+  size: 54
+  overlay: true
+  overlay-item: "GRAY_STAINED_GLASS_PANE"
+  item-format:
+    name: "<light_purple>{player}"
+    lore:
+      - ""
+      - "<light_purple>Vanished<white>: {vanished}"
+      - ""

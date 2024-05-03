@@ -1,4 +1,5 @@
 NO-PERMISSIONS: "<red>No Permissions."
+PLAYER-NULL: "<red>Player {player} is not online"
 
 STAFF-CHAT:
   ENABLED: "<green>Staff Chat Enabled."
@@ -25,3 +26,9 @@ STAFF-BAR: "<light_purple>Chat<white>: {chat} <white>| <light_purple>Vanish<whit
 
 STAFF:
   TELEPORTED: "<green>Successfully teleported to {player} location"
+
+USAGE:
+  FREEZE:
+    - ""
+    - "<red>/freeze <player>"
+    - ""
