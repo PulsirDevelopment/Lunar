@@ -99,15 +99,14 @@ freeze-inventory:
   size: 9
   overlay: true
   overlay-item: "PURPLE_STAINED_GLASS_PANE"
-  freeze-inventory:
-    items:
-      1:
-        item: "BOOK"
-        name: "<red>You are <bold>FROZEN"
-        lore:
-          - ""
-          - "<red>Please join our discord discord.gg/server"
-          - "<red>and create a freeze ticket."
-          - "<red>You have 3 minutes."
-          - ""
-        slot: 4
+  items:
+    1:
+      item: "BOOK"
+      name: "<red>You are <bold>FROZEN"
+      lore:
+        - ""
+        - "<red>Please join our discord discord.gg/server"
+        - "<red>and create a freeze ticket."
+        - "<red>You have 3 minutes."
+        - ""
+      slot: 4

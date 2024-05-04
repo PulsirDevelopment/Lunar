@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -128,12 +130,31 @@ public class StaffModeListener implements Listener {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
         if (!(event.getRightClicked() instanceof Player target)) return;
+        if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
 
         if (key == null || !key.equalsIgnoreCase("freeze")) return;
 
-        event.getPlayer().performCommand("freeze " + target.getName());
+        if (Lunar.getInstance().getData().getStaffMembers().contains(target.getUniqueId())) {
+            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("FREEZE.STAFF"))));
+            return;
+        }
+
+        if (Lunar.getInstance().getData().getFrozenPlayers().contains(target.getUniqueId())) {
+            Lunar.getInstance().getData().getFrozenPlayers().remove(target.getUniqueId());
+            new FreezeInventory().close(target);
+            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                            .getConfiguration().getString("FREEZE.UNFROZEN"))
+                    .replace("{player}", target.getName()))));
+        } else {
+            Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
+            new FreezeInventory().open(target);
+            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                            .getConfiguration().getString("FREEZE.FROZEN"))
+                    .replace("{player}", target.getName()))));
+        }
     }
 }

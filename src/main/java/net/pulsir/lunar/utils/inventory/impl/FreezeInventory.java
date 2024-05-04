@@ -1,6 +1,7 @@
 package net.pulsir.lunar.utils.inventory.impl;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.inventory.LInventory;
@@ -29,10 +30,10 @@ public class FreezeInventory implements LInventory {
             ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("freeze-inventory.items." + items + ".item")));
             ItemMeta meta = itemStack.getItemMeta();
             meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                    .getString("freeze-inventory.items." + items + ".name"))));
+                    .getString("freeze-inventory.items." + items + ".name"))).decoration(TextDecoration.ITALIC, false));
             List<Component> lore = new ArrayList<>();
             Lunar.getInstance().getConfiguration().getConfiguration().getStringList("freeze-inventory.items." + items + ".lore")
-                    .forEach(line -> lore.add(MiniMessage.miniMessage().deserialize(line)));
+                    .forEach(line -> lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
 
             meta.lore(lore);
             itemStack.setItemMeta(meta);

@@ -48,13 +48,13 @@ public class FreezeCommand implements CommandExecutor {
                 Lunar.getInstance().getData().getFrozenPlayers().remove(target.getUniqueId());
                 new FreezeInventory().close(target);
                 player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                                .getConfiguration().getString("FREEZE.FROZEN"))
+                                .getConfiguration().getString("FREEZE.UNFROZEN"))
                         .replace("{player}", target.getName()))));
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
                 new FreezeInventory().open(target);
                 player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                                .getConfiguration().getString("FREEZE.UNFROZEN"))
+                                .getConfiguration().getString("FREEZE.FROZEN"))
                         .replace("{player}", target.getName()))));
             }
         }

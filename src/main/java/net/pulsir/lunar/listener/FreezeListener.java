@@ -3,6 +3,7 @@ package net.pulsir.lunar.listener;
 import io.papermc.paper.event.entity.EntityDamageItemEvent;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +19,7 @@ public class FreezeListener implements Listener {
     public void onClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player player)) return;
         if (Lunar.getInstance().getData().getFrozenPlayers().contains(event.getPlayer().getUniqueId())) {
-            new FreezeInventory().open(player);
+            Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> new FreezeInventory().open(player), 10L);
         }
     }
 
