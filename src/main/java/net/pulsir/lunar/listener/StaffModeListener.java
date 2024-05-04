@@ -127,10 +127,13 @@ public class StaffModeListener implements Listener {
     public void onEntityClick(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (!(event.getRightClicked() instanceof Player target)) return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
 
         if (key == null || !key.equalsIgnoreCase("freeze")) return;
+
+        event.getPlayer().performCommand("freeze " + target.getName());
     }
 }

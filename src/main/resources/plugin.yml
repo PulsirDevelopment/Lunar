@@ -17,3 +17,5 @@ commands:
     aliases: [plugin]
   vanish:
     aliases: [v]
+  freeze:
+    aliases: [ss]

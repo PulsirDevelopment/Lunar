@@ -32,3 +32,8 @@ USAGE:
     - ""
     - "<red>/freeze <player>"
     - ""
+
+FREEZE:
+  FROZEN: "<green>Successfully frozen {player} player."
+  UNFROZEN: "<green>Successfully unfrozen {player} player."
+  STAFF: "<red>You can't freeze staff"

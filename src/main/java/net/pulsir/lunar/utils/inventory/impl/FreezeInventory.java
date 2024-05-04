@@ -20,7 +20,8 @@ public class FreezeInventory implements LInventory {
 
     @Override
     public Inventory inventory(Player player) {
-        Inventory inventory = Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance()
+        Inventory inventory = Bukkit.createInventory(player, Lunar.getInstance().getConfiguration().getConfiguration()
+                .getInt("freeze-inventory.size"), MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance()
                 .getConfiguration().getConfiguration().getString("freeze-inventory.title"))));
 
 
@@ -30,11 +31,23 @@ public class FreezeInventory implements LInventory {
             meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                     .getString("freeze-inventory.items." + items + ".name"))));
             List<Component> lore = new ArrayList<>();
-            Lunar.getInstance().getConfiguration().getConfiguration().getStringList(Lunar.getInstance().getConfiguration().getConfiguration().getStringList("freeze-inventory.items." + items + ".lore"))
+            Lunar.getInstance().getConfiguration().getConfiguration().getStringList("freeze-inventory.items." + items + ".lore")
                     .forEach(line -> lore.add(MiniMessage.miniMessage().deserialize(line)));
 
             meta.lore(lore);
             itemStack.setItemMeta(meta);
+
+            inventory.setItem(Lunar.getInstance().getConfiguration().getConfiguration().getInt("freeze-inventory.items." + items + ".slot"), itemStack);
+
+        }
+
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("freeze-inventory.overlay")) {
+            for (int i = 0; i < inventory.getSize(); i++) {
+                if (inventory.getItem(i) == null) {
+                    inventory.setItem(i, new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration()
+                            .getString("freeze-inventory.overlay-item"))));
+                }
+            }
         }
 
         return inventory;

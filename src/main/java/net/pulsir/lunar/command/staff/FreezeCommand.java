@@ -2,6 +2,7 @@ package net.pulsir.lunar.command.staff;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,10 +38,24 @@ public class FreezeCommand implements CommandExecutor {
                 return false;
             }
 
+            if (Lunar.getInstance().getData().getStaffMembers().contains(target.getUniqueId())) {
+                player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("FREEZE.STAFF"))));
+                return false;
+            }
+
             if (Lunar.getInstance().getData().getFrozenPlayers().contains(target.getUniqueId())) {
                 Lunar.getInstance().getData().getFrozenPlayers().remove(target.getUniqueId());
+                new FreezeInventory().close(target);
+                player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                .getConfiguration().getString("FREEZE.FROZEN"))
+                        .replace("{player}", target.getName()))));
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
+                new FreezeInventory().open(target);
+                player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                .getConfiguration().getString("FREEZE.UNFROZEN"))
+                        .replace("{player}", target.getName()))));
             }
         }
 

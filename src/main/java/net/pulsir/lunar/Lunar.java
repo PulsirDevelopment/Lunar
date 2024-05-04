@@ -8,10 +8,7 @@ import net.pulsir.lunar.command.staff.FreezeCommand;
 import net.pulsir.lunar.command.staff.StaffCommand;
 import net.pulsir.lunar.command.staff.VanishCommand;
 import net.pulsir.lunar.data.Data;
-import net.pulsir.lunar.listener.ChatListener;
-import net.pulsir.lunar.listener.PlayerListener;
-import net.pulsir.lunar.listener.StaffModeListener;
-import net.pulsir.lunar.listener.VanishListener;
+import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.task.ActionBarTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
@@ -116,6 +113,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new StaffModeListener(), this);
         pluginManager.registerEvents(new VanishListener(), this);
+        pluginManager.registerEvents(new FreezeListener(), this);
     }
 
     private void registerTasks(){
