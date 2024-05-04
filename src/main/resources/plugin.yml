@@ -19,3 +19,5 @@ commands:
     aliases: [v]
   freeze:
     aliases: [ss]
+  inspect:
+    aliases: [invsee]

@@ -126,7 +126,7 @@ public class StaffModeListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityClick(PlayerInteractAtEntityEvent event) {
+    public void onFreeze(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
         if (!(event.getRightClicked() instanceof Player target)) return;
@@ -156,5 +156,20 @@ public class StaffModeListener implements Listener {
                             .getConfiguration().getString("FREEZE.FROZEN"))
                     .replace("{player}", target.getName()))));
         }
+    }
+
+    @EventHandler
+    public void onInspect(PlayerInteractAtEntityEvent event) {
+        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (!(event.getRightClicked() instanceof Player target)) return;
+        if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
+
+        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+
+        if (key == null || !key.equalsIgnoreCase("inspect")) return;
+
+
     }
 }

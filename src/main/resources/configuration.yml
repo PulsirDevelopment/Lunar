@@ -1,4 +1,4 @@
-bungee: true
+bungee: false
 
 force-vanish: true
 
@@ -14,7 +14,6 @@ staff-items:
       - "<white>Right click to go through walls"
       - ""
     slot: 0
-    action: "/thru"
     enabled: true
   inspect:
     item: "BOOK"
@@ -27,7 +26,6 @@ staff-items:
       - "<white>Right click to view player inventory."
       - ""
     slot: 1
-    action: "/inspect"
     enabled: true
   freeze:
     item: "ICE"
@@ -40,7 +38,6 @@ staff-items:
       - "<white>Right click to freeze player."
       - ""
     slot: 2
-    action: "/inspect"
     enabled: true
   random:
     item: "CLOCK"
@@ -53,7 +50,6 @@ staff-items:
       - "<white>Right click to teleport to random player."
       - ""
     slot: 8
-    action: "/randomtp"
     enabled: true
   online:
     item: "DIAMOND"
@@ -66,7 +62,6 @@ staff-items:
       - "<white>Right click to view online staff."
       - ""
     slot: 7
-    action: "/online"
     enabled: true
   wand:
     item: "WOODEN_AXE"
@@ -79,7 +74,6 @@ staff-items:
       - "<white>Right click to do the magic."
       - ""
     slot: 6
-    action: "/wand"
     enabled: true
 
 online-inventory:
@@ -110,3 +104,7 @@ freeze-inventory:
         - "<red>You have 3 minutes."
         - ""
       slot: 4
+
+inspect-inventory:
+  title: "<red>Inspect Inventory"
+  size: 54
