@@ -21,3 +21,5 @@ commands:
     aliases: [ss]
   inspect:
     aliases: [invsee]
+  broadcast:
+    aliases: [alert]

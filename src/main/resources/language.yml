@@ -36,6 +36,12 @@ USAGE:
     - ""
     - "<red>/inspect <player>"
     - ""
+  BROADCAST:
+    - ""
+    - "<red>/broadcast <message>"
+    - ""
+
+BROADCAST-MESSAGE: "<dark_red>Alert<white>: {message}"
 
 FREEZE:
   FROZEN: "<green>Successfully frozen {player} player."

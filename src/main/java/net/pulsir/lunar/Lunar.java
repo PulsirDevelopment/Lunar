@@ -4,10 +4,7 @@ import lombok.Getter;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
-import net.pulsir.lunar.command.staff.FreezeCommand;
-import net.pulsir.lunar.command.staff.InvseeCommand;
-import net.pulsir.lunar.command.staff.StaffCommand;
-import net.pulsir.lunar.command.staff.VanishCommand;
+import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.task.ActionBarTask;
@@ -108,6 +105,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("freeze")).setExecutor(new FreezeCommand());
         Objects.requireNonNull(getCommand("inspect")).setExecutor(new InvseeCommand());
+
+        Objects.requireNonNull(getCommand("broadcast")).setExecutor(new BroadcastCommand());
     }
 
     private void registerListeners(PluginManager pluginManager) {
