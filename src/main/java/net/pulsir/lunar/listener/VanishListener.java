@@ -12,6 +12,7 @@ import java.util.UUID;
 public class VanishListener implements Listener {
 
     @EventHandler
+    @Deprecated
     public void onJoin(PlayerJoinEvent event) {
         if (!(event.getPlayer().hasPermission("lunar.staff"))) {
             for (UUID uuid : Lunar.getInstance().getData().getVanish()) {

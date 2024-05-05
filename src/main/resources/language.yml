@@ -32,8 +32,21 @@ USAGE:
     - ""
     - "<red>/freeze <player>"
     - ""
+  INSPECT:
+    - ""
+    - "<red>/inspect <player>"
+    - ""
 
 FREEZE:
   FROZEN: "<green>Successfully frozen {player} player."
   UNFROZEN: "<green>Successfully unfrozen {player} player."
   STAFF: "<red>You can't freeze staff"
+
+OPTIONS:
+  VANISH-ENABLED: "<green>Enabled"
+  VANISH-DISABLED: "<red>Disabled"
+  PUBLIC-CHAT: "<white>Public"
+  STAFF-CHAT: "<yellow>Staff"
+  ADMIN-CHAT: "<red>Admin"
+  OWNER-CHAT: "<dark_red>Owner"
+  ONLINE: "<green>{players}"

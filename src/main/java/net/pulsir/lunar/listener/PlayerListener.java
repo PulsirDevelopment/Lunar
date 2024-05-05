@@ -1,7 +1,6 @@
 package net.pulsir.lunar.listener;
 
 import net.pulsir.lunar.Lunar;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;

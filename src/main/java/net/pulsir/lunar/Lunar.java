@@ -33,41 +33,6 @@ public final class Lunar extends JavaPlugin {
     private Config language;
 
     @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
-    @Getter private final NamespacedKey armorKey = new NamespacedKey(this, "armor");
-
-    /*
-        [00:47:41 ERROR]: Could not pass event PlayerInteractAtEntityEvent to Lunar v1.0-SNAPSHOT
-java.lang.NullPointerException: Cannot invoke "org.bukkit.inventory.meta.ItemMeta.getPersistentDataContainer()" because the return value of "org.bukkit.inventory.ItemStack.getItemMeta()" is null
-        at net.pulsir.lunar.listener.StaffModeListener.onInspect(StaffModeListener.java:164) ~[Lunar-1.0-SNAPSHOT-all.jar:?]
-        at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor5.execute(Unknown Source) ~[?:?]
-        at org.bukkit.plugin.EventExecutor$2.execute(EventExecutor.java:77) ~[paper-api-1.20.4-R0.1-SNAPSHOT.jar:?]
-        at co.aikar.timings.TimedEventExecutor.execute(TimedEventExecutor.java:81) ~[paper-api-1.20.4-R0.1-SNAPSHOT.jar:git-Paper-496]
-        at org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:70) ~[paper-api-1.20.4-R0.1-SNAPSHOT.jar:?]
-        at io.papermc.paper.plugin.manager.PaperEventManager.callEvent(PaperEventManager.java:54) ~[paper-1.20.4.jar:git-Paper-496]
-        at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.callEvent(PaperPluginManagerImpl.java:126) ~[paper-1.20.4.jar:git-Paper-496]
-        at org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:615) ~[paper-api-1.20.4-R0.1-SNAPSHOT.jar:?]
-        at net.minecraft.server.network.ServerGamePacketListenerImpl$3.performInteraction(ServerGamePacketListenerImpl.java:2722) ~[?:?]
-        at net.minecraft.server.network.ServerGamePacketListenerImpl$3.a(ServerGamePacketListenerImpl.java:2775) ~[?:?]
-        at net.minecraft.network.protocol.game.ServerboundInteractPacket$InteractionAtLocationAction.dispatch(ServerboundInteractPacket.java:159) ~[?:?]
-        at net.minecraft.network.protocol.game.ServerboundInteractPacket.dispatch(ServerboundInteractPacket.java:80) ~[?:?]
-        at net.minecraft.server.network.ServerGamePacketListenerImpl.handleInteract(ServerGamePacketListenerImpl.java:2711) ~[?:?]
-        at net.minecraft.network.protocol.game.ServerboundInteractPacket.handle(ServerboundInteractPacket.java:67) ~[?:?]
-        at net.minecraft.network.protocol.game.ServerboundInteractPacket.handle(ServerboundInteractPacket.java:12) ~[?:?]
-        at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:54) ~[?:?]
-        at net.minecraft.server.TickTask.run(TickTask.java:18) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:149) ~[?:?]
-        at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:24) ~[?:?]
-        at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:1465) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.server.MinecraftServer.d(MinecraftServer.java:194) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:123) ~[?:?]
-        at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:1442) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:1365) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:133) ~[?:?]
-        at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:1516) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1226) ~[paper-1.20.4.jar:git-Paper-496]
-        at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:319) ~[paper-1.20.4.jar:git-Paper-496]
-        at java.lang.Thread.run(Thread.java:840) ~[?:?]
-     */
 
     @Override
     public void onEnable() {

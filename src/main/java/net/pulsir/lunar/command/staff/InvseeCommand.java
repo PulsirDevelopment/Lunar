@@ -24,7 +24,9 @@ public class InvseeCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-
+            for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("USAGE.INSPECT")) {
+                player.sendMessage(MiniMessage.miniMessage().deserialize(lines));
+            }
         } else {
             Player target = Bukkit.getPlayer(args[0]);
 
