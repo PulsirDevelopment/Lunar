@@ -21,6 +21,7 @@ public class Data {
     private final Set<UUID> frozenPlayers = new HashSet<>();
 
     private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
+    private final Map<UUID, UUID> inspect = new HashMap<>();
 
     public void clearChat(UUID uuid) {
         staffChat.remove(uuid);

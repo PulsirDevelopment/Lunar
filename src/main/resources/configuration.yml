@@ -108,4 +108,12 @@ freeze-inventory:
 
 inspect-inventory:
   title: "<red>Inspect Inventory"
-  size: 54
+  statistics-item: true
+  item: "GLISTERING_MELON_SLICE"
+  name: "<green>{player}'s Inventory"
+  lore:
+    - ""
+    - "<white>{health}<light_purple>/<white>{health_max}"
+    - "<white>{hunger}<light_purple>/<white>20"
+    - "<white>Gamemode<light_purple>: <white>{gamemode}"
+    - ""
