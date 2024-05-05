@@ -1,6 +1,7 @@
 bungee: false
 
 force-vanish: true
+staff-bar: true
 
 staff-items:
   compass:

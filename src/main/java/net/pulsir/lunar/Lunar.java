@@ -118,7 +118,9 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new FreezeListener(), this);
     }
 
-    private void registerTasks(){
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 0L ,20L);
+    private void registerTasks() {
+        if (getConfiguration().getConfiguration().getBoolean("staff-bar")) {
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 0L, 20L);
+        }
     }
 }
