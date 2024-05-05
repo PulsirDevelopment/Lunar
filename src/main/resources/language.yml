@@ -4,15 +4,15 @@ PLAYER-NULL: "<red>Player {player} is not online"
 STAFF-CHAT:
   ENABLED: "<green>Staff Chat Enabled."
   DISABLED: "<red>Staff Chat Disabled."
-  FORMAT: "<yellow>Staff <white>{player} - {message}"
+  FORMAT: "<dark_gray>[<yellow>Staff<dark_gray>] <white>⇢ <yellow>{player}<white>: {message}"
 ADMIN-CHAT:
   ENABLED: "<green>Admin Chat Enabled."
   DISABLED: "<red>Admin Chat Disabled."
-  FORMAT: "<red>Admin <white>{player} - {message}"
+  FORMAT: "<dark_gray>[<red>Admin<dark_gray>] <white>⇢ <red>{player}<white>: {message}"
 OWNER-CHAT:
   ENABLED: "<green>Owner Chat Enabled."
   DISABLED: "<red>Owner Chat Disabled."
-  FORMAT: "<dark_red>Owner <white>{player} - {message}"
+  FORMAT: "<dark_gray>[<dark_red>Owner<dark_gray>] <white>⇢ <dark_red>{player}<white>: {message}"
 
 STAFF-MODE:
   ENABLED: "<green>Successfully enabled staff mode"

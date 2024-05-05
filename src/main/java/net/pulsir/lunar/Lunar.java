@@ -88,7 +88,7 @@ public final class Lunar extends JavaPlugin {
         instance = null;
     }
 
-    private void loadConfiguration(){
+    private void loadConfiguration() {
         this.configuration = new Config(this, new File(getDataFolder(), "configuration.yml"),
                 new YamlConfiguration(), "configuration.yml");
         this.language = new Config(this, new File(getDataFolder(), "language.yml"),
@@ -98,7 +98,7 @@ public final class Lunar extends JavaPlugin {
         this.language.create();
     }
 
-    private void registerCommands(){
+    private void registerCommands() {
         Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCommand());
         Objects.requireNonNull(getCommand("adminchat")).setExecutor(new AdminChatCommand());
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());
@@ -110,7 +110,7 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("inspect")).setExecutor(new InvseeCommand());
     }
 
-    private void registerListeners(PluginManager pluginManager){
+    private void registerListeners(PluginManager pluginManager) {
         pluginManager.registerEvents(new ChatListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new StaffModeListener(), this);
