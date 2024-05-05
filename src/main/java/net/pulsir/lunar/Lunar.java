@@ -33,6 +33,7 @@ public final class Lunar extends JavaPlugin {
     private Config language;
 
     @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
+    @Getter private final NamespacedKey armorKey = new NamespacedKey(this, "armor");
 
     /*
         [00:47:41 ERROR]: Could not pass event PlayerInteractAtEntityEvent to Lunar v1.0-SNAPSHOT

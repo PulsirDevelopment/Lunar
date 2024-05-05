@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
+import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -84,6 +85,7 @@ public class StaffModeListener implements Listener {
     public void onOnlineStaff(PlayerInteractEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
@@ -128,6 +130,7 @@ public class StaffModeListener implements Listener {
     @EventHandler
     public void onFreeze(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
         if (!(event.getRightClicked() instanceof Player target)) return;
         if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
@@ -161,15 +164,18 @@ public class StaffModeListener implements Listener {
     @EventHandler
     public void onInspect(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
         if (!(event.getRightClicked() instanceof Player target)) return;
         if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
+        Player player = event.getPlayer();
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
 
         if (key == null || !key.equalsIgnoreCase("inspect")) return;
 
-
+        InspectionInventory inventory = new InspectionInventory(target);
+        inventory.open(player);
     }
 }
