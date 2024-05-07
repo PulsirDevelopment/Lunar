@@ -1,5 +1,5 @@
-database: "mongo" # mongo | flatfile
-mongo-uri: "mongodb://198.50.209.162:45235/"
+database: "flatfile" # mongo | flatfile
+mongo-uri: ""
 bungee: true
 
 force-vanish: true

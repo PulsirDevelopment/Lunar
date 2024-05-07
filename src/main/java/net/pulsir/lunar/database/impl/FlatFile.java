@@ -29,7 +29,7 @@ public class FlatFile implements IDatabase {
 
     @Override
     public void loadInventory(UUID uuid) {
-        if (Lunar.getInstance().getConfiguration().getConfiguration().getConfigurationSection("inventory") == null) return;
+        if (Lunar.getInstance().getInventory().getConfiguration().getConfigurationSection("inventory") == null) return;
         for (final String inventory : Objects.requireNonNull(Lunar.getInstance().getInventory().getConfiguration().getConfigurationSection("inventory")).getKeys(false)) {
             List<String> strings = Lunar.getInstance().getInventory().getConfiguration().getStringList("inventory." + inventory + ".inventory");
             ItemStack[] itemStacks = new ItemStack[strings.size()];
