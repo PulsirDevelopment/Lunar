@@ -26,6 +26,8 @@ STAFF-BAR: "<light_purple>Chat<white>: {chat} <white>| <light_purple>Vanish<whit
 
 STAFF:
   TELEPORTED: "<green>Successfully teleported to {player} location"
+  JOIN-MESSAGE: "<light_purple>{player} <white>has joined <light_purple>{server}"
+  QUIT-MESSAGE: "<light_purple>{player} <white>has left <light_purple>{server}"
 
 USAGE:
   FREEZE:

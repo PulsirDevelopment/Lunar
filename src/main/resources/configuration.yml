@@ -3,6 +3,9 @@ bungee: true
 force-vanish: true
 staff-bar: true
 
+join-message: true
+quit-message: true
+
 staff-items:
   compass:
     item: "COMPASS"

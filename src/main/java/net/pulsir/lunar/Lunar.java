@@ -7,7 +7,8 @@ import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.listener.*;
-import net.pulsir.lunar.task.ActionBarTask;
+import net.pulsir.lunar.task.LunarTask;
+import net.pulsir.lunar.task.PermissionTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
 import org.bukkit.*;
@@ -111,7 +112,6 @@ public final class Lunar extends JavaPlugin {
 
     private void registerListeners(PluginManager pluginManager) {
         pluginManager.registerEvents(new ChatListener(), this);
-        pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new StaffModeListener(), this);
         pluginManager.registerEvents(new VanishListener(), this);
         pluginManager.registerEvents(new FreezeListener(), this);
@@ -120,7 +120,9 @@ public final class Lunar extends JavaPlugin {
 
     private void registerTasks() {
         if (getConfiguration().getConfiguration().getBoolean("staff-bar")) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 0L, 20L);
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new LunarTask(), 0L, 60L);
+        } else {
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new PermissionTask(), 0L, 60L);
         }
     }
 }
