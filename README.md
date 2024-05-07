@@ -12,6 +12,7 @@ Quality & efficient staff core.
 <li>Broadcast</li>
 <li>Report</li>
 <li>Request</li>
+<li>Inventory Restore</li>
 <br>
 
 ### Contributing
