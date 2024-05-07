@@ -58,3 +58,21 @@ OPTIONS:
   ADMIN-CHAT: "<red>Admin"
   OWNER-CHAT: "<dark_red>Owner"
   ONLINE: "<green>{players}"
+
+REQUEST:
+  USAGE:
+    - ""
+    - "<red>/request <request>"
+    - ""
+  FORMAT: "<light_purple>{player} <white>has requested support with <light_purple>{message}."
+  COOLDOWN: "<red>You are currently on cooldown for another {time} seconds."
+  SUCCESS: "<green>Successfully sent request to the staff members."
+
+REPORT:
+  USAGE:
+    - ""
+    - "<red>/report <player> <reason>"
+    - ""
+  FORMAT: "<light_purple>{player} <white>has reported <light_purple>{target} <white>for {message}."
+  COOLDOWN: "<red>You are currently on cooldown for another {time} seconds."
+  SUCCESS: "<green>Successfully sent report to the staff members."

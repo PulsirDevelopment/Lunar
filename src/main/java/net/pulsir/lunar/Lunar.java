@@ -4,11 +4,13 @@ import lombok.Getter;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
+import net.pulsir.lunar.command.player.ReportCommand;
+import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.task.LunarTask;
-import net.pulsir.lunar.task.PermissionTask;
+import net.pulsir.lunar.task.ServerTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
 import org.bukkit.*;
@@ -108,6 +110,9 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("inspect")).setExecutor(new InvseeCommand());
 
         Objects.requireNonNull(getCommand("broadcast")).setExecutor(new BroadcastCommand());
+
+        Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand());
+        Objects.requireNonNull(getCommand("request")).setExecutor(new RequestCommand());
     }
 
     private void registerListeners(PluginManager pluginManager) {
@@ -120,9 +125,9 @@ public final class Lunar extends JavaPlugin {
 
     private void registerTasks() {
         if (getConfiguration().getConfiguration().getBoolean("staff-bar")) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new LunarTask(), 0L, 60L);
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new LunarTask(), 0L, 20L);
         } else {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new PermissionTask(), 0L, 60L);
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ServerTask(), 0L, 20L);
         }
     }
 }

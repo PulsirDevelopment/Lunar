@@ -6,6 +6,9 @@ staff-bar: true
 join-message: true
 quit-message: true
 
+report-cooldown: 60
+request-cooldown: 60
+
 staff-items:
   compass:
     item: "COMPASS"

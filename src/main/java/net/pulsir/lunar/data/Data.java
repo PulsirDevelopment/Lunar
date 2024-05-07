@@ -23,6 +23,9 @@ public class Data {
     private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
     private final Map<UUID, UUID> inspect = new HashMap<>();
 
+    private final Map<UUID, Integer> reportCooldown = new HashMap<>();
+    private final Map<UUID, Integer> requestCooldown = new HashMap<>();
+
     public void clearChat(UUID uuid) {
         staffChat.remove(uuid);
         adminChat.remove(uuid);

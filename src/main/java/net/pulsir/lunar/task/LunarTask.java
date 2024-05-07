@@ -51,5 +51,25 @@ public class LunarTask implements Runnable {
                 Lunar.getInstance().getData().getStaffMembers().add(onlinePlayers.getUniqueId());
             }
         }
+
+        for (UUID uuid : Lunar.getInstance().getData().getRequestCooldown().keySet()) {
+            if (Lunar.getInstance().getData().getRequestCooldown().get(uuid) <= 1) {
+                Lunar.getInstance().getData().getRequestCooldown().remove(uuid);
+            } else {
+                Lunar.getInstance().getData().getRequestCooldown().replace(uuid,
+                        Lunar.getInstance().getData().getRequestCooldown().get(uuid),
+                        Lunar.getInstance().getData().getRequestCooldown().get(uuid) - 1);
+            }
+        }
+
+        for (UUID uuid : Lunar.getInstance().getData().getReportCooldown().keySet()) {
+            if (Lunar.getInstance().getData().getReportCooldown().get(uuid) <= 1) {
+                Lunar.getInstance().getData().getReportCooldown().remove(uuid);
+            } else {
+                Lunar.getInstance().getData().getReportCooldown().replace(uuid,
+                        Lunar.getInstance().getData().getReportCooldown().get(uuid),
+                        Lunar.getInstance().getData().getReportCooldown().get(uuid) - 1);
+            }
+        }
     }
 }
