@@ -1,3 +1,5 @@
+database: "mongo" # mongo | flatfile
+mongo-uri: "mongodb://198.50.209.162:45235/"
 bungee: true
 
 force-vanish: true
@@ -8,6 +10,8 @@ quit-message: true
 
 report-cooldown: 60
 request-cooldown: 60
+
+delete-on-restore: true
 
 staff-items:
   compass:

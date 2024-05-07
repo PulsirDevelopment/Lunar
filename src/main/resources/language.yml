@@ -76,3 +76,11 @@ REPORT:
   FORMAT: "<light_purple>{player} <white>has reported <light_purple>{target} <white>for {message}."
   COOLDOWN: "<red>You are currently on cooldown for another {time} seconds."
   SUCCESS: "<green>Successfully sent report to the staff members."
+
+RESTORE:
+  USAGE:
+    - ""
+    - "<red>/restore <player>"
+    - ""
+  NO-DATABASE: "<red>Failed to find {player} inventory in database."
+  RESTORED: "<green>Successfully restored {player} inventory."

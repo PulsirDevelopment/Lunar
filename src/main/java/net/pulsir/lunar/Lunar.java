@@ -6,6 +6,7 @@ import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
+import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
 import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
@@ -35,6 +36,7 @@ public final class Lunar extends JavaPlugin {
 
     private Config configuration;
     private Config language;
+    private Config inventory;
     private IDatabase database;
 
     private final InventoryManager inventoryManager = new InventoryManager();
@@ -108,9 +110,12 @@ public final class Lunar extends JavaPlugin {
                 new YamlConfiguration(), "configuration.yml");
         this.language = new Config(this, new File(getDataFolder(), "language.yml"),
                 new YamlConfiguration(), "language.yml");
+        this.inventory = new Config(this, new File(getDataFolder(), "inventories.yml"),
+                new YamlConfiguration(), "inventories.yml");
 
         this.configuration.create();
         this.language.create();
+        this.inventory.create();
     }
 
     private void registerCommands() {
@@ -128,6 +133,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand());
         Objects.requireNonNull(getCommand("request")).setExecutor(new RequestCommand());
+
+        Objects.requireNonNull(getCommand("restore")).setExecutor(new InventoryRestoreCommand());
     }
 
     private void registerListeners(PluginManager pluginManager) {
@@ -136,6 +143,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new VanishListener(), this);
         pluginManager.registerEvents(new FreezeListener(), this);
         pluginManager.registerEvents(new InventoryListener(), this);
+        pluginManager.registerEvents(new PlayerListener(), this);
     }
 
     private void registerTasks() {

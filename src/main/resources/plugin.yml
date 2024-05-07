@@ -26,3 +26,5 @@ commands:
   report:
     aliases: [helpop]
   request:
+  restore:
+    aliases: [inventoryrestore, restoreinventory]
