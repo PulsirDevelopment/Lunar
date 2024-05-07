@@ -52,8 +52,6 @@ public class RequestCommand implements CommandExecutor {
                     .getConfiguration().getString("REQUEST.SUCCESS"))));
         }
 
-        Bukkit.getConsoleSender().sendMessage(Lunar.getInstance().getData().getRequestCooldown().toString());
-
         return true;
     }
 }
