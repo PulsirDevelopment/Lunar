@@ -8,6 +8,10 @@ import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
+import net.pulsir.lunar.database.IDatabase;
+import net.pulsir.lunar.database.impl.FlatFile;
+import net.pulsir.lunar.database.impl.Mongo;
+import net.pulsir.lunar.inventories.manager.InventoryManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.ServerTask;
@@ -31,6 +35,9 @@ public final class Lunar extends JavaPlugin {
 
     private Config configuration;
     private Config language;
+    private IDatabase database;
+
+    private final InventoryManager inventoryManager = new InventoryManager();
 
     @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
 
@@ -39,6 +46,13 @@ public final class Lunar extends JavaPlugin {
         instance = this;
 
         this.loadConfiguration();
+
+        if (Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).equalsIgnoreCase("mongo")) {
+            database = new Mongo();
+        } else if (Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).equalsIgnoreCase("flatfile")) {
+            database = new FlatFile();
+        }
+
         this.registerCommands();
         this.registerListeners(Bukkit.getPluginManager());
 
@@ -56,6 +70,7 @@ public final class Lunar extends JavaPlugin {
     public void onDisable() {
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
+        this.database.saveInventory();
 
         if (getData().getInventories().isEmpty()) return;
         for (UUID uuid : getData().getInventories().keySet()) {

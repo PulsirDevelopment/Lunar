@@ -22,6 +22,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
     compileOnly "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT"
+    implementation 'org.mongodb:mongodb-driver-sync:5.0.1'
 }
 
 def targetJavaVersion = 17
