@@ -16,6 +16,9 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
 }
 
 dependencies {
@@ -23,6 +26,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
     compileOnly "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT"
     implementation 'org.mongodb:mongodb-driver-sync:5.0.1'
+    compileOnly 'me.clip:placeholderapi:2.11.5'
 }
 
 def targetJavaVersion = 17

@@ -12,6 +12,7 @@ import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.database.impl.FlatFile;
 import net.pulsir.lunar.database.impl.Mongo;
+import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.task.LunarTask;
@@ -66,6 +67,10 @@ public final class Lunar extends JavaPlugin {
         }
 
         this.registerTasks();
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PlaceHolderHook().register();
+        }
     }
 
     @Override
