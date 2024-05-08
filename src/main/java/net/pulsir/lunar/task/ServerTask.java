@@ -7,11 +7,18 @@ import org.bukkit.entity.Player;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ServerTask implements Runnable{
+public class ServerTask implements Runnable {
     @Override
     public void run() {
         if (!Lunar.getInstance().getData().getStaffMembers().isEmpty()) {
-            Lunar.getInstance().getData().getStaffMembers().removeIf(uuid -> !Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.staff"));
+            for (final UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.staff")) {
+                    Lunar.getInstance().getData().getStaffMembers().remove(uuid);
+                }
+                if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.spy")) {
+                    Lunar.getInstance().getData().getSpy().remove(uuid);
+                }
+            }
         }
 
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {

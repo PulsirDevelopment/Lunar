@@ -135,6 +135,8 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("request")).setExecutor(new RequestCommand());
 
         Objects.requireNonNull(getCommand("restore")).setExecutor(new InventoryRestoreCommand());
+
+        Objects.requireNonNull(getCommand("spy")).setExecutor(new SpyCommand());
     }
 
     private void registerListeners(PluginManager pluginManager) {
@@ -144,6 +146,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new FreezeListener(), this);
         pluginManager.registerEvents(new InventoryListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
+        pluginManager.registerEvents(new SpyListener(), this);
     }
 
     private void registerTasks() {

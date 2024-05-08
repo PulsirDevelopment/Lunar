@@ -28,3 +28,4 @@ commands:
   request:
   restore:
     aliases: [inventoryrestore, restoreinventory]
+  spy:

@@ -41,13 +41,15 @@ public class StaffModeListener implements Listener {
             Lunar.getInstance().getData().getOwnerMembers().add(event.getPlayer().getUniqueId());
         }
 
-        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("join-message")) {
-            for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
-                Player player = Bukkit.getPlayer(uuid);
-                Objects.requireNonNull(player).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                                .getConfiguration().getString("STAFF.JOIN-MESSAGE"))
-                        .replace("{player}", event.getPlayer().getName())
-                        .replace("{server}", Bukkit.getServer().getName())));
+        if (event.getPlayer().hasPermission("lunar.staff")) {
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("join-message")) {
+                for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                    Player player = Bukkit.getPlayer(uuid);
+                    Objects.requireNonNull(player).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("STAFF.JOIN-MESSAGE"))
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
+                }
             }
         }
     }
@@ -55,12 +57,14 @@ public class StaffModeListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("quit-message")) {
-            for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
-                Player player = Bukkit.getPlayer(uuid);
-                Objects.requireNonNull(player).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                                .getConfiguration().getString("STAFF.QUIT-MESSAGE"))
-                        .replace("{player}", event.getPlayer().getName())
-                        .replace("{server}", Bukkit.getServer().getName())));
+            if (event.getPlayer().hasPermission("lunar.staff")) {
+                for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                    Player player = Bukkit.getPlayer(uuid);
+                    Objects.requireNonNull(player).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("STAFF.QUIT-MESSAGE"))
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
+                }
             }
         }
 

@@ -84,3 +84,15 @@ RESTORE:
     - ""
   NO-DATABASE: "<red>Failed to find {player} inventory in database."
   RESTORED: "<green>Successfully restored {player} inventory."
+
+SPY:
+  USAGE:
+    - ""
+    - "<red>/spy add <player>"
+    - "<red>/spy remove <player>"
+    - ""
+  ADDED: "<green>Successfully added {player} to spy."
+  REMOVED: "<red>Successfully removed {player} from spy."
+  EMPTY: "<red>You aren't spying on anybody."
+  FORMAT: "<light_purple>{player} said<white>: {message}"
+  STAFF: "<red>You can't spy on other staff member."

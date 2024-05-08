@@ -12,6 +12,11 @@ report-cooldown: 60
 request-cooldown: 60
 
 delete-on-restore: true
+allow-staff-spy: false
+
+spy:
+  messages: true
+  commands: true
 
 staff-items:
   compass:
