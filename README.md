@@ -13,6 +13,7 @@ Quality & efficient staff core.
 <li>Report</li>
 <li>Request</li>
 <li>Inventory Restore</li>
+<li>Spy Command</li>
 <br>
 
 ### Contributing
