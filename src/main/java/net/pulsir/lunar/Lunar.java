@@ -16,6 +16,7 @@ import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.task.LunarTask;
+import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
@@ -38,6 +39,8 @@ public final class Lunar extends JavaPlugin {
     private Config configuration;
     private Config language;
     private Config inventory;
+    private Config messages;
+
     private IDatabase database;
 
     private final InventoryManager inventoryManager = new InventoryManager();
@@ -117,10 +120,13 @@ public final class Lunar extends JavaPlugin {
                 new YamlConfiguration(), "language.yml");
         this.inventory = new Config(this, new File(getDataFolder(), "inventories.yml"),
                 new YamlConfiguration(), "inventories.yml");
+        this.messages = new Config(this, new File(getDataFolder(), "messages.yml"),
+                new YamlConfiguration(), "messages.yml");
 
         this.configuration.create();
         this.language.create();
         this.inventory.create();
+        this.messages.create();
     }
 
     private void registerCommands() {
@@ -160,5 +166,6 @@ public final class Lunar extends JavaPlugin {
         } else {
             Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ServerTask(), 0L, 20L);
         }
+        Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
     }
 }

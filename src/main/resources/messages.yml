@@ -1,0 +1,19 @@
+delay-between: 300
+enabled: false
+
+messages:
+  1:
+    message:
+      - ""
+      - "<light_purple>Store<white>: https://pulsir.net"
+      - ""
+  2:
+    message:
+      - ""
+      - "<light_purple>Forum<white>: https://pulsir.net"
+      - ""
+  3:
+    message:
+      - ""
+      - "<light_purple>Discord<white>: https://pulsir.net"
+      - ""
