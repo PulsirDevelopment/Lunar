@@ -16,20 +16,21 @@ public class StaffChatCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
         if (!(player.hasPermission("lunar.command.staffchat"))) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
         if (Lunar.getInstance().getData().getStaffChat().contains(player.getUniqueId())) {
             Lunar.getInstance().getData().getStaffChat().remove(player.getUniqueId());
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("STAFF-CHAT.DISABLED"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("STAFF-CHAT.DISABLED")));
         } else {
             Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getStaffChat().add(player.getUniqueId());
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("STAFF-CHAT.ENABLED"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("STAFF-CHAT.ENABLED")));
+
         }
 
         return true;

@@ -32,7 +32,7 @@ public class MessagesTask implements Runnable {
 
         if (delay <= 1) {
             for (final String line : globalMessages.get(current)) {
-                Bukkit.broadcast(MiniMessage.miniMessage().deserialize(line));
+                Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(line));
             }
 
             if (globalMessages.size() <= current + 1) {

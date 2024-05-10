@@ -17,20 +17,20 @@ public class OwnerChatCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
         if (!(player.hasPermission("lunar.command.ownerchat"))) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
         if (Lunar.getInstance().getData().getOwnerChat().contains(player.getUniqueId())) {
             Lunar.getInstance().getData().getOwnerChat().remove(player.getUniqueId());
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("OWNER-CHAT.DISABLED"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("OWNER-CHAT.DISABLED")));
         } else {
             Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getOwnerChat().add(player.getUniqueId());
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("OWNER-CHAT.ENABLED"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("OWNER-CHAT.ENABLED")));
         }
 
         return true;

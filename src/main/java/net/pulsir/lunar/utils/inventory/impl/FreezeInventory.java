@@ -22,18 +22,18 @@ public class FreezeInventory implements LInventory {
     @Override
     public Inventory inventory(Player player) {
         Inventory inventory = Bukkit.createInventory(player, Lunar.getInstance().getConfiguration().getConfiguration()
-                .getInt("freeze-inventory.size"), MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance()
-                .getConfiguration().getConfiguration().getString("freeze-inventory.title"))));
+                .getInt("freeze-inventory.size"), Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                .getConfiguration().getConfiguration().getString("freeze-inventory.title")));
 
 
         for (final String items : Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getConfigurationSection("freeze-inventory.items")).getKeys(false)) {
             ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("freeze-inventory.items." + items + ".item")));
             ItemMeta meta = itemStack.getItemMeta();
-            meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                    .getString("freeze-inventory.items." + items + ".name"))).decoration(TextDecoration.ITALIC, false));
+            meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration().getString("freeze-inventory.items." + items + ".name"))
+                    .decoration(TextDecoration.ITALIC, false));
             List<Component> lore = new ArrayList<>();
             Lunar.getInstance().getConfiguration().getConfiguration().getStringList("freeze-inventory.items." + items + ".lore")
-                    .forEach(line -> lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                    .forEach(line -> lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
             meta.lore(lore);
             itemStack.setItemMeta(meta);

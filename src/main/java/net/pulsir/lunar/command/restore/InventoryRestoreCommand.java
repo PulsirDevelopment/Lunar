@@ -17,29 +17,29 @@ public class InventoryRestoreCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender.hasPermission("lunar.restore"))) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
         if (args.length == 0) {
             for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("RESTORE.USAGE")) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(lines));
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(lines));
             }
         } else {
             Player target = Bukkit.getPlayer(args[0]);
 
             if (target == null || !target.isOnline()) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("PLAYER-NULL"))
-                        .replace("{player}", args[0]))));
+                        .replace("{player}", args[0])));
                 return false;
             }
 
             if (!Lunar.getInstance().getInventoryManager().getInventories().containsKey(target.getUniqueId())) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("RESTORE.NO-DATABASE"))
-                        .replace("{player}", target.getName()))));
+                        .replace("{player}", target.getName())));
                 return false;
             }
 
@@ -47,7 +47,7 @@ public class InventoryRestoreCommand implements CommandExecutor {
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("delete-on-restore")) {
                 Lunar.getInstance().getInventoryManager().getInventories().remove(target.getUniqueId());
             }
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
                             .getString("RESTORE.RESTORED"))
                     .replace("{player}", target.getName())));
         }

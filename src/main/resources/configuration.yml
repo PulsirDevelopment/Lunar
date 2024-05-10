@@ -1,6 +1,7 @@
 database: "flatfile" # mongo | flatfile
 mongo-uri: ""
 bungee: true
+message-format: "legacy" # legacy (&chey) | modern (<red>hey)
 
 force-vanish: true
 staff-bar: true
@@ -14,6 +15,8 @@ request-cooldown: 60
 delete-on-restore: true
 allow-staff-spy: false
 
+inventory-on-freeze: false
+
 spy:
   messages: true
   commands: true
@@ -24,10 +27,10 @@ staff-items:
     enchanted: false
     enchants:
       - ""
-    name: "<red>Teleportation Compass"
+    name: "&cTeleportation Compass"
     lore:
       - ""
-      - "<white>Right click to go through walls"
+      - "&fRight click to go through walls"
       - ""
     slot: 0
     enabled: true
@@ -36,10 +39,10 @@ staff-items:
     enchanted: false
     enchants:
       - ""
-    name: "<red>Inspection Book"
+    name: "&cInspection Book"
     lore:
       - ""
-      - "<white>Right click to view player inventory."
+      - "&fRight click to view player inventory."
       - ""
     slot: 1
     enabled: true
@@ -48,10 +51,10 @@ staff-items:
     enchanted: false
     enchants:
       - ""
-    name: "<red>Freeze Player"
+    name: "&cFreeze Player"
     lore:
       - ""
-      - "<white>Right click to freeze player."
+      - "&fRight click to freeze player."
       - ""
     slot: 2
     enabled: true
@@ -60,10 +63,10 @@ staff-items:
     enchanted: false
     enchants:
       - ""
-    name: "<red>Random Teleport"
+    name: "&cRandom Teleport"
     lore:
       - ""
-      - "<white>Right click to teleport to random player."
+      - "&fRight click to teleport to random player."
       - ""
     slot: 8
     enabled: true
@@ -72,10 +75,10 @@ staff-items:
     enchanted: false
     enchants:
       - ""
-    name: "<red>Online Staff"
+    name: "&cOnline Staff"
     lore:
       - ""
-      - "<white>Right click to view online staff."
+      - "&fRight click to view online staff."
       - ""
     slot: 7
     enabled: true
@@ -84,51 +87,51 @@ staff-items:
     enchanted: false
     enchants:
       - ""
-    name: "<red>Wand"
+    name: "&cWand"
     lore:
       - ""
-      - "<white>Right click to do the magic."
+      - "&fRight click to do the magic."
       - ""
     slot: 6
     enabled: true
 
 online-inventory:
-  title: "<red>Online Staff"
+  title: "&cOnline Staff"
   size: 54
   overlay: true
   overlay-item: "GRAY_STAINED_GLASS_PANE"
   item-format:
-    name: "<light_purple>{player}"
+    name: "&d{player}"
     lore:
       - ""
-      - "<light_purple>Vanished<white>: {vanished}"
+      - "&dVanished&f: {vanished}"
       - ""
 
 freeze-inventory:
-  title: "<red>Frozen Inventory"
+  title: "&cFrozen Inventory"
   size: 9
   overlay: true
   overlay-item: "PURPLE_STAINED_GLASS_PANE"
   items:
     1:
       item: "BOOK"
-      name: "<red>You are <bold>FROZEN"
+      name: "&cYou are &c&lFROZEN"
       lore:
         - ""
-        - "<red>Please join our discord discord.gg/server"
-        - "<red>and create a freeze ticket."
-        - "<red>You have 3 minutes."
+        - "&cPlease join our discord discord.gg/server"
+        - "&cand create a freeze ticket."
+        - "&cYou have 3 minutes."
         - ""
       slot: 4
 
 inspect-inventory:
-  title: "<red>Inspect Inventory"
+  title: "&cInspect Inventory"
   statistics-item: true
   item: "GLISTERING_MELON_SLICE"
-  name: "<green>{player}'s Inventory"
+  name: "&a{player}'s Inventory"
   lore:
     - ""
-    - "<white>{health}<light_purple>/<white>{health_max}"
-    - "<white>{hunger}<light_purple>/<white>20"
-    - "<white>Gamemode<light_purple>: <white>{gamemode}"
+    - "&f{health}&d/&f{health_max}"
+    - "&f{hunger}&d/&f20"
+    - "&fGamemode&d: &f{gamemode}"
     - ""

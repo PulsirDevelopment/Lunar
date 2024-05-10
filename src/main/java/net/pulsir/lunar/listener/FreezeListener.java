@@ -17,9 +17,11 @@ public class FreezeListener implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        if (!(event.getPlayer() instanceof Player player)) return;
-        if (Lunar.getInstance().getData().getFrozenPlayers().contains(event.getPlayer().getUniqueId())) {
-            Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> new FreezeInventory().open(player), 10L);
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
+            if (!(event.getPlayer() instanceof Player player)) return;
+            if (Lunar.getInstance().getData().getFrozenPlayers().contains(event.getPlayer().getUniqueId())) {
+                Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> new FreezeInventory().open(player), 10L);
+            }
         }
     }
 

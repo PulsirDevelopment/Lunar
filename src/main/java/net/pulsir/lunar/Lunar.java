@@ -20,6 +20,7 @@ import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.config.Config;
+import net.pulsir.lunar.utils.message.Message;
 import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -42,6 +43,7 @@ public final class Lunar extends JavaPlugin {
     private Config messages;
 
     private IDatabase database;
+    @Getter private Message message;
 
     private final InventoryManager inventoryManager = new InventoryManager();
 
@@ -52,15 +54,23 @@ public final class Lunar extends JavaPlugin {
         instance = this;
 
         this.loadConfiguration();
+        this.message = new Message();
 
         if (Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).equalsIgnoreCase("mongo")) {
             database = new Mongo();
+            Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded MONGO as database.");
         } else if (Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).equalsIgnoreCase("flatfile")) {
+            database = new FlatFile();
+            Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded FLATFILE as database.");
+        } else {
+            Bukkit.getConsoleSender().sendMessage("[Lunar] Unsupported database. Loading default one [FLATFILE].");
             database = new FlatFile();
         }
 
         this.registerCommands();
+        Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded commands.");
         this.registerListeners(Bukkit.getPluginManager());
+        Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded listeners.");
 
         this.data = new Data();
 

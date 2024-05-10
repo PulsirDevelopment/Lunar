@@ -20,7 +20,7 @@ public class SpyListener implements Listener {
             Set<Player> spy = Lunar.getInstance().getData().getSpyOf(event.getPlayer());
 
             for (final Player spyPlayer : spy) {
-                spyPlayer.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance()
+                spyPlayer.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
                                 .getLanguage().getConfiguration().getString("SPY.FORMAT"))
                         .replace("{player}", event.getPlayer().getName())
                         .replace("{message}", event.getMessage())));
@@ -34,7 +34,7 @@ public class SpyListener implements Listener {
             Set<Player> spy = Lunar.getInstance().getData().getSpyOf(event.getPlayer());
 
             for (final Player spyPlayer : spy) {
-                spyPlayer.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance()
+                spyPlayer.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
                                 .getLanguage().getConfiguration().getString("SPY.FORMAT"))
                         .replace("{player}", event.getPlayer().getName())
                         .replace("{message}", event.getMessage())));

@@ -1,98 +1,98 @@
-NO-PERMISSIONS: "<red>No Permissions."
-PLAYER-NULL: "<red>Player {player} is not online"
+NO-PERMISSIONS: "&cNo Permissions."
+PLAYER-NULL: "&cPlayer {player} is not online"
 
 STAFF-CHAT:
-  ENABLED: "<green>Staff Chat Enabled."
-  DISABLED: "<red>Staff Chat Disabled."
-  FORMAT: "<dark_gray>[<yellow>Staff<dark_gray>] <white>⇢ <yellow>{player}<white>: {message}"
+  ENABLED: "&aStaff Chat Enabled."
+  DISABLED: "&cStaff Chat Disabled."
+  FORMAT: "&8[&eStaff&8] &8(&e{server}&8) &f⇢ &e{player}&f: {message}"
 ADMIN-CHAT:
-  ENABLED: "<green>Admin Chat Enabled."
-  DISABLED: "<red>Admin Chat Disabled."
-  FORMAT: "<dark_gray>[<red>Admin<dark_gray>] <white>⇢ <red>{player}<white>: {message}"
+  ENABLED: "&aAdmin Chat Enabled."
+  DISABLED: "&cAdmin Chat Disabled."
+  FORMAT: "&8[&cAdmin&8] &8(&c{server}&8) &f⇢ &c{player}&f: {message}"
 OWNER-CHAT:
-  ENABLED: "<green>Owner Chat Enabled."
-  DISABLED: "<red>Owner Chat Disabled."
-  FORMAT: "<dark_gray>[<dark_red>Owner<dark_gray>] <white>⇢ <dark_red>{player}<white>: {message}"
+  ENABLED: "&aOwner Chat Enabled."
+  DISABLED: "&cOwner Chat Disabled."
+  FORMAT: "&8[&4Owner&8] &8(&4{server}&8) &f⇢ &4{player}&f: {message}"
 
 STAFF-MODE:
-  ENABLED: "<green>Successfully enabled staff mode"
-  DISABLED: "<red>Successfully disabled staff mode"
+  ENABLED: "&aSuccessfully enabled staff mode"
+  DISABLED: "&cSuccessfully disabled staff mode"
 
 VANISH:
-  ENABLED: "<green>Vanish has been enabled."
-  DISABLED: "<red>Vanish has been disabled."
+  ENABLED: "&aVanish has been enabled."
+  DISABLED: "&cVanish has been disabled."
 
-STAFF-BAR: "<light_purple>Chat<white>: {chat} <white>| <light_purple>Vanish<white>: {vanish} | <light_purple>Online<white>: {online}"
+STAFF-BAR: "&dChat&f: {chat} &f| &dVanish&f: {vanish} &f| &dOnline&f: {online}"
 
 STAFF:
-  TELEPORTED: "<green>Successfully teleported to {player} location"
-  JOIN-MESSAGE: "<light_purple>{player} <white>has joined <light_purple>{server}"
-  QUIT-MESSAGE: "<light_purple>{player} <white>has left <light_purple>{server}"
+  TELEPORTED: "&aSuccessfully teleported to {player} location"
+  JOIN-MESSAGE: "&d{player} &fhas joined &d{server}"
+  QUIT-MESSAGE: "&d{player} &fhas left &d{server}"
 
 USAGE:
   FREEZE:
     - ""
-    - "<red>/freeze <player>"
+    - "&c/freeze <player>"
     - ""
   INSPECT:
     - ""
-    - "<red>/inspect <player>"
+    - "&c/inspect <player>"
     - ""
   BROADCAST:
     - ""
-    - "<red>/broadcast <message>"
+    - "&c/broadcast <message>"
     - ""
 
-BROADCAST-MESSAGE: "<dark_red>Alert<white>: {message}"
+BROADCAST-MESSAGE: "&4Alert&f: {message}"
 
 FREEZE:
-  FROZEN: "<green>Successfully frozen {player} player."
-  UNFROZEN: "<green>Successfully unfrozen {player} player."
-  STAFF: "<red>You can't freeze staff"
+  FROZEN: "&aSuccessfully frozen {player} player."
+  UNFROZEN: "&aSuccessfully unfrozen {player} player."
+  STAFF: "&cYou can't freeze staff"
 
 OPTIONS:
-  VANISH-ENABLED: "<green>Enabled"
-  VANISH-DISABLED: "<red>Disabled"
-  PUBLIC-CHAT: "<white>Public"
-  STAFF-CHAT: "<yellow>Staff"
-  ADMIN-CHAT: "<red>Admin"
-  OWNER-CHAT: "<dark_red>Owner"
-  ONLINE: "<green>{players}"
+  VANISH-ENABLED: "&aEnabled"
+  VANISH-DISABLED: "&cDisabled"
+  PUBLIC-CHAT: "&fPublic"
+  STAFF-CHAT: "&eStaff"
+  ADMIN-CHAT: "&cAdmin"
+  OWNER-CHAT: "&4Owner"
+  ONLINE: "&a{players}"
 
 REQUEST:
   USAGE:
     - ""
-    - "<red>/request <request>"
+    - "&c/request <request>"
     - ""
-  FORMAT: "<light_purple>{player} <white>has requested support with <light_purple>{message}."
-  COOLDOWN: "<red>You are currently on cooldown for another {time} seconds."
-  SUCCESS: "<green>Successfully sent request to the staff members."
+  FORMAT: "&d{player} &fhas requested support with &d{message}."
+  COOLDOWN: "&cYou are currently on cooldown for another {time} seconds."
+  SUCCESS: "&aSuccessfully sent request to the staff members."
 
 REPORT:
   USAGE:
     - ""
-    - "<red>/report <player> <reason>"
+    - "&c/report <player> <reason>"
     - ""
-  FORMAT: "<light_purple>{player} <white>has reported <light_purple>{target} <white>for {message}."
-  COOLDOWN: "<red>You are currently on cooldown for another {time} seconds."
-  SUCCESS: "<green>Successfully sent report to the staff members."
+  FORMAT: "&d{player} &fhas reported &d{target} &ffor {message}."
+  COOLDOWN: "&cYou are currently on cooldown for another {time} seconds."
+  SUCCESS: "&aSuccessfully sent report to the staff members."
 
 RESTORE:
   USAGE:
     - ""
-    - "<red>/restore <player>"
+    - "&c/restore <player>"
     - ""
-  NO-DATABASE: "<red>Failed to find {player} inventory in database."
-  RESTORED: "<green>Successfully restored {player} inventory."
+  NO-DATABASE: "&cFailed to find {player} inventory in database."
+  RESTORED: "&aSuccessfully restored {player} inventory."
 
 SPY:
   USAGE:
     - ""
-    - "<red>/spy add <player>"
-    - "<red>/spy remove <player>"
+    - "&c/spy add <player>"
+    - "&c/spy remove <player>"
     - ""
-  ADDED: "<green>Successfully added {player} to spy."
-  REMOVED: "<red>Successfully removed {player} from spy."
-  EMPTY: "<red>You aren't spying on anybody."
-  FORMAT: "<light_purple>{player} said<white>: {message}"
-  STAFF: "<red>You can't spy on other staff member."
+  ADDED: "&aSuccessfully added {player} to spy."
+  REMOVED: "&cSuccessfully removed {player} from spy."
+  EMPTY: "&cYou aren't spying on anybody."
+  FORMAT: "&d{player} said&f: {message}"
+  STAFF: "&cYou can't spy on other staff member."

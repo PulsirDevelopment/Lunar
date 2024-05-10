@@ -18,43 +18,51 @@ public class FreezeCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender.hasPermission("lunar.staff"))) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
         if (args.length == 0) {
             for (final String usage : Lunar.getInstance().getLanguage().getConfiguration().getStringList("USAGE.FREEZE")) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(usage));
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(usage));
             }
         } else {
             Player target = Bukkit.getPlayer(args[0]);
 
             if (target == null || !target.isOnline()) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("PLAYER-NULL"))
-                        .replace("{player}", args[0]))));
+                        .replace("{player}", args[0])));
                 return false;
             }
 
             if (Lunar.getInstance().getData().getStaffMembers().contains(target.getUniqueId())) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                        .getConfiguration().getString("FREEZE.STAFF"))));
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("FREEZE.STAFF")));
                 return false;
             }
 
             if (Lunar.getInstance().getData().getFrozenPlayers().contains(target.getUniqueId())) {
                 Lunar.getInstance().getData().getFrozenPlayers().remove(target.getUniqueId());
-                new FreezeInventory().close(target);
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
+                    new FreezeInventory().close(target);
+                } else {
+                    Lunar.getInstance().getData().getFreezeChat().add(target.getUniqueId());
+                }
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("FREEZE.UNFROZEN"))
-                        .replace("{player}", target.getName()))));
+                        .replace("{player}", target.getName())));
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
-                new FreezeInventory().open(target);
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
+                    new FreezeInventory().open(target);
+                } else {
+                    Lunar.getInstance().getData().getFreezeChat().add(target.getUniqueId());
+                }
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("FREEZE.FROZEN"))
-                        .replace("{player}", target.getName()))));
+                        .replace("{player}", target.getName())));
             }
         }
 

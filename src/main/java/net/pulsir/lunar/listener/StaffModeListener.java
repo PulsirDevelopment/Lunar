@@ -2,10 +2,7 @@ package net.pulsir.lunar.listener;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
-import net.pulsir.lunar.utils.bungee.Bungee;
-import net.pulsir.lunar.utils.bungee.message.ChannelType;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
 import org.bukkit.Bukkit;
@@ -45,7 +42,7 @@ public class StaffModeListener implements Listener {
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("join-message")) {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                     Player player = Bukkit.getPlayer(uuid);
-                    Objects.requireNonNull(player).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                    Objects.requireNonNull(player).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                     .getConfiguration().getString("STAFF.JOIN-MESSAGE"))
                             .replace("{player}", event.getPlayer().getName())
                             .replace("{server}", Bukkit.getServer().getName())));
@@ -60,10 +57,10 @@ public class StaffModeListener implements Listener {
             if (event.getPlayer().hasPermission("lunar.staff")) {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                     Player player = Bukkit.getPlayer(uuid);
-                    Objects.requireNonNull(player).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                    Objects.requireNonNull(player).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                     .getConfiguration().getString("STAFF.QUIT-MESSAGE"))
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{server}", Bukkit.getServer().getName())));
+                            .replace("{server}", event.getPlayer().getName())));
                 }
             }
         }
@@ -132,6 +129,8 @@ public class StaffModeListener implements Listener {
     public void onRandomTeleport(PlayerInteractEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
@@ -144,9 +143,9 @@ public class StaffModeListener implements Listener {
 
         if (randomPlayer != null) {
             event.getPlayer().teleport(randomPlayer.getLocation());
-            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                             .getConfiguration().getString("STAFF.TELEPORTED"))
-                    .replace("{player}", randomPlayer.getName()))));
+                    .replace("{player}", randomPlayer.getName())));
         }
     }
 
@@ -154,6 +153,8 @@ public class StaffModeListener implements Listener {
     public void onOnlineStaff(PlayerInteractEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
 
@@ -164,19 +165,19 @@ public class StaffModeListener implements Listener {
 
         Inventory inventory = Bukkit.createInventory(event.getPlayer(),
                 Lunar.getInstance().getConfiguration().getConfiguration().getInt("online-inventory.size"),
-                MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-inventory.title"))));
+                Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-inventory.title")));
 
         for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
             String vanish = Lunar.getInstance().getData().getVanish().contains(uuid) ? "Enabled" : "Disabled";
             ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
             ItemMeta meta = itemStack.getItemMeta();
-            meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getConfiguration()
-                            .getConfiguration().getString("online-inventory.item-format.name"))
-                    .replace("{player}", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName()))).decoration(TextDecoration.ITALIC, false));
+            meta.displayName(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                            .getString("online-inventory.item-format.name"))
+                    .replace("{player}", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName())).decoration(TextDecoration.ITALIC, false));
+
             List<Component> lore = new ArrayList<>();
             for (final String lines : Lunar.getInstance().getConfiguration().getConfiguration().getStringList("online-inventory.item-format.lore")) {
-                lore.add(MiniMessage.miniMessage().deserialize(lines
-                        .replace("{vanished}", vanish)).decoration(TextDecoration.ITALIC, false));
+                lore.add(Lunar.getInstance().getMessage().getMessage(lines.replace("{vanished}", vanish)).decoration(TextDecoration.ITALIC, false));
             }
 
             meta.lore(lore);
@@ -199,7 +200,9 @@ public class StaffModeListener implements Listener {
     @EventHandler
     public void onFreeze(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
         if (!(event.getRightClicked() instanceof Player target)) return;
         if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
@@ -210,30 +213,40 @@ public class StaffModeListener implements Listener {
         if (key == null || !key.equalsIgnoreCase("freeze")) return;
 
         if (Lunar.getInstance().getData().getStaffMembers().contains(target.getUniqueId())) {
-            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("FREEZE.STAFF"))));
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("FREEZE.STAFF")));
             return;
         }
 
         if (Lunar.getInstance().getData().getFrozenPlayers().contains(target.getUniqueId())) {
             Lunar.getInstance().getData().getFrozenPlayers().remove(target.getUniqueId());
-            new FreezeInventory().close(target);
-            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                            .getConfiguration().getString("FREEZE.UNFROZEN"))
-                    .replace("{player}", target.getName()))));
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
+                new FreezeInventory().close(target);
+            } else {
+                Lunar.getInstance().getData().getFreezeChat().remove(target.getUniqueId());
+            }
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                            .getString("FREEZE.UNFROZEN"))
+                    .replace("{player}", target.getName())));
         } else {
             Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
-            new FreezeInventory().open(target);
-            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                            .getConfiguration().getString("FREEZE.FROZEN"))
-                    .replace("{player}", target.getName()))));
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
+                new FreezeInventory().open(target);
+            } else {
+                Lunar.getInstance().getData().getFreezeChat().add(target.getUniqueId());
+            }
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                            .getString("FREEZE.FROZEN"))
+                    .replace("{player}", target.getName())));
         }
     }
 
     @EventHandler
     public void onInspect(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
         if (!(event.getRightClicked() instanceof Player target)) return;
         if (!(event.getHand().equals(EquipmentSlot.HAND))) return;

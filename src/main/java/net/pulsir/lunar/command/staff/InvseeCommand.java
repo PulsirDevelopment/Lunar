@@ -18,22 +18,22 @@ public class InvseeCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
         if (!(player.hasPermission("lunar.inspect"))) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
         if (args.length == 0) {
             for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("USAGE.INSPECT")) {
-                player.sendMessage(MiniMessage.miniMessage().deserialize(lines));
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(lines));
             }
         } else {
             Player target = Bukkit.getPlayer(args[0]);
 
             if (target == null || !target.isOnline()) {
-                player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("PLAYER-NULL"))
-                        .replace("{player}", args[0]))));
+                        .replace("{player}", args[0])));
                 return false;
             }
 

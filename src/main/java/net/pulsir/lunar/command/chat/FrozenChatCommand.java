@@ -10,26 +10,22 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class AdminChatCommand implements CommandExecutor {
+public class FrozenChatCommand implements CommandExecutor {
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player player)) return false;
-        if (!(player.hasPermission("lunar.command.adminchat"))) {
+        if (!(player.hasPermission("lunar.command.frozenchat"))) {
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
-        if (Lunar.getInstance().getData().getAdminChat().contains(player.getUniqueId())) {
-            Lunar.getInstance().getData().getAdminChat().remove(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("ADMIN-CHAT.DISABLED")));
+        if (Lunar.getInstance().getData().getFreezeChat().contains(player.getUniqueId())) {
+            Lunar.getInstance().getData().getFreezeChat().remove(player.getUniqueId());
         } else {
-            Lunar.getInstance().getData().clearChat(player.getUniqueId());
-            Lunar.getInstance().getData().getAdminChat().add(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("ADMIN-CHAT.ENABLED")));
+            Lunar.getInstance().getData().getFreezeChat().add(player.getUniqueId());
         }
 
         return true;

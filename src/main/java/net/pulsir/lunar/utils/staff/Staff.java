@@ -25,11 +25,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "compass");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.compass.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.compass.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.compass.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -45,11 +45,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "inspect");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.inspect.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.inspect.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.inspect.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -65,11 +65,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "freeze");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.freeze.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.freeze.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.freeze.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -85,11 +85,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "randomtp");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.random.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.random.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.random.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -105,11 +105,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "online");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.online.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.online.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.online.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -125,11 +125,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "wand");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.wand.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.wand.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.wand.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -145,11 +145,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "vanish");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.vanish.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.vanish.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.vanish.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);
@@ -165,11 +165,11 @@ public class Staff {
         }
         ItemMeta meta = itemStack.getItemMeta();
         meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "unvanish");
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                .getString("staff-items.unvanish.name"))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
+                .getString("staff-items.unvanish.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-items.unvanish.lore").forEach(line ->
-                lore.add(MiniMessage.miniMessage().deserialize(line).decoration(TextDecoration.ITALIC, false)));
+                lore.add(Lunar.getInstance().getMessage().getMessage(line)));
 
         meta.lore(lore);
         itemStack.setItemMeta(meta);

@@ -1,5 +1,6 @@
 package net.pulsir.lunar.listener;
 
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.bungee.Bungee;
@@ -20,69 +21,78 @@ public class ChatListener implements Listener {
         if (Lunar.getInstance().getData().getStaffChat().contains(event.getPlayer().getUniqueId())) {
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("bungee")) {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                                    .getLanguage().getConfiguration().getString("STAFF-CHAT.FORMAT"))
+                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("STAFF-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName()))));
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
                 }
 
                 Bungee.sendMessage(event.getPlayer(),
                         Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
-                                .replace("{player}", event.getPlayer().getName()),
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Bukkit.getServer().getName()),
                         ChannelType.STAFF);
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                                    .getLanguage().getConfiguration().getString("STAFF-CHAT.FORMAT"))
+                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("STAFF-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName()))));
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
                 }
             }
             event.setCancelled(true);
         } else if (Lunar.getInstance().getData().getAdminChat().contains(event.getPlayer().getUniqueId())) {
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("bungee")) {
                 for (UUID uuid : Lunar.getInstance().getData().getAdminMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                                    .getLanguage().getConfiguration().getString("ADMIN-CHAT.FORMAT"))
+                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("ADMIN-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName()))));
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
                 }
 
                 Bungee.sendMessage(event.getPlayer(),
                         Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("ADMIN-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
-                                .replace("{player}", event.getPlayer().getName()),
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Bukkit.getServer().getName()),
                         ChannelType.ADMIN);
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getAdminMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                                    .getLanguage().getConfiguration().getString("ADMIN-CHAT.FORMAT"))
+                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("ADMIN-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName()))));
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
                 }
             }
             event.setCancelled(true);
         } else if (Lunar.getInstance().getData().getOwnerChat().contains(event.getPlayer().getUniqueId())) {
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("bungee")) {
                 for (UUID uuid : Lunar.getInstance().getData().getOwnerMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                                    .getLanguage().getConfiguration().getString("OWNER-CHAT.FORMAT"))
+                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("OWNER-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName()))));
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
                 }
 
                 Bungee.sendMessage(event.getPlayer(),
                         Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("OWNER-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
-                                .replace("{player}", event.getPlayer().getName()),
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Bukkit.getServer().getName()),
                         ChannelType.OWNER);
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getOwnerMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                                    .getLanguage().getConfiguration().getString("OWNER-CHAT.FORMAT"))
+                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                    .getConfiguration().getString("OWNER-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName()))));
+                            .replace("{player}", event.getPlayer().getName())
+                            .replace("{server}", Bukkit.getServer().getName())));
                 }
             }
             event.setCancelled(true);

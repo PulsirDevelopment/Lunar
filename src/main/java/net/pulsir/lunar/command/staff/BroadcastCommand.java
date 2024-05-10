@@ -15,14 +15,14 @@ public class BroadcastCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender.hasPermission("lunar.staff"))) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
         if (args.length == 0) {
             for (final String usage : Lunar.getInstance().getLanguage().getConfiguration().getStringList("USAGE.BROADCAST")) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(usage));
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(usage));
             }
         } else {
             String message = "";
@@ -34,8 +34,8 @@ public class BroadcastCommand implements CommandExecutor {
                 }
             }
 
-            Bukkit.broadcast(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("BROADCAST-MESSAGE")).replace("{message}", message))));
+            Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("BROADCAST-MESSAGE")).replace("{message}", message)));
         }
 
         return true;

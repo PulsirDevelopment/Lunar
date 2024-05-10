@@ -4,18 +4,18 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.message.type.MessageType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 public class BungeeListener implements PluginMessageListener {
 
     @Override
+    @SuppressWarnings("ALL")
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, @NotNull byte[] message) {
         if (!channel.equalsIgnoreCase("BungeeCord")) return;
 
@@ -37,7 +37,11 @@ public class BungeeListener implements PluginMessageListener {
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("lunar.staff")) {
-                    onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.COMPONENT)) {
+                        onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    } else if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.LEGACY)) {
+                        onlinePlayer.sendMessage(Lunar.getInstance().getMessage().forceLegacy(string));
+                    }
                 }
             }
         } else if (subChannel.equalsIgnoreCase("AdminChannel")) {
@@ -55,7 +59,11 @@ public class BungeeListener implements PluginMessageListener {
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("lunar.admin")) {
-                    onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.COMPONENT)) {
+                        onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    } else if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.LEGACY)) {
+                        onlinePlayer.sendMessage(Lunar.getInstance().getMessage().forceLegacy(string));
+                    }
                 }
             }
         } else if (subChannel.equalsIgnoreCase("OwnerChannel")) {
@@ -73,7 +81,11 @@ public class BungeeListener implements PluginMessageListener {
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("lunar.owner")) {
-                    onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.COMPONENT)) {
+                        onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    } else if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.LEGACY)) {
+                        onlinePlayer.sendMessage(Lunar.getInstance().getMessage().forceLegacy(string));
+                    }
                 }
             }
         }

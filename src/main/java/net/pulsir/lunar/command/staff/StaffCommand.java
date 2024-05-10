@@ -18,8 +18,8 @@ public class StaffCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return false;
         if (!(player.hasPermission("lunar.staff"))) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
@@ -30,8 +30,8 @@ public class StaffCommand implements CommandExecutor {
             player.getInventory().setContents(Lunar.getInstance().getData().getInventories().get(player.getUniqueId()));
             Lunar.getInstance().getData().getInventories().remove(player.getUniqueId());
 
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("STAFF-MODE.DISABLED"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("STAFF-MODE.DISABLED")));
         } else {
             Lunar.getInstance().getData().getStaffMode().add(player.getUniqueId());
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("force-vanish")) {
@@ -43,8 +43,8 @@ public class StaffCommand implements CommandExecutor {
             player.setGameMode(GameMode.CREATIVE);
             Staff.items(player);
 
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("STAFF-MODE.ENABLED"))));
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("STAFF-MODE.ENABLED")));
         }
 
         return true;

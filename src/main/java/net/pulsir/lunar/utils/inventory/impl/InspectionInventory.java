@@ -29,8 +29,8 @@ public class InspectionInventory implements LInventory {
     public Inventory inventory(Player player) {
         Inventory inventory = Bukkit.createInventory(player,
                 54,
-                MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                        .getString("inspect-inventory.title"))));
+                Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration()
+                        .getConfiguration().getString("inspect-inventory.title")));
 
         List<ItemStack> armor = getItemStacks();
 
@@ -54,12 +54,12 @@ public class InspectionInventory implements LInventory {
 
         ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("inspect-inventory.item")));
         ItemMeta meta = itemStack.getItemMeta();
-        meta.displayName(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("inspect-inventory.name"))
-                .replace("{player}", player.getName()))).decoration(TextDecoration.ITALIC, false));
+        meta.displayName(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("inspect-inventory.name"))
+                .replace("{player}", player.getName())).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
         Lunar.getInstance().getConfiguration().getConfiguration().getStringList("inspect-inventory.lore")
                 .forEach(line ->
-                        lore.add(MiniMessage.miniMessage().deserialize(line
+                        lore.add(Lunar.getInstance().getMessage().getMessage(line
                                 .replace("{health}", String.valueOf(Math.round(player.getHealth())))
                                 .replace("{health_max}", String.valueOf(Math.round(player.getHealthScale())))
                                 .replace("{hunger}", String.valueOf(player.getFoodLevel()))

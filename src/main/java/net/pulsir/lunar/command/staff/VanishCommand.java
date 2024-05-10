@@ -19,8 +19,8 @@ public class VanishCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
         if (!(player.hasPermission("lunar.staff"))) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("NO-PERMISSIONS"))));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
         }
 
@@ -31,8 +31,9 @@ public class VanishCommand implements CommandExecutor {
                     onlinePlayers.showPlayer(player);
                 }
             }
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("VANISH.DISABLED"))));
+
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("VANISH.DISABLED")));
         } else {
             Lunar.getInstance().getData().getVanish().add(player.getUniqueId());
             for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
@@ -40,8 +41,9 @@ public class VanishCommand implements CommandExecutor {
                     onlinePlayers.hidePlayer(player);
                 }
             }
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("VANISH.ENABLED"))));
+
+            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("VANISH.ENABLED")));
         }
 
         return true;
