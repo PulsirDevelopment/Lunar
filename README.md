@@ -14,7 +14,12 @@ Quality & efficient staff core.
 <li>Request</li>
 <li>Inventory Restore</li>
 <li>Spy Command</li>
+<li>Auto Messeger</li>
 <br>
+
+### SoftDependencies
+
+<li>PlaceholderAPI</li>
 
 ### Contributing
 
