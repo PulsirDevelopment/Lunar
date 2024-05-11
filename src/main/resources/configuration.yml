@@ -4,7 +4,6 @@ redis:
   host: "198.50.209.162"
   port: 6379
   auth: false
-  username: ""
   password: ""
 allow-sync: true
 sync-system: "redis" # bungee | redis

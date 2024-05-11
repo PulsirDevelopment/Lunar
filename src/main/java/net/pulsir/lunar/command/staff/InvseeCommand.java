@@ -1,6 +1,5 @@
 package net.pulsir.lunar.command.staff;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
 import org.bukkit.Bukkit;

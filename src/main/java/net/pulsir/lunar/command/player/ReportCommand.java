@@ -1,8 +1,6 @@
 package net.pulsir.lunar.command.player;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
-import net.pulsir.lunar.utils.message.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

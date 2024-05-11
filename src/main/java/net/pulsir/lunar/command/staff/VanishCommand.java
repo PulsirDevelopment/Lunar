@@ -1,6 +1,5 @@
 package net.pulsir.lunar.command.staff;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -8,8 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class VanishCommand implements CommandExecutor {
 

@@ -1,6 +1,5 @@
 package net.pulsir.lunar.command.restore;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

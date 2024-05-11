@@ -1,6 +1,5 @@
 package net.pulsir.lunar.listener;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
