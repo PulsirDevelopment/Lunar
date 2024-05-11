@@ -13,6 +13,10 @@ OWNER-CHAT:
   ENABLED: "&aOwner Chat Enabled."
   DISABLED: "&cOwner Chat Disabled."
   FORMAT: "&8[&4Owner&8] &8(&4{server}&8) &f⇢ &4{player}&f: {message}"
+FREEZE-CHAT:
+  ENABLED: "&aFreeze Chat Enabled."
+  DISABLED: "&cFreeze Chat Disabled."
+  FORMAT: "&8[&bFreeze&8] &f⇢ &b{player}&f: {message}"
 
 STAFF-MODE:
   ENABLED: "&aSuccessfully enabled staff mode"

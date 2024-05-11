@@ -2,6 +2,7 @@ package net.pulsir.lunar;
 
 import lombok.Getter;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
+import net.pulsir.lunar.command.chat.FrozenChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
@@ -143,6 +144,7 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCommand());
         Objects.requireNonNull(getCommand("adminchat")).setExecutor(new AdminChatCommand());
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());
+        Objects.requireNonNull(getCommand("freezechat")).setExecutor(new FrozenChatCommand());
 
         Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCommand());
         Objects.requireNonNull(getCommand("vanish")).setExecutor(new VanishCommand());
