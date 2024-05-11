@@ -6,7 +6,7 @@ redis:
   auth: false
   password: ""
 allow-sync: true
-sync-system: "redis" # bungee | redis
+sync-system: "bungee" # bungee | redis
 
 message-format: "legacy" # legacy (&chey) | modern (<red>hey)
 

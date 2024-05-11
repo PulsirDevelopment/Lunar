@@ -245,7 +245,7 @@ public class StaffModeListener implements Listener {
                             .getString("FREEZE.FROZEN"))
                     .replace("{player}", target.getName())));
 
-            for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("FREEZE.MESSAGE")) {
+            for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("FREEZE-CHAT.MESSAGE")) {
                 target.sendMessage(Lunar.getInstance().getMessage().getMessage(lines));
             }
         }

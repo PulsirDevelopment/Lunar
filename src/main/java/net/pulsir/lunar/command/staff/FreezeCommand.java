@@ -67,7 +67,7 @@ public class FreezeCommand implements CommandExecutor {
                 sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("FREEZE.FROZEN"))
                         .replace("{player}", target.getName())));
-                for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("FREEZE.MESSAGE")) {
+                for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("FREEZE-CHAT.MESSAGE")) {
                     target.sendMessage(Lunar.getInstance().getMessage().getMessage(lines));
                 }
             }
