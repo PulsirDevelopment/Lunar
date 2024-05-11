@@ -195,13 +195,3 @@ public final class Lunar extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
     }
 }
-
-/*
-So in that case, Redis will be available on redis://localhost:6379 on your PC.
-
-If you want to make it available directly from ouside of the cluster, you need to create Service with NodePort, Service with LoadBalancer (if you in Cloud) or simply Service with Ingress.
-
-Inside a cluster, you can create Service with Cluster IP (which is actually simply Service, because it always has Cluster IP) for your Redis pod and will be available on:
-
-redis://[USER]:[PASSWORD]@[SERVICE-IP]:[PORT]
- */

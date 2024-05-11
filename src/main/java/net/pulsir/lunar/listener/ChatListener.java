@@ -130,7 +130,13 @@ public class ChatListener implements Listener {
                             .replace("{player}", event.getPlayer().getName())
                             .replace("{message}", event.getMessage())));
                 }
+
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                                .getLanguage().getConfiguration().getString("FREEZE-CHAT.FORMAT"))
+                        .replace("{player}", event.getPlayer().getName())
+                        .replace("{message}", event.getMessage())));
             }
+            event.setCancelled(true);
         }
     }
 }

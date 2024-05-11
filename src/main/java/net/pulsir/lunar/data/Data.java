@@ -36,6 +36,7 @@ public class Data {
         staffChat.remove(uuid);
         adminChat.remove(uuid);
         ownerChat.remove(uuid);
+        freezeChat.remove(uuid);
     }
 
     public Set<Player> getSpyOf(Player player) {

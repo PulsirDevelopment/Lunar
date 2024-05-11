@@ -1,7 +1,7 @@
 database: "flatfile" # mongo | flatfile
 mongo-uri: ""
 redis:
-  host: "198.50.209.162"
+  host: ""
   port: 6379
   auth: false
   password: ""
@@ -22,8 +22,8 @@ request-cooldown: 60
 delete-on-restore: true
 allow-staff-spy: false
 
-inventory-on-freeze: true
-freeze-chat: false
+inventory-on-freeze: false
+freeze-chat: true
 
 spy:
   messages: true

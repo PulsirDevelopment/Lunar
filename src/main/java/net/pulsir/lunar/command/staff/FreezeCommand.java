@@ -58,15 +58,18 @@ public class FreezeCommand implements CommandExecutor {
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
-                    new FreezeInventory().close(target);
+                    new FreezeInventory().open(target);
                 }
 
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("freeze-chat")) {
-                    Lunar.getInstance().getData().getFreezeChat().remove(target.getUniqueId());
+                    Lunar.getInstance().getData().getFreezeChat().add(target.getUniqueId());
                 }
                 sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("FREEZE.FROZEN"))
                         .replace("{player}", target.getName())));
+                for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("FREEZE.MESSAGE")) {
+                    target.sendMessage(Lunar.getInstance().getMessage().getMessage(lines));
+                }
             }
         }
 

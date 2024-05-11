@@ -17,6 +17,11 @@ FREEZE-CHAT:
   ENABLED: "&aFreeze Chat Enabled."
   DISABLED: "&cFreeze Chat Disabled."
   FORMAT: "&8[&bFreeze&8] &f⇢ &b{player}&f: {message}"
+  MESSAGE:
+    - ""
+    - "&cYou are &c&lFROZEN"
+    - "&cPlease join our discord @ discord.gg/server"
+    - ""
 
 STAFF-MODE:
   ENABLED: "&aSuccessfully enabled staff mode"
