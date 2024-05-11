@@ -16,6 +16,7 @@ import net.pulsir.lunar.database.impl.Mongo;
 import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryManager;
 import net.pulsir.lunar.listener.*;
+import net.pulsir.lunar.redis.RedisManager;
 import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
@@ -27,6 +28,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.io.File;
 import java.util.Objects;
@@ -37,6 +41,7 @@ public final class Lunar extends JavaPlugin {
 
     @Getter private static Lunar instance;
     private Data data;
+    private RedisManager redisManager;
 
     private Config configuration;
     private Config language;
@@ -75,9 +80,21 @@ public final class Lunar extends JavaPlugin {
 
         this.data = new Data();
 
-        if (configuration.getConfiguration().getBoolean("bungee")) {
-            Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
-            Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        if (configuration.getConfiguration().getBoolean("allow-sync")) {
+            if (Objects.requireNonNull(configuration.getConfiguration().getString("sync-system")).equalsIgnoreCase("bungee")) {
+                Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
+                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded BUNGEE as sync system.");
+            } else if (Objects.requireNonNull(configuration.getConfiguration().getString("sync-system")).equalsIgnoreCase("redis")) {
+                this.redisManager = new RedisManager(configuration.getConfiguration().getBoolean("redis.auth"));
+                this.redisManager.subscribe();
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded REDIS as sync system.");
+            } else {
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Unsupported sync system. Loading default one [BUNGEE].");
+                Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
+                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded BUNGEE as sync system.");
+            }
         }
 
         this.registerTasks();
@@ -181,3 +198,13 @@ public final class Lunar extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
     }
 }
+
+/*
+So in that case, Redis will be available on redis://localhost:6379 on your PC.
+
+If you want to make it available directly from ouside of the cluster, you need to create Service with NodePort, Service with LoadBalancer (if you in Cloud) or simply Service with Ingress.
+
+Inside a cluster, you can create Service with Cluster IP (which is actually simply Service, because it always has Cluster IP) for your Redis pod and will be available on:
+
+redis://[USER]:[PASSWORD]@[SERVICE-IP]:[PORT]
+ */

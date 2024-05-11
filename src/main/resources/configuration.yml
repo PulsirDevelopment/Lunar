@@ -1,6 +1,14 @@
 database: "flatfile" # mongo | flatfile
 mongo-uri: ""
-bungee: true
+redis:
+  host: "198.50.209.162"
+  port: 6379
+  auth: false
+  username: ""
+  password: ""
+allow-sync: true
+sync-system: "redis" # bungee | redis
+
 message-format: "legacy" # legacy (&chey) | modern (<red>hey)
 
 force-vanish: true
@@ -15,7 +23,8 @@ request-cooldown: 60
 delete-on-restore: true
 allow-staff-spy: false
 
-inventory-on-freeze: false
+inventory-on-freeze: true
+freeze-chat: false
 
 spy:
   messages: true

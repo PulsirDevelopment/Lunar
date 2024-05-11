@@ -47,18 +47,23 @@ public class FreezeCommand implements CommandExecutor {
                 Lunar.getInstance().getData().getFrozenPlayers().remove(target.getUniqueId());
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
                     new FreezeInventory().close(target);
-                } else {
-                    Lunar.getInstance().getData().getFreezeChat().add(target.getUniqueId());
                 }
+
+                if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("freeze-chat")) {
+                    Lunar.getInstance().getData().getFreezeChat().remove(target.getUniqueId());
+                }
+
                 sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("FREEZE.UNFROZEN"))
                         .replace("{player}", target.getName())));
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
-                    new FreezeInventory().open(target);
-                } else {
-                    Lunar.getInstance().getData().getFreezeChat().add(target.getUniqueId());
+                    new FreezeInventory().close(target);
+                }
+
+                if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("freeze-chat")) {
+                    Lunar.getInstance().getData().getFreezeChat().remove(target.getUniqueId());
                 }
                 sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("FREEZE.FROZEN"))

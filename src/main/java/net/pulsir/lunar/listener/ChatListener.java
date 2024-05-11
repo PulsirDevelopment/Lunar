@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import redis.clients.jedis.Jedis;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -20,21 +21,28 @@ public class ChatListener implements Listener {
     @Deprecated /*(Reason: Compatibility with Spigot & Paper)*/
     public void onAsyncChat(AsyncPlayerChatEvent event) {
         if (Lunar.getInstance().getData().getStaffChat().contains(event.getPlayer().getUniqueId())) {
-            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("bungee")) {
-                for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                                    .getConfiguration().getString("STAFF-CHAT.FORMAT"))
-                            .replace("{message}", event.getMessage())
-                            .replace("{player}", event.getPlayer().getName())
-                            .replace("{server}", Bukkit.getServer().getName())));
-                }
-
-                Bungee.sendMessage(event.getPlayer(),
-                        Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF-CHAT.FORMAT"))
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
+                if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                        .equalsIgnoreCase("bungee")) {
+                    for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                        Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                        .getConfiguration().getString("STAFF-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
                                 .replace("{player}", event.getPlayer().getName())
-                                .replace("{server}", Bukkit.getServer().getName()),
-                        ChannelType.STAFF);
+                                .replace("{server}", Bukkit.getServer().getName())));
+                    }
+
+                    Bungee.sendMessage(event.getPlayer(),
+                            Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF-CHAT.FORMAT"))
+                                    .replace("{message}", event.getMessage())
+                                    .replace("{player}", event.getPlayer().getName())
+                                    .replace("{server}", Bukkit.getServer().getName()),
+                            ChannelType.STAFF);
+                } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                        .equalsIgnoreCase("redis")) {
+                    Lunar.getInstance().getRedisManager().publish("staff-chat", event.getMessage());
+                    Bukkit.getConsoleSender().sendMessage("message sent");
+                }
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                     Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
