@@ -231,6 +231,12 @@ public class StaffModeListener implements Listener {
             event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
                             .getString("FREEZE.UNFROZEN"))
                     .replace("{player}", target.getName())));
+            for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
+                                .getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-UNFROZEN"))
+                        .replace("{player}", target.getName())
+                        .replace("{staff}", event.getPlayer().getName())));
+            }
         } else {
             Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
@@ -247,6 +253,12 @@ public class StaffModeListener implements Listener {
 
             for (final String lines : Lunar.getInstance().getLanguage().getConfiguration().getStringList("FREEZE-CHAT.MESSAGE")) {
                 target.sendMessage(Lunar.getInstance().getMessage().getMessage(lines));
+            }
+            for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
+                                .getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-FROZEN"))
+                        .replace("{player}", target.getName())
+                        .replace("{staff}", event.getPlayer().getName())));
             }
         }
     }

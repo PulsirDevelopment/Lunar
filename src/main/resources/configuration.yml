@@ -1,3 +1,4 @@
+# https://docs.pulsir.net/home
 database: "flatfile" # mongo | flatfile
 mongo-uri: ""
 redis:
@@ -8,7 +9,7 @@ redis:
 allow-sync: true
 sync-system: "bungee" # bungee | redis
 
-message-format: "legacy" # legacy (&chey) | modern (<red>hey)
+message-format: "legacy" # legacy | modern
 
 force-vanish: true
 staff-bar: true
