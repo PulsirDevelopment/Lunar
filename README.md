@@ -15,6 +15,8 @@ Quality & efficient staff core.
 <li>Inventory Restore</li>
 <li>Spy Command</li>
 <li>Auto Messeger</li>
+<li>Freeze Chat</li>
+<li>Redis Sync</li>
 <br>
 
 ### SoftDependencies
