@@ -32,3 +32,5 @@ commands:
   spy:
   freezechat:
     aliases: [frozenchat]
+  clearchat:
+    aliases: [chatclear, cc]

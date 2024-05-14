@@ -144,3 +144,6 @@ inspect-inventory:
     - "&f{hunger}&d/&f20"
     - "&fGamemode&d: &f{gamemode}"
     - ""
+
+clear-chat:
+  lines: 200

@@ -109,3 +109,6 @@ SPY:
   EMPTY: "&cYou aren't spying on anybody."
   FORMAT: "&d{player} said&f: {message}"
   STAFF: "&cYou can't spy on other staff member."
+
+CLEAR-CHAT:
+  FINISH: "&aChat has been cleared by a staff member."

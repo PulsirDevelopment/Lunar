@@ -5,6 +5,7 @@ import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.FrozenChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
+import net.pulsir.lunar.command.mod.ClearChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
@@ -159,6 +160,7 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("adminchat")).setExecutor(new AdminChatCommand());
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());
         Objects.requireNonNull(getCommand("freezechat")).setExecutor(new FrozenChatCommand());
+        Objects.requireNonNull(getCommand("clearchat")).setExecutor(new ClearChatCommand());
 
         Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCommand());
         Objects.requireNonNull(getCommand("vanish")).setExecutor(new VanishCommand());
