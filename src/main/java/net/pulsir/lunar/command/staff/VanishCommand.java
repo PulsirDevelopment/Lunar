@@ -28,7 +28,8 @@ public class VanishCommand implements CommandExecutor {
                     onlinePlayers.showPlayer(player);
                 }
             }
-
+            
+            Lunar.getInstance().getData().getOnlinePlayers().add(player.getUniqueId());
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("VANISH.DISABLED")));
         } else {
@@ -39,8 +40,10 @@ public class VanishCommand implements CommandExecutor {
                 }
             }
 
+            Lunar.getInstance().getData().getOnlinePlayers().remove(player.getUniqueId());
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("VANISH.ENABLED")));
+                    
         }
 
         return true;

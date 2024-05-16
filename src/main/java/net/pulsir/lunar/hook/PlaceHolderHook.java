@@ -48,6 +48,15 @@ public class PlaceHolderHook extends PlaceholderExpansion {
         if (identifier.equals("frozen")) {
             return Lunar.getInstance().getData().getFrozenPlayers().contains(player.getUniqueId()) ? "Yes" : "No";
         }
+        if (identifier.equals("online")) {
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players").equalsIgnoreCase("bukkit")) {
+                return String.valueOf(Bukkit.getOnlinePlayers().size());
+            } else {
+                return String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size());
+            }
+        
+            return String.valueOf(Bukkit.getOnlinePlayers().size());
+        }
 
         return null;
     }

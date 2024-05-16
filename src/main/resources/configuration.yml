@@ -11,7 +11,8 @@ sync-system: "bungee" # bungee | redis
 
 message-format: "legacy" # legacy | modern
 
-force-vanish: true
+online-players: "bukkit" # bukkit | custom
+
 staff-bar: true
 
 join-message: true
