@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 public class VanishCommand implements CommandExecutor {
@@ -30,6 +31,9 @@ public class VanishCommand implements CommandExecutor {
             }
             
             Lunar.getInstance().getData().getOnlinePlayers().add(player.getUniqueId());
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("vanish-invis")) {
+                player.removePotionEffect(PotionEffectType.INVISIBILITY);
+            }
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("VANISH.DISABLED")));
         } else {
@@ -41,6 +45,9 @@ public class VanishCommand implements CommandExecutor {
             }
 
             Lunar.getInstance().getData().getOnlinePlayers().remove(player.getUniqueId());
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("vanish-invis")) {
+                player.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(99999999, 1));
+            }
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("VANISH.ENABLED")));
                     

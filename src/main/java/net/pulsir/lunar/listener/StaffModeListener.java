@@ -21,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -42,6 +43,9 @@ public class StaffModeListener implements Listener {
         }
         if (event.getPlayer().hasPermission("lunar.forcevanish")) {
             Lunar.getInstance().getData().getVanish().add(event.getPlayer().getUniqueId());
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("vanish-invis")) {
+                event.getPlayer().addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(99999999, 1));
+            }
             Lunar.getInstance().getData().getOnlinePlayers().remove(event.getPlayer().getUniqueId());
         }
 

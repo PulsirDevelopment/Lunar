@@ -18,9 +18,17 @@ public class LunarTask implements Runnable {
                         ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-ENABLED")) :
                         Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-DISABLED"));
 
-                Component players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
-                                .getString("OPTIONS.ONLINE"))
-                        .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
+                Component players;
+
+                if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
+                    players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                    .getString("OPTIONS.ONLINE"))
+                            .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
+                } else {
+                    players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                    .getString("OPTIONS.ONLINE"))
+                            .replace("{players}", String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size())));
+                }
 
                 Component staffChat =
                         Lunar.getInstance().getData().getStaffChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
