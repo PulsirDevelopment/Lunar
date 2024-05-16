@@ -29,20 +29,20 @@ public class StaffModeListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if (event.getPlayer().hasPermission("lunar.staff")) {
-            Lunar.getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
+            Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
             Lunar.getInstance().getData().getStaffMembers().add(event.getPlayer().getUniqueId());
         }
         if (event.getPlayer().hasPermission("lunar.admin")) {
-            Lunar.getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
+            Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
             Lunar.getInstance().getData().getAdminMembers().add(event.getPlayer().getUniqueId());
         }
         if (event.getPlayer().hasPermission("lunar.owner")) {
-            Lunar.getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
+            Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
             Lunar.getInstance().getData().getOwnerMembers().add(event.getPlayer().getUniqueId());
         }
         if (event.getPlayer().hasPermission("lunar.forcevanish")) {
-            Lunar.getData().getVanish().add(event.getPlayer.getUniqueId());
-            Lunar.getData().getOnlinePlayers().remove(event.getPlayer().getUniqueId());
+            Lunar.getInstance().getData().getVanish().add(event.getPlayer().getUniqueId());
+            Lunar.getInstance().getData().getOnlinePlayers().remove(event.getPlayer().getUniqueId());
         }
 
         if (event.getPlayer().hasPermission("lunar.staff")) {

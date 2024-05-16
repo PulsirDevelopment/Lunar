@@ -2,8 +2,11 @@ package net.pulsir.lunar.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.pulsir.lunar.Lunar;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class PlaceHolderHook extends PlaceholderExpansion {
 
@@ -49,13 +52,11 @@ public class PlaceHolderHook extends PlaceholderExpansion {
             return Lunar.getInstance().getData().getFrozenPlayers().contains(player.getUniqueId()) ? "Yes" : "No";
         }
         if (identifier.equals("online")) {
-            if (Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players").equalsIgnoreCase("bukkit")) {
+            if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
                 return String.valueOf(Bukkit.getOnlinePlayers().size());
             } else {
                 return String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size());
             }
-        
-            return String.valueOf(Bukkit.getOnlinePlayers().size());
         }
 
         return null;

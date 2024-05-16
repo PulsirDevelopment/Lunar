@@ -30,7 +30,7 @@ public class Data {
     private final Map<UUID, Integer> reportCooldown = new HashMap<>();
     private final Map<UUID, Integer> requestCooldown = new HashMap<>();
 
-    private final Set<UUID> onlinePlayers = new HashMap<>();
+    private final Set<UUID> onlinePlayers = new HashSet<>();
 
     private final Map<UUID, Set<UUID>> spy = new HashMap<>();
 
