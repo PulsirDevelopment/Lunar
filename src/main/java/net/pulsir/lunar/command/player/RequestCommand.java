@@ -1,6 +1,8 @@
 package net.pulsir.lunar.command.player;
 
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.bungee.Bungee;
+import net.pulsir.lunar.utils.bungee.message.ChannelType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -45,7 +47,17 @@ public class RequestCommand implements CommandExecutor {
                 Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("REQUEST.FORMAT"))
                         .replace("{player}", player.getName())
-                        .replace("{message}", message)));
+                        .replace("{message}", message)
+                        .replace("{server}", Bukkit.getServer().getName())));
+            }
+
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
+                Bungee.sendMessage(player, Lunar.getInstance().getMessage()
+                        .getComponent(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                        .getConfiguration().getString("REQUEST.FORMAT"))
+                                .replace("{player}", player.getName())
+                                .replace("{message}", message)
+                                .replace("{server}", Bukkit.getServer().getName()))), ChannelType.STAFF);
             }
 
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
