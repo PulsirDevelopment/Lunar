@@ -1,14 +1,16 @@
 package net.pulsir.lunar.listener;
 
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.inventories.InventoryPlayer;
-import net.pulsir.lunar.utils.message.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
@@ -36,7 +38,11 @@ public class PlayerListener implements Listener {
             for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                 Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage()
                         .getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
-                                .getString("FREEZE.QUIT")).replace("{player}", event.getPlayer().getName())));
+                                .getString("FREEZE.QUIT")).replace("{player}", event.getPlayer().getName()))
+                        .clickEvent(ClickEvent.callback(player -> Bukkit.getServer().dispatchCommand(
+                                Bukkit.getConsoleSender(),
+                                Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE.CLICK-COMMAND"))
+                                        .replace("{player}", event.getPlayer().getName()))))));
             }
         }
     }
