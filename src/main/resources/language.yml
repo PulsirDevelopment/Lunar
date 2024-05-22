@@ -61,7 +61,7 @@ FREEZE:
   STAFF-FROZEN: "&8[&bFreeze&8] &b{player} &fhas been frozen by &b{staff}"
   STAFF-UNFROZEN: "&8[&bFreeze&8] &b{player} &fhas been unfrozen by &b{staff}"
   QUIT: "&8[&bFreeze&8] &b{player} &fhas left while being frozen. &8(&cClick to ban&8)"
-  CLICK-COMMAND: "/ban {player} Left while being frozen."
+  CLICK-COMMAND: "ban {player} Left while being frozen."
 
 OPTIONS:
   VANISH-ENABLED: "&aEnabled"
