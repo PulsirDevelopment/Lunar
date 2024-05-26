@@ -88,6 +88,24 @@ public class BungeeListener implements PluginMessageListener {
                     }
                 }
             }
+        } else if (subChannel.equalsIgnoreCase("GlobalChannel")) {
+            char[] input = byteArrayDataInput.readUTF().toCharArray();
+            char[] finalInput = Arrays.copyOfRange(input, 2, input.length);
+            String string = "";
+
+            for (char c : finalInput) {
+                if (string.isEmpty()) {
+                    string = String.valueOf(c);
+                } else {
+                    string = string + c;
+                }
+            }
+
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                onlinePlayer.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                        .getLanguage().getConfiguration().getString("BROADCAST-MESSAGE")
+                        .replace("{message}", string)));
+            }
         }
     }
 }

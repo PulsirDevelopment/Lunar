@@ -2,6 +2,7 @@ package net.pulsir.lunar.redis;
 
 import net.pulsir.lunar.Lunar;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import redis.clients.jedis.*;
 
 import java.util.Objects;
@@ -47,7 +48,7 @@ public class RedisManager {
         new Thread("Subscriber") {
             @Override
             public void run() {
-                String[] chatChannels = {"staff-chat", "admin-chat", "owner-chat"};
+                String[] chatChannels = {"staff-chat", "admin-chat", "owner-chat", "global-chat"};
                 subscriber.subscribe(new JedisPubSub() {
                     @Override
                     public void onMessage(String channel, String message) {
@@ -81,6 +82,12 @@ public class RedisManager {
                                                 .replace("{player}", player)
                                                 .replace("{server}", server)
                                                 .replace("{message}", finalMessage)));
+                            }
+                        } else if (channel.equalsIgnoreCase("global-chat")) {
+                            for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                                onlinePlayer.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
+                                                .getInstance().getLanguage().getConfiguration().getString("BROADCAST-MESSAGE"))
+                                        .replace("{message}", finalMessage)));
                             }
                         }
                     }
