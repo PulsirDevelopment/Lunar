@@ -137,6 +137,27 @@ public class ChatListener implements Listener {
                         .replace("{message}", event.getMessage())));
             }
             event.setCancelled(true);
+        } else {
+            if (Lunar.getInstance().getData().isChatMuted()) {
+                if (!event.getPlayer().hasPermission("lunar.bypass.mute")) {
+                    event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
+                            .getInstance().getLanguage().getConfiguration().getString("CHAT-MUTE.MUTED")));
+                    event.setCancelled(true);
+                }
+            }
+
+            if (Lunar.getInstance().getData().getChatSlowdown() > 0 && !event.getPlayer().hasPermission("lunar.bypass.slowdown")) {
+                if (Lunar.getInstance().getData().getSlowdownedPlayers().containsKey(event.getPlayer().getUniqueId())) {
+                    event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                                    .getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.COOLDOWN"))
+                            .replace("{cooldown}",
+                                    String.valueOf(Lunar.getInstance().getData().getSlowdownedPlayers().get(event.getPlayer().getUniqueId())))));
+                    event.setCancelled(true);
+                } else {
+                    Lunar.getInstance().getData().getSlowdownedPlayers().put(event.getPlayer().getUniqueId(),
+                            Lunar.getInstance().getData().getChatSlowdown());
+                }
+            }
         }
     }
 }
