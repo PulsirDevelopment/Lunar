@@ -112,3 +112,22 @@ SPY:
 
 CLEAR-CHAT:
   FINISH: "&aChat has been cleared by a staff member."
+
+CHAT-MUTE:
+  USAGE: "&c/chat mute"
+  SENDER: "&aSuccessfully muted chat"
+  GLOBAL: "&fChat has been &dmuted &fby &d{sender}"
+  MUTED: "&cChat is currently muted."
+  ALREADY-MUTED: "&cChat is already muted."
+
+CHAT-UNMUTE:
+  USAGE: "&c/chat unmute"
+  SENDER: "&aSuccessfully unmuted chat"
+  GLOBAL: "&fChat has been &dunmuted &fby &d{sender}"
+  ALREADY-UNMUTED: "&cChat isn't muted."
+
+CHAT-SLOWDOWN:
+  USAGE: "&c/chat slowdown <seconds>"
+  SENDER: "&aSuccessfully slowdowned chat"
+  GLOBAL: "&fChat has been &dslowdowned &fby &d{sender}"
+  COOLDOWN: "&cYou are on message cooldown for another {cooldown} seconds."

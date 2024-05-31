@@ -58,6 +58,15 @@ public class PlaceHolderHook extends PlaceholderExpansion {
                 return String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size());
             }
         }
+        if (identifier.equals("slowed")) {
+            return Lunar.getInstance().getData().getChatSlowdown() > 0 ? "Yes" : "No";
+        }
+        if (identifier.equals("slowed_amount")) {
+            return String.valueOf(Lunar.getInstance().getData().getChatSlowdown());
+        }
+        if (identifier.equals("muted")) {
+            return Lunar.getInstance().getData().isChatMuted() ? "Yes" : "No";
+        }
 
         return null;
     }

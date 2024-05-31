@@ -34,3 +34,4 @@ commands:
     aliases: [frozenchat]
   clearchat:
     aliases: [chatclear, cc]
+  chat:

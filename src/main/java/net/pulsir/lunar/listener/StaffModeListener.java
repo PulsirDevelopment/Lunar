@@ -79,7 +79,7 @@ public class StaffModeListener implements Listener {
         Lunar.getInstance().getData().getStaffMembers().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getAdminMembers().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getOwnerMembers().remove(event.getPlayer().getUniqueId());
-        Lunar.getInstance().getData().getStaffMode().clear();
+        Lunar.getInstance().getData().getStaffMode().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getData().getVanish().remove(event.getPlayer().getUniqueId());
 
         if (Lunar.getInstance().getData().getInventories().containsKey(event.getPlayer().getUniqueId())) {

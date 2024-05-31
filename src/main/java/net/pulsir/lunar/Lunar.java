@@ -1,6 +1,9 @@
 package net.pulsir.lunar;
 
 import lombok.Getter;
+import net.pulsir.lunar.chat.ChatMuteCommand;
+import net.pulsir.lunar.chat.ChatSlowDownCommand;
+import net.pulsir.lunar.chat.ChatUnMuteCommand;
 import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.FrozenChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
@@ -22,6 +25,8 @@ import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
+import net.pulsir.lunar.utils.command.completer.type.CompleterType;
+import net.pulsir.lunar.utils.command.manager.CommandManager;
 import net.pulsir.lunar.utils.config.Config;
 import net.pulsir.lunar.utils.message.Message;
 import org.bukkit.*;
@@ -176,6 +181,14 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("restore")).setExecutor(new InventoryRestoreCommand());
 
         Objects.requireNonNull(getCommand("spy")).setExecutor(new SpyCommand());
+
+        CommandManager chatManager = new CommandManager(getCommand("chat"));
+
+        chatManager.addSubCommand(new ChatMuteCommand());
+        chatManager.addSubCommand(new ChatUnMuteCommand());
+        chatManager.addSubCommand(new ChatSlowDownCommand());
+
+        chatManager.registerCommands(() -> CompleterType.CHAT);
     }
 
     private void registerListeners(PluginManager pluginManager) {

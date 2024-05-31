@@ -1,6 +1,7 @@
 package net.pulsir.lunar.data;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.pulsir.lunar.Lunar;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,6 +34,12 @@ public class Data {
     private final Set<UUID> onlinePlayers = new HashSet<>();
 
     private final Map<UUID, Set<UUID>> spy = new HashMap<>();
+
+    @Setter
+    private boolean isChatMuted = false;
+    @Setter private int chatSlowdown = 0;
+
+    private final Map<UUID, Integer> slowdownedPlayers = new HashMap<>();
 
     public void clearChat(UUID uuid) {
         staffChat.remove(uuid);
