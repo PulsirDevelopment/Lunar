@@ -199,6 +199,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new InventoryListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new SpyListener(), this);
+        pluginManager.registerEvents(new ChestListener(), this);
     }
 
     private void registerTasks() {
