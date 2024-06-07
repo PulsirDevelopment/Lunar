@@ -3,6 +3,7 @@ package net.pulsir.lunar.api;
 import net.pulsir.lunar.api.bungee.BungeeAPI;
 import net.pulsir.lunar.api.inventory.InventoryAPI;
 import net.pulsir.lunar.api.redis.RedisAPI;
+import net.pulsir.lunar.api.session.SessionAPI;
 import net.pulsir.lunar.api.staff.StaffAPI;
 
 public class API {
@@ -21,5 +22,8 @@ public class API {
 
     public InventoryAPI getInventory(){
         return new InventoryAPI();
+    }
+    public SessionAPI getSession(){
+        return new SessionAPI();
     }
 }

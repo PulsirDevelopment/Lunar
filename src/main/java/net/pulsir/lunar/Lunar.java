@@ -1,6 +1,7 @@
 package net.pulsir.lunar;
 
 import lombok.Getter;
+import net.pulsir.lunar.api.API;
 import net.pulsir.lunar.chat.ChatMuteCommand;
 import net.pulsir.lunar.chat.ChatSlowDownCommand;
 import net.pulsir.lunar.chat.ChatUnMuteCommand;
@@ -60,6 +61,7 @@ public final class Lunar extends JavaPlugin {
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
 
     @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
+    private final API api = new API();
 
     @Override
     public void onEnable() {
@@ -213,5 +215,9 @@ public final class Lunar extends JavaPlugin {
         }
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
+    }
+
+    public API getAPI() {
+        return api;
     }
 }
