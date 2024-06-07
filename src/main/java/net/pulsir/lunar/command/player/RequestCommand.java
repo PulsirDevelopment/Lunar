@@ -52,7 +52,8 @@ public class RequestCommand implements CommandExecutor, TabCompleter {
                                 .getConfiguration().getString("REQUEST.FORMAT"))
                         .replace("{player}", player.getName())
                         .replace("{message}", message)
-                        .replace("{server}", Bukkit.getServer().getName())));
+                        .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                .getConfiguration().getString("server-name")))));
             }
 
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
@@ -61,7 +62,8 @@ public class RequestCommand implements CommandExecutor, TabCompleter {
                                         .getConfiguration().getString("REQUEST.FORMAT"))
                                 .replace("{player}", player.getName())
                                 .replace("{message}", message)
-                                .replace("{server}", Bukkit.getServer().getName()))), ChannelType.STAFF);
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                        .getConfiguration().getString("server-name"))))), ChannelType.STAFF);
             }
 
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()

@@ -131,3 +131,13 @@ CHAT-SLOWDOWN:
   SENDER: "&aSuccessfully slowdowned chat"
   GLOBAL: "&fChat has been &dslowdowned &fby &d{sender}"
   COOLDOWN: "&cYou are on message cooldown for another {cooldown} seconds."
+
+SILENT:
+  CHEST: "&7Opening chest silently."
+  ENDER-CHEST: "&7Opening enderchest silently."
+
+SESSION:
+  SECONDS: "&7Seconds"
+  MINUTES: "&7Minutes"
+  HOURS: "&7Hours"
+  DAYS: "&7Days"

@@ -60,7 +60,8 @@ public class ReportCommand implements CommandExecutor, TabCompleter {
                             .replace("{player}", player.getName())
                             .replace("{message}", message)
                             .replace("{target}", target)
-                            .replace("{server}", Bukkit.getServer().getName())));
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
 
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
@@ -69,7 +70,8 @@ public class ReportCommand implements CommandExecutor, TabCompleter {
                                             .getConfiguration().getString("REPORT.FORMAT"))
                                     .replace("{player}", player.getName())
                                     .replace("{message}", message)
-                                    .replace("{server}", Bukkit.getServer().getName())
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                            .getConfiguration().getString("server-name")))
                                     .replace("{target}", target))), ChannelType.STAFF);
                 }
 

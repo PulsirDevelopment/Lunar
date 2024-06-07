@@ -25,18 +25,21 @@ public class ChatListener implements Listener {
                                         .getConfiguration().getString("STAFF-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
                                 .replace("{player}", event.getPlayer().getName())
-                                .replace("{server}", Bukkit.getServer().getName())));
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                        .getConfiguration().getString("server-name")))));
                     }
 
                     Bungee.sendMessage(event.getPlayer(),
                             Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF-CHAT.FORMAT"))
                                     .replace("{message}", event.getMessage())
                                     .replace("{player}", event.getPlayer().getName())
-                                    .replace("{server}", Bukkit.getServer().getName()),
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                            .getConfiguration().getString("server-name"))),
                             ChannelType.STAFF);
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
-                    String message = event.getPlayer().getName() + "<splitter>" + Bukkit.getServer().getName() + "<splitter>" + event.getMessage();
+                    String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                            .getConfiguration().getString("server-name")) + "<splitter>" + event.getMessage();
                     Lunar.getInstance().getRedisManager().publish("staff-chat", message);
                 }
             } else {
@@ -45,7 +48,8 @@ public class ChatListener implements Listener {
                                     .getConfiguration().getString("STAFF-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{server}", Bukkit.getServer().getName())));
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
             }
             event.setCancelled(true);
@@ -58,18 +62,21 @@ public class ChatListener implements Listener {
                                         .getConfiguration().getString("ADMIN-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
                                 .replace("{player}", event.getPlayer().getName())
-                                .replace("{server}", Bukkit.getServer().getName())));
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                        .getConfiguration().getString("server-name")))));
                     }
 
                     Bungee.sendMessage(event.getPlayer(),
                             Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("ADMIN-CHAT.FORMAT"))
                                     .replace("{message}", event.getMessage())
                                     .replace("{player}", event.getPlayer().getName())
-                                    .replace("{server}", Bukkit.getServer().getName()),
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                            .getConfiguration().getString("server-name"))),
                             ChannelType.STAFF);
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
-                    String message = event.getPlayer().getName() + "<splitter>" + Bukkit.getServer().getName() + "<splitter>" + event.getMessage();
+                    String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                            .getConfiguration().getString("server-name")) + "<splitter>" + event.getMessage();
                     Lunar.getInstance().getRedisManager().publish("admin-chat", message);
                 }
             } else {
@@ -78,7 +85,8 @@ public class ChatListener implements Listener {
                                     .getConfiguration().getString("ADMIN-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{server}", Bukkit.getServer().getName())));
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
             }
             event.setCancelled(true);
@@ -91,18 +99,21 @@ public class ChatListener implements Listener {
                                         .getConfiguration().getString("OWNER-CHAT.FORMAT"))
                                 .replace("{message}", event.getMessage())
                                 .replace("{player}", event.getPlayer().getName())
-                                .replace("{server}", Bukkit.getServer().getName())));
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                        .getConfiguration().getString("server-name")))));
                     }
 
                     Bungee.sendMessage(event.getPlayer(),
                             Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("OWNER-CHAT.FORMAT"))
                                     .replace("{message}", event.getMessage())
                                     .replace("{player}", event.getPlayer().getName())
-                                    .replace("{server}", Bukkit.getServer().getName()),
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                            .getConfiguration().getString("server-name"))),
                             ChannelType.STAFF);
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
-                    String message = event.getPlayer().getName() + "<splitter>" + Bukkit.getServer().getName() + "<splitter>" + event.getMessage();
+                    String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                            .getConfiguration().getString("server-name")) + "<splitter>" + event.getMessage();
                     Lunar.getInstance().getRedisManager().publish("owner-chat", message);
                 }
             } else {
@@ -111,7 +122,8 @@ public class ChatListener implements Listener {
                                     .getConfiguration().getString("OWNER-CHAT.FORMAT"))
                             .replace("{message}", event.getMessage())
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{server}", Bukkit.getServer().getName())));
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
             }
             event.setCancelled(true);

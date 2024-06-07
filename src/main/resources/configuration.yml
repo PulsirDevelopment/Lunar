@@ -8,6 +8,7 @@ redis:
   password: ""
 allow-sync: true
 sync-system: "bungee" # bungee | redis
+server-name: "Hub"
 
 message-format: "legacy" # legacy | modern
 
@@ -19,6 +20,8 @@ vanish-invis: true
 
 join-message: true
 quit-message: true
+
+silent-chests: true
 
 report-cooldown: 60
 request-cooldown: 60
@@ -117,6 +120,7 @@ online-inventory:
     lore:
       - ""
       - "&dVanished&f: {vanished}"
+      - "&dSession Time&f: {session_time}"
       - ""
 
 freeze-inventory:
@@ -147,6 +151,10 @@ inspect-inventory:
     - "&f{hunger}&d/&f20"
     - "&fGamemode&d: &f{gamemode}"
     - ""
+
+silent-inventory:
+  chest-title: "&7Silent Chest"
+  enderchest-title: "&7Silent EnderChest"
 
 clear-chat:
   lines: 200

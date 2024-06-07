@@ -3,8 +3,10 @@ package net.pulsir.lunar.listener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.session.SessionPlayer;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
+import net.pulsir.lunar.utils.time.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -32,6 +34,9 @@ public class StaffModeListener implements Listener {
         if (event.getPlayer().hasPermission("lunar.staff")) {
             Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
             Lunar.getInstance().getData().getStaffMembers().add(event.getPlayer().getUniqueId());
+
+            Lunar.getInstance().getSessionPlayerManager().getSessionPlayers()
+                    .put(event.getPlayer().getUniqueId(), new SessionPlayer(event.getPlayer().getUniqueId(), 0));
         }
         if (event.getPlayer().hasPermission("lunar.admin")) {
             Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
@@ -56,7 +61,8 @@ public class StaffModeListener implements Listener {
                     Objects.requireNonNull(player).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                     .getConfiguration().getString("STAFF.JOIN-MESSAGE"))
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{server}", Bukkit.getServer().getName())));
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
             }
         }
@@ -74,6 +80,11 @@ public class StaffModeListener implements Listener {
                             .replace("{server}", event.getPlayer().getName())));
                 }
             }
+        }
+
+        if (Lunar.getInstance().getData().getStaffMembers().contains(event.getPlayer().getUniqueId())) {
+            Lunar.getInstance().getSessionPlayerManager().getSessionPlayers()
+                    .remove(event.getPlayer().getUniqueId());
         }
 
         Lunar.getInstance().getData().getStaffMembers().remove(event.getPlayer().getUniqueId());
@@ -188,7 +199,11 @@ public class StaffModeListener implements Listener {
 
             List<Component> lore = new ArrayList<>();
             for (final String lines : Lunar.getInstance().getConfiguration().getConfiguration().getStringList("online-inventory.item-format.lore")) {
-                lore.add(Lunar.getInstance().getMessage().getMessage(lines.replace("{vanished}", vanish)).decoration(TextDecoration.ITALIC, false));
+                lore.add(Lunar.getInstance().getMessage()
+                        .getMessage(lines.replace("{vanished}", vanish)
+                                .replace("{session_time}", Time.parse(Lunar.getInstance().getSessionPlayerManager()
+                                        .getSessionPlayers().get(event.getPlayer().getUniqueId()).getSessionTime())))
+                        .decoration(TextDecoration.ITALIC, false));
             }
 
             meta.lore(lore);

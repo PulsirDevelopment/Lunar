@@ -21,9 +21,11 @@ import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.redis.RedisManager;
+import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
+import net.pulsir.lunar.task.SessionTask;
 import net.pulsir.lunar.utils.bungee.listener.BungeeListener;
 import net.pulsir.lunar.utils.command.completer.type.CompleterType;
 import net.pulsir.lunar.utils.command.manager.CommandManager;
@@ -55,6 +57,7 @@ public final class Lunar extends JavaPlugin {
     @Getter private Message message;
 
     private final InventoryManager inventoryManager = new InventoryManager();
+    private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
 
     @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
 
@@ -209,5 +212,6 @@ public final class Lunar extends JavaPlugin {
             Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ServerTask(), 0L, 20L);
         }
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
     }
 }
