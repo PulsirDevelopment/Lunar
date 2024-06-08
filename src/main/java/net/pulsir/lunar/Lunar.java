@@ -61,6 +61,8 @@ public final class Lunar extends JavaPlugin {
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
 
     @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
+    @Getter private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
+
     private final API api = new API();
 
     @Override

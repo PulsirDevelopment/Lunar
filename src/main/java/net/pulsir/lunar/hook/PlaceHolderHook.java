@@ -41,40 +41,41 @@ public class PlaceHolderHook extends PlaceholderExpansion {
         Data data = Lunar.getInstance().getData();
 
         switch (identifier) {
-            case "muted":
+            case "muted" -> {
                 return data.isChatMuted() ? enabled : disabled;
-
-            case "slowed_amount":
+            }
+            case "slowed_amount" -> {
                 return String.valueOf(data.getChatSlowdown());
-
-            case "slowed":
+            }
+            case "slowed" -> {
                 return data.getChatSlowdown() > 0 ? enabled : disabled;
-
-            case "vanish":
+            }
+            case "vanish" -> {
                 return data.getVanish().contains(player.getUniqueId()) ? enabled : disabled;
-
-            case "staff":
+            }
+            case "staff" -> {
                 return data.getStaffMode().contains(player.getUniqueId()) ? enabled : disabled;
-
-            case "staff_chat":
+            }
+            case "staff_chat" -> {
                 return data.getStaffChat().contains(player.getUniqueId()) ? enabled : disabled;
-
-            case "admin_chat":
+            }
+            case "admin_chat" -> {
                 return data.getAdminChat().contains(player.getUniqueId()) ? enabled : disabled;
-
-            case "owner_chat":
+            }
+            case "owner_chat" -> {
                 return data.getOwnerChat().contains(player.getUniqueId()) ? enabled : disabled;
-
-            case "frozen":
+            }
+            case "frozen" -> {
                 return data.getFrozenPlayers().contains(player.getUniqueId()) ? enabled : disabled;
-
-            case "online":
+            }
+            case "online" -> {
                 Config config = Lunar.getInstance().getConfiguration();
                 boolean isShowTotalPlayers = Objects.requireNonNull(config.getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit");
-
                 return isShowTotalPlayers ? String.valueOf(Bukkit.getOnlinePlayers().size()) : String.valueOf(data.getOnlinePlayers().size());
-            default:
+            }
+            default -> {
                 return null;
+            }
         }
     }
 }

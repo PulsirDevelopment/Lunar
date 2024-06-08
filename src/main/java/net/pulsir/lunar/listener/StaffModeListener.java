@@ -164,10 +164,15 @@ public class StaffModeListener implements Listener {
         Player randomPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[index];
 
         if (randomPlayer != null) {
-            event.getPlayer().teleport(randomPlayer.getLocation());
-            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                            .getConfiguration().getString("STAFF.TELEPORTED"))
-                    .replace("{player}", randomPlayer.getName())));
+            if (!randomPlayer.getName().equalsIgnoreCase(event.getPlayer().getName())) {
+                event.getPlayer().teleport(randomPlayer.getLocation());
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                .getConfiguration().getString("STAFF.TELEPORTED"))
+                        .replace("{player}", randomPlayer.getName())));
+            } else {
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                        .getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")));
+            }
         }
     }
 
@@ -196,6 +201,7 @@ public class StaffModeListener implements Listener {
             meta.displayName(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
                             .getString("online-inventory.item-format.name"))
                     .replace("{player}", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName())).decoration(TextDecoration.ITALIC, false));
+            meta.getPersistentDataContainer().set(Lunar.getInstance().getOnlineStaffKey(), PersistentDataType.STRING, uuid.toString());
 
             List<Component> lore = new ArrayList<>();
             for (final String lines : Lunar.getInstance().getConfiguration().getConfiguration().getStringList("online-inventory.item-format.lore")) {

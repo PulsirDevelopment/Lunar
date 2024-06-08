@@ -2,6 +2,7 @@ package net.pulsir.lunar.task;
 
 import net.kyori.adventure.text.Component;
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.session.SessionPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -56,6 +57,11 @@ public class LunarTask implements Runnable {
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             if (onlinePlayers.hasPermission("lunar.staff")) {
                 Lunar.getInstance().getData().getStaffMembers().add(onlinePlayers.getUniqueId());
+
+                if (!Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().containsKey(onlinePlayers.getUniqueId())) {
+                    Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().put(onlinePlayers.getUniqueId(),
+                            new SessionPlayer(onlinePlayers.getUniqueId(), 0));
+                }
             }
         }
 

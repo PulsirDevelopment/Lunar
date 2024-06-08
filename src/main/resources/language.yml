@@ -35,6 +35,7 @@ STAFF-BAR: "&dChat&f: {chat} &f| &dVanish&f: {vanish} &f| &dOnline&f: {online}"
 
 STAFF:
   TELEPORTED: "&aSuccessfully teleported to {player} location"
+  TELEPORT-FAIL: "&cYou can't teleport to yourself."
   JOIN-MESSAGE: "&d{player} &fhas joined &d{server}"
   QUIT-MESSAGE: "&d{player} &fhas left &d{server}"
 
