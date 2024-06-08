@@ -2,6 +2,8 @@ package net.pulsir.lunar.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.data.Data;
+import net.pulsir.lunar.utils.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -26,48 +28,53 @@ public class PlaceHolderHook extends PlaceholderExpansion {
     }
 
     @Override
+    public boolean persist() {
+        return true;
+    }
+
+    @Override
     public String onPlaceholderRequest(Player player, String identifier) {
 
-        if (identifier.equals("vanish")) {
-            return Lunar.getInstance().getData().getVanish().contains(player.getUniqueId()) ? "Enabled" : "Disabled";
-        }
+        String enabled = getPlaceholderAPI().getPlaceholderAPIConfig().booleanTrue();
+        String disabled = getPlaceholderAPI().getPlaceholderAPIConfig().booleanFalse();
 
-        if (identifier.equals("staff")) {
-            return Lunar.getInstance().getData().getStaffMode().contains(player.getUniqueId()) ? "Enabled" : "Disabled";
-        }
+        Data data = Lunar.getInstance().getData();
 
-        if (identifier.equals("staff_chat")) {
-            return Lunar.getInstance().getData().getStaffChat().contains(player.getUniqueId()) ? "Enabled" : "Disabled";
-        }
+        switch (identifier) {
+            case "muted":
+                return data.isChatMuted() ? enabled : disabled;
 
-        if (identifier.equals("admin_chat")) {
-            return Lunar.getInstance().getData().getAdminChat().contains(player.getUniqueId()) ? "Enabled" : "Disabled";
-        }
+            case "slowed_amount":
+                return String.valueOf(data.getChatSlowdown());
 
-        if (identifier.equals("owner_chat")) {
-            return Lunar.getInstance().getData().getOwnerChat().contains(player.getUniqueId()) ? "Enabled" : "Disabled";
-        }
+            case "slowed":
+                return data.getChatSlowdown() > 0 ? enabled : disabled;
 
-        if (identifier.equals("frozen")) {
-            return Lunar.getInstance().getData().getFrozenPlayers().contains(player.getUniqueId()) ? "Yes" : "No";
-        }
-        if (identifier.equals("online")) {
-            if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
-                return String.valueOf(Bukkit.getOnlinePlayers().size());
-            } else {
-                return String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size());
-            }
-        }
-        if (identifier.equals("slowed")) {
-            return Lunar.getInstance().getData().getChatSlowdown() > 0 ? "Yes" : "No";
-        }
-        if (identifier.equals("slowed_amount")) {
-            return String.valueOf(Lunar.getInstance().getData().getChatSlowdown());
-        }
-        if (identifier.equals("muted")) {
-            return Lunar.getInstance().getData().isChatMuted() ? "Yes" : "No";
-        }
+            case "vanish":
+                return data.getVanish().contains(player.getUniqueId()) ? enabled : disabled;
 
-        return null;
+            case "staff":
+                return data.getStaffMode().contains(player.getUniqueId()) ? enabled : disabled;
+
+            case "staff_chat":
+                return data.getStaffChat().contains(player.getUniqueId()) ? enabled : disabled;
+
+            case "admin_chat":
+                return data.getAdminChat().contains(player.getUniqueId()) ? enabled : disabled;
+
+            case "owner_chat":
+                return data.getOwnerChat().contains(player.getUniqueId()) ? enabled : disabled;
+
+            case "frozen":
+                return data.getFrozenPlayers().contains(player.getUniqueId()) ? enabled : disabled;
+
+            case "online":
+                Config config = Lunar.getInstance().getConfiguration();
+                boolean isShowTotalPlayers = Objects.requireNonNull(config.getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit");
+
+                return isShowTotalPlayers ? String.valueOf(Bukkit.getOnlinePlayers().size()) : String.valueOf(data.getOnlinePlayers().size());
+            default:
+                return null;
+        }
     }
 }
