@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'net.pulsir'
-version = '2.0.2'
+version = '2.0.3'
 
 repositories {
     mavenCentral()
@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.mongodb:mongodb-driver-sync:5.0.1'
     compileOnly 'me.clip:placeholderapi:2.11.5'
     implementation "redis.clients:jedis:2.8.0"
+    implementation "com.zaxxer:HikariCP:2.3.2"
 }
 
 def targetJavaVersion = 17

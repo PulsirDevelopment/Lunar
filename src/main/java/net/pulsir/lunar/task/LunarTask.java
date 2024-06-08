@@ -13,39 +13,172 @@ public class LunarTask implements Runnable {
 
     @Override
     public void run() {
-        if (!Lunar.getInstance().getData().getStaffMode().isEmpty()) {
-            for (UUID uuid : Lunar.getInstance().getData().getStaffMode()) {
-                Component vanish = Lunar.getInstance().getData().getVanish().contains(uuid)
-                        ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-ENABLED")) :
-                        Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-DISABLED"));
+        if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-bar-visibility")).equalsIgnoreCase("staff")) {
+            if (!Lunar.getInstance().getData().getStaffMode().isEmpty()) {
+                for (UUID uuid : Lunar.getInstance().getData().getStaffMode()) {
+                    Component vanish = Lunar.getInstance().getData().getVanish().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-ENABLED")) :
+                            Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-DISABLED"));
 
-                Component players;
+                    Component players;
 
-                if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
-                    players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
-                                    .getString("OPTIONS.ONLINE"))
-                            .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
-                } else {
-                    players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
-                                    .getString("OPTIONS.ONLINE"))
-                            .replace("{players}", String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size())));
+                    if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
+                    } else {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size())));
+                    }
+
+                    Component staffMode = Lunar.getInstance().getData().getStaffMode().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-ENABLED"))
+                            : Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-DISABLED"));
+
+                    Component staffChat =
+                            Lunar.getInstance().getData().getStaffChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                    .getLanguage().getConfiguration().getString("OPTIONS.STAFF-CHAT")) :
+                                    Lunar.getInstance().getData().getAdminChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                            .getLanguage().getConfiguration().getString("OPTIONS.ADMIN-CHAT")) :
+                                            Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                                    .getLanguage().getConfiguration().getString("OPTIONS.OWNER-CHAT")) :
+                                                    Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.PUBLIC-CHAT"));
+
+                    if (Bukkit.getPlayer(uuid) != null && Objects.requireNonNull(Bukkit.getPlayer(uuid)).isOnline()) {
+                        Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                        .getConfiguration().getString("STAFF-BAR"))
+                                .replace("{vanish}", Lunar.getInstance().getMessage().getComponent(vanish))
+                                .replace("{online}", Lunar.getInstance().getMessage().getComponent(players))
+                                .replace("{chat}", Lunar.getInstance().getMessage().getComponent(staffChat))
+                                .replace("{staff}", Lunar.getInstance().getMessage().getComponent(staffMode))));
+                    }
                 }
+            }
+        } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-bar-visibility")).equalsIgnoreCase("vanish")) {
+            if (!Lunar.getInstance().getData().getVanish().isEmpty()) {
+                for (UUID uuid : Lunar.getInstance().getData().getVanish()) {
+                    Component vanish = Lunar.getInstance().getData().getVanish().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-ENABLED")) :
+                            Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-DISABLED"));
 
-                Component staffChat =
-                        Lunar.getInstance().getData().getStaffChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
-                                .getLanguage().getConfiguration().getString("OPTIONS.STAFF-CHAT")) :
-                                Lunar.getInstance().getData().getAdminChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
-                                        .getLanguage().getConfiguration().getString("OPTIONS.ADMIN-CHAT")) :
-                                        Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
-                                                .getLanguage().getConfiguration().getString("OPTIONS.OWNER-CHAT")) :
-                                                Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.PUBLIC-CHAT"));
+                    Component players;
 
-                if (Bukkit.getPlayer(uuid) != null && Objects.requireNonNull(Bukkit.getPlayer(uuid)).isOnline()) {
-                    Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                                    .getConfiguration().getString("STAFF-BAR"))
-                            .replace("{vanish}", Lunar.getInstance().getMessage().getComponent(vanish))
-                            .replace("{online}", Lunar.getInstance().getMessage().getComponent(players))
-                            .replace("{chat}", Lunar.getInstance().getMessage().getComponent(staffChat))));
+                    if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
+                    } else {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size())));
+                    }
+
+                    Component staffMode = Lunar.getInstance().getData().getStaffMode().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-ENABLED"))
+                            : Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-DISABLED"));
+
+                    Component staffChat =
+                            Lunar.getInstance().getData().getStaffChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                    .getLanguage().getConfiguration().getString("OPTIONS.STAFF-CHAT")) :
+                                    Lunar.getInstance().getData().getAdminChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                            .getLanguage().getConfiguration().getString("OPTIONS.ADMIN-CHAT")) :
+                                            Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                                    .getLanguage().getConfiguration().getString("OPTIONS.OWNER-CHAT")) :
+                                                    Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.PUBLIC-CHAT"));
+
+                    if (Bukkit.getPlayer(uuid) != null && Objects.requireNonNull(Bukkit.getPlayer(uuid)).isOnline()) {
+                        Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                        .getConfiguration().getString("STAFF-BAR"))
+                                .replace("{vanish}", Lunar.getInstance().getMessage().getComponent(vanish))
+                                .replace("{online}", Lunar.getInstance().getMessage().getComponent(players))
+                                .replace("{chat}", Lunar.getInstance().getMessage().getComponent(staffChat))
+                                .replace("{staff}", Lunar.getInstance().getMessage().getComponent(staffMode))));
+                    }
+                }
+            }
+        } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("staff-bar-visibility")).equalsIgnoreCase("both")) {
+            if (!Lunar.getInstance().getData().getStaffMode().isEmpty()) {
+                for (UUID uuid : Lunar.getInstance().getData().getStaffMode()) {
+                    Component vanish = Lunar.getInstance().getData().getVanish().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-ENABLED")) :
+                            Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-DISABLED"));
+
+                    Component players;
+
+                    if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
+                    } else {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size())));
+                    }
+
+                    Component staffMode = Lunar.getInstance().getData().getStaffMode().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-ENABLED"))
+                            : Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-DISABLED"));
+
+                    Component staffChat =
+                            Lunar.getInstance().getData().getStaffChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                    .getLanguage().getConfiguration().getString("OPTIONS.STAFF-CHAT")) :
+                                    Lunar.getInstance().getData().getAdminChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                            .getLanguage().getConfiguration().getString("OPTIONS.ADMIN-CHAT")) :
+                                            Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                                    .getLanguage().getConfiguration().getString("OPTIONS.OWNER-CHAT")) :
+                                                    Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.PUBLIC-CHAT"));
+
+                    if (Bukkit.getPlayer(uuid) != null && Objects.requireNonNull(Bukkit.getPlayer(uuid)).isOnline()) {
+                        Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                        .getConfiguration().getString("STAFF-BAR"))
+                                .replace("{vanish}", Lunar.getInstance().getMessage().getComponent(vanish))
+                                .replace("{online}", Lunar.getInstance().getMessage().getComponent(players))
+                                .replace("{chat}", Lunar.getInstance().getMessage().getComponent(staffChat))
+                                .replace("{staff}", Lunar.getInstance().getMessage().getComponent(staffMode))));
+                    }
+                }
+            }
+
+            if (!Lunar.getInstance().getData().getVanish().isEmpty()) {
+                for (UUID uuid : Lunar.getInstance().getData().getVanish()) {
+                    Component vanish = Lunar.getInstance().getData().getVanish().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-ENABLED")) :
+                            Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.VANISH-DISABLED"));
+
+                    Component players;
+
+                    if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit")) {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Bukkit.getOnlinePlayers().size())));
+                    } else {
+                        players = Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                        .getString("OPTIONS.ONLINE"))
+                                .replace("{players}", String.valueOf(Lunar.getInstance().getData().getOnlinePlayers().size())));
+                    }
+
+                    Component staffMode = Lunar.getInstance().getData().getStaffMode().contains(uuid)
+                            ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-ENABLED"))
+                            : Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.STAFFMODE-DISABLED"));
+
+                    Component staffChat =
+                            Lunar.getInstance().getData().getStaffChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                    .getLanguage().getConfiguration().getString("OPTIONS.STAFF-CHAT")) :
+                                    Lunar.getInstance().getData().getAdminChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                            .getLanguage().getConfiguration().getString("OPTIONS.ADMIN-CHAT")) :
+                                            Lunar.getInstance().getData().getOwnerChat().contains(uuid) ? Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                                                    .getLanguage().getConfiguration().getString("OPTIONS.OWNER-CHAT")) :
+                                                    Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage().getConfiguration().getString("OPTIONS.PUBLIC-CHAT"));
+
+                    if (Bukkit.getPlayer(uuid) != null && Objects.requireNonNull(Bukkit.getPlayer(uuid)).isOnline()) {
+                        Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendActionBar(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                        .getConfiguration().getString("STAFF-BAR"))
+                                .replace("{vanish}", Lunar.getInstance().getMessage().getComponent(vanish))
+                                .replace("{online}", Lunar.getInstance().getMessage().getComponent(players))
+                                .replace("{chat}", Lunar.getInstance().getMessage().getComponent(staffChat))
+                                .replace("{staff}", Lunar.getInstance().getMessage().getComponent(staffMode))));
+                    }
                 }
             }
         }

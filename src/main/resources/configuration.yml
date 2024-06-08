@@ -15,6 +15,7 @@ message-format: "legacy" # legacy | modern
 online-players: "bukkit" # bukkit | custom
 
 staff-bar: true
+staff-bar-visibility: "staff" # staff | vanish | both
 
 vanish-invis: true
 

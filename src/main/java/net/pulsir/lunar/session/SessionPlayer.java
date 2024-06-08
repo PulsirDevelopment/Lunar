@@ -2,7 +2,6 @@ package net.pulsir.lunar.session;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.pulsir.lunar.Lunar;
 
 import java.util.UUID;
 

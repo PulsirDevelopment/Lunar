@@ -31,7 +31,7 @@ VANISH:
   ENABLED: "&aVanish has been enabled."
   DISABLED: "&cVanish has been disabled."
 
-STAFF-BAR: "&dChat&f: {chat} &f| &dVanish&f: {vanish} &f| &dOnline&f: {online}"
+STAFF-BAR: "&dChat&f: {chat} &f| &dVanish&f: {vanish} &f| &dOnline&f: {online} &f| &dStaff&f: {staff}"
 
 STAFF:
   TELEPORTED: "&aSuccessfully teleported to {player} location"
@@ -72,6 +72,8 @@ OPTIONS:
   ADMIN-CHAT: "&cAdmin"
   OWNER-CHAT: "&4Owner"
   ONLINE: "&a{players}"
+  STAFFMODE-ENABLED: "&aEnabled"
+  STAFFMODE-DISABLED: "&cDisabled"
 
 REQUEST:
   USAGE:
