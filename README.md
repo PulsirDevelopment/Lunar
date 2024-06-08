@@ -1,27 +1,28 @@
-## Lunar  
+## Lunar
 
 Quality & efficient staff core.
+Download at [SpigotMC](https://www.spigotmc.org/resources/116639/)
 
 ### Features
 
-<li>Staff Mode (Freeze, Inspect, Online Staff, Random TP)</li>
-<li>Staff Chat (Server / Global)</li>
-<li>Admin Chat (Server / Global)</li>
-<li>Owner Chat (Server / Global)</li>
-<li>Vanish Command</li>
-<li>Broadcast</li>
-<li>Report</li>
-<li>Request</li>
-<li>Inventory Restore</li>
-<li>Spy Command</li>
-<li>Auto Messeger</li>
-<li>Freeze Chat</li>
-<li>Redis Sync</li>
-<br>
+- Staff Mode (Freeze, Inspect, Online Staff, Random TP)
+- Staff Chat (Server / Global)
+- Admin Chat (Server / Global)
+- Owner Chat (Server / Global)
+- Vanish Command
+- Broadcast
+- Report
+- Request
+- Inventory Restore
+- Spy Command
+- Auto Messeger
+- Freeze Chat
+- Redis Sync
+  <br>
 
 ### SoftDependencies
 
-<li>PlaceholderAPI</li>
+- PlaceholderAPI
 
 ### Contributing
 
