@@ -35,3 +35,5 @@ commands:
   clearchat:
     aliases: [chatclear, cc]
   chat:
+  lunarplugin:
+    aliases: [lunar]

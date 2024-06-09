@@ -144,3 +144,10 @@ SESSION:
   MINUTES: "&7Minutes"
   HOURS: "&7Hours"
   DAYS: "&7Days"
+
+LUNAR:
+  USAGE:
+    - ""
+    - "&c/lunar reload"
+    - ""
+  RELOADED: "&aSuccessfully reloaded."

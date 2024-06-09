@@ -51,4 +51,12 @@ public class Config {
             throw new RuntimeException(e);
         }
     }
+
+    public void reload(){
+        try {
+            configuration.load(file);
+        } catch (IOException | InvalidConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -9,6 +9,7 @@ import net.pulsir.lunar.command.chat.AdminChatCommand;
 import net.pulsir.lunar.command.chat.FrozenChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
+import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
@@ -189,6 +190,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("spy")).setExecutor(new SpyCommand());
 
+        Objects.requireNonNull(getCommand("lunar")).setExecutor(new LunarCommand());
+
         CommandManager chatManager = new CommandManager(getCommand("chat"));
 
         chatManager.addSubCommand(new ChatMuteCommand());
@@ -221,5 +224,12 @@ public final class Lunar extends JavaPlugin {
 
     public API getAPI() {
         return api;
+    }
+
+    public void reloadConfigs(){
+        this.configuration.reload();
+        this.language.reload();
+        this.inventory.reload();
+        this.messages.reload();
     }
 }
