@@ -32,6 +32,8 @@ allow-staff-spy: false
 
 inventory-on-freeze: false
 freeze-chat: true
+freeze-blocked-commands:
+  - "/tpa"
 
 spy:
   messages: true

@@ -64,7 +64,8 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                     Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                                     .getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-UNFROZEN"))
                             .replace("{player}", target.getName())
-                            .replace("{staff}", sender.getName())));
+                            .replace("{staff}", sender.getName())
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))));
                 }
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
@@ -85,7 +86,8 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                     Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                                     .getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-FROZEN"))
                             .replace("{player}", target.getName())
-                            .replace("{staff}", sender.getName())));
+                            .replace("{staff}", sender.getName())
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))));
                 }
             }
         }

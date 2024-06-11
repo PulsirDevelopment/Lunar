@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -59,6 +61,22 @@ public class FreezeListener implements Listener {
     @EventHandler
     public void onDamage(EntityDamageItemEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
+        if (Lunar.getInstance().getData().getFrozenPlayers().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        if (Lunar.getInstance().getData().getFrozenPlayers().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
         if (Lunar.getInstance().getData().getFrozenPlayers().contains(player.getUniqueId())) {
             event.setCancelled(true);
         }
