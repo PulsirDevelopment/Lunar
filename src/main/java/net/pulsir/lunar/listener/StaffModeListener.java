@@ -46,7 +46,7 @@ public class StaffModeListener implements Listener {
             Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
             Lunar.getInstance().getData().getOwnerMembers().add(event.getPlayer().getUniqueId());
         }
-        if (event.getPlayer().hasPermission("lunar.forcevanish")) {
+        if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("force-vanish")) {
             Lunar.getInstance().getData().getVanish().add(event.getPlayer().getUniqueId());
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("vanish-invis")) {
                 event.getPlayer().addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(99999999, 1));

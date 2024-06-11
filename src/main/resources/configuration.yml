@@ -18,6 +18,7 @@ staff-bar: true
 staff-bar-visibility: "staff" # staff | vanish | both
 
 vanish-invis: true
+force-vanish: false
 
 join-message: true
 quit-message: true

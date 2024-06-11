@@ -133,20 +133,26 @@ public class ChatListener implements Listener {
                     Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
                                     .getLanguage().getConfiguration().getString("FREEZE-CHAT.FORMAT"))
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{message}", event.getMessage())));
+                            .replace("{message}", event.getMessage())
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                     Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
                                     .getLanguage().getConfiguration().getString("FREEZE-CHAT.FORMAT"))
                             .replace("{player}", event.getPlayer().getName())
-                            .replace("{message}", event.getMessage())));
+                            .replace("{message}", event.getMessage())
+                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                    .getConfiguration().getString("server-name")))));
                 }
 
                 event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
                                 .getLanguage().getConfiguration().getString("FREEZE-CHAT.FORMAT"))
                         .replace("{player}", event.getPlayer().getName())
-                        .replace("{message}", event.getMessage())));
+                        .replace("{message}", event.getMessage())
+                        .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                .getConfiguration().getString("server-name")))));
             }
             event.setCancelled(true);
         } else {
