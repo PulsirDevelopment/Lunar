@@ -1,6 +1,7 @@
 package net.pulsir.lunar.command.staff;
 
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.staff.Staff;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -51,6 +52,14 @@ public class VanishCommand implements CommandExecutor {
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("VANISH.ENABLED")));
                     
+        }
+
+        if (Lunar.getInstance().getData().getVanish().contains(player.getUniqueId())) {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.vanish.slot"), Staff.unvanish());
+        } else {
+            player.getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.vanish.slot"), Staff.vanish());
         }
 
         return true;

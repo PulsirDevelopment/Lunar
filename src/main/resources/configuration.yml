@@ -113,6 +113,53 @@ staff-items:
       - ""
     slot: 6
     enabled: true
+  random-miners:
+    item: "DIAMOND_PICKAXE"
+    enchanted: false
+    enchants:
+      - ""
+    name: "&cRandom Miner Teleport"
+    lore:
+      - ""
+      - "&fRight click to teleport to random player, who is mining."
+      - ""
+    slot: 4
+    y-level: 45
+    enabled: true
+  random-fighter:
+    item: "DIAMOND_SWORD"
+    enchanted: false
+    enchants:
+      - ""
+    name: "&cRandom Fighter Teleport"
+    lore:
+      - ""
+      - "&fRight click to teleport to random player, who is fighting."
+      - ""
+    slot: 5
+    enabled: true
+  vanish:
+    item: "LIME_DYE"
+    enchanted: false
+    enchants:
+      - ""
+    name: "&aEnable Vanish"
+    lore:
+      - ""
+      - "&fRight click to enable your vanish."
+      - ""
+    slot: 3
+    enabled: true
+  unvanish:
+    item: "RED_DYE"
+    enchanted: false
+    enchants:
+      - ""
+    name: "&cDisable Vanish"
+    lore:
+      - ""
+      - "&fRight click to disable your vanish."
+      - ""
 
 online-inventory:
   title: "&cOnline Staff"

@@ -40,6 +40,7 @@ public class Data {
     @Setter private int chatSlowdown = 0;
 
     private final Map<UUID, Integer> slowdownedPlayers = new HashMap<>();
+    private final Map<UUID, Integer> fightingPlayers = new HashMap<>();
 
     public void clearChat(UUID uuid) {
         staffChat.remove(uuid);

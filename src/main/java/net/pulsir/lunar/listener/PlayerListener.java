@@ -6,8 +6,10 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -33,6 +35,25 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.getDamager() != null && event.getEntity() != null && event.getDamager() instanceof Player player && event.getEntity() instanceof Player target) {
+            if (!Lunar.getInstance().getData().getFightingPlayers().containsKey(player.getUniqueId())) {
+                Lunar.getInstance().getData().getFightingPlayers().put(player.getUniqueId(), 15);
+            } else {
+                Lunar.getInstance().getData().getFightingPlayers().replace(player.getUniqueId(),
+                        Lunar.getInstance().getData().getFightingPlayers().get(player.getUniqueId()), 15);
+            }
+
+            if (!Lunar.getInstance().getData().getFightingPlayers().containsKey(target.getUniqueId())) {
+                Lunar.getInstance().getData().getFightingPlayers().put(target.getUniqueId(), 15);
+            } else {
+                Lunar.getInstance().getData().getFightingPlayers().replace(target.getUniqueId(),
+                        Lunar.getInstance().getData().getFightingPlayers().get(target.getUniqueId()), 15);
+            }
+        }
+    }
+
+    @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         if (Lunar.getInstance().getData().getFrozenPlayers().contains(event.getPlayer().getUniqueId())) {
             for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
@@ -45,5 +66,7 @@ public class PlayerListener implements Listener {
                                         .replace("{player}", event.getPlayer().getName()))))));
             }
         }
+
+        Lunar.getInstance().getData().getFightingPlayers().remove(event.getPlayer().getUniqueId());
     }
 }

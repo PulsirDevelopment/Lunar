@@ -54,5 +54,11 @@ public class ServerTask implements Runnable {
                         Lunar.getInstance().getData().getReportCooldown().get(uuid) - 1);
             }
         }
+
+        for (final UUID uuid : Lunar.getInstance().getData().getFightingPlayers().keySet()) {
+            if (Lunar.getInstance().getData().getFightingPlayers().get(uuid) <= 1) {
+                Lunar.getInstance().getData().getFightingPlayers().remove(uuid);
+            }
+        }
     }
 }

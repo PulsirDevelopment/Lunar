@@ -8,6 +8,7 @@ import net.pulsir.lunar.utils.bungee.Bungee;
 import net.pulsir.lunar.utils.bungee.message.ChannelType;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
+import net.pulsir.lunar.utils.staff.Staff;
 import net.pulsir.lunar.utils.time.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -175,6 +176,117 @@ public class StaffModeListener implements Listener {
                 event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
                         .getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")));
             }
+        }
+    }
+
+    @EventHandler
+    public void onRandomMinerTeleport(PlayerInteractEvent event) {
+        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (!event.hasItem() || event.getItem() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+
+        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+
+        if (key == null || !key.equalsIgnoreCase("randomminertp")) return;
+
+        List<Player> onlineMiningPlayers = new ArrayList<>();
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            if (player.getLocation().getY() < Lunar.getInstance().getConfiguration().getConfiguration().getInt("staff-items.random-miners.y-level")) {
+                onlineMiningPlayers.add(player);
+            }
+        }
+
+        if (onlineMiningPlayers.isEmpty()) {
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("STAFF.NO-MINERS")));
+            return;
+        }
+
+        int index = new Random().nextInt(onlineMiningPlayers.size());
+        Player randomPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[index];
+
+        if (randomPlayer != null) {
+            if (!randomPlayer.getName().equalsIgnoreCase(event.getPlayer().getName())) {
+                event.getPlayer().teleport(randomPlayer.getLocation());
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                .getConfiguration().getString("STAFF.TELEPORTED"))
+                        .replace("{player}", randomPlayer.getName())));
+            } else {
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                        .getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")));
+            }
+        } else {
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("STAFF.NO-MINERS")));
+        }
+    }
+
+    @EventHandler
+    public void onRandomFighterTeleport(PlayerInteractEvent event) {
+        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (!event.hasItem() || event.getItem() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+
+        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+
+        if (key == null || !key.equalsIgnoreCase("randomfightertp")) return;
+
+        List<Player> onlineFightingPlayers = new ArrayList<>();
+        for (final UUID uuid : Lunar.getInstance().getData().getFightingPlayers().keySet()) {
+            onlineFightingPlayers.add(Bukkit.getPlayer(uuid));
+        }
+
+        if (onlineFightingPlayers.isEmpty()) {
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("STAFF.NO-FIGHTERS")));
+            return;
+        }
+
+        int index = new Random().nextInt(onlineFightingPlayers.size());
+        Player randomPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[index];
+
+        if (randomPlayer != null) {
+            if (!randomPlayer.getName().equalsIgnoreCase(event.getPlayer().getName())) {
+                event.getPlayer().teleport(randomPlayer.getLocation());
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                .getConfiguration().getString("STAFF.TELEPORTED"))
+                        .replace("{player}", randomPlayer.getName())));
+            } else {
+                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                        .getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")));
+            }
+        } else {
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("STAFF.NO-FIGHTERS")));
+        }
+    }
+
+    @EventHandler
+    public void onVanish(PlayerInteractEvent event) {
+        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        if (!event.hasItem() || event.getItem() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+
+        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+
+        if (key == null || !key.equalsIgnoreCase("vanish")) return;
+        event.getPlayer().performCommand("vanish");
+
+        if (Lunar.getInstance().getData().getVanish().contains(event.getPlayer().getUniqueId())) {
+            event.getPlayer().getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.vanish.slot"), Staff.unvanish());
+        } else {
+            event.getPlayer().getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
+                    .getInt("staff-items.vanish.slot"), Staff.vanish());
         }
     }
 

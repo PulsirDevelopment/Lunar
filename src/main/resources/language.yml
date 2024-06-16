@@ -36,6 +36,8 @@ STAFF-BAR: "&dChat&f: {chat} &f| &dVanish&f: {vanish} &f| &dOnline&f: {online} &
 STAFF:
   TELEPORTED: "&aSuccessfully teleported to {player} location"
   TELEPORT-FAIL: "&cYou can't teleport to yourself."
+  NO-MINERS: "&cFailed to teleport, nobody is currently mining."
+  NO-FIGHTERS: "&cFailed to teleport, nobody is currently fighting."
   JOIN-MESSAGE: "&d{player} &fhas joined &d{server}"
   QUIT-MESSAGE: "&d{player} &fhas left &d{server}"
 
