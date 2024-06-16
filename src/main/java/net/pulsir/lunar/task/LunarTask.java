@@ -185,6 +185,7 @@ public class LunarTask implements Runnable {
 
         if (!Lunar.getInstance().getData().getStaffMembers().isEmpty()) {
             Lunar.getInstance().getData().getStaffMembers().removeIf(uuid -> !Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.staff"));
+            Lunar.getInstance().getData().getStaffMode().removeIf(uuid -> !Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.staff"));
         }
 
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {

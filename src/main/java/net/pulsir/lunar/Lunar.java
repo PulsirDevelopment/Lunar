@@ -192,6 +192,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("lunar")).setExecutor(new LunarCommand());
 
+        Objects.requireNonNull(getCommand("tphere")).setExecutor(new TpHereCommand());
+
         CommandManager chatManager = new CommandManager(getCommand("chat"));
 
         chatManager.addSubCommand(new ChatMuteCommand());
@@ -227,7 +229,7 @@ public final class Lunar extends JavaPlugin {
         return api;
     }
 
-    public void reloadConfigs(){
+    public void reloadConfigs() {
         this.configuration.reload();
         this.language.reload();
         this.inventory.reload();

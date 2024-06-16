@@ -15,6 +15,7 @@ public class ServerTask implements Runnable {
         if (!Lunar.getInstance().getData().getStaffMembers().isEmpty()) {
             for (final UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                 if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.staff")) {
+                    Lunar.getInstance().getData().getStaffMode().remove(uuid);
                     Lunar.getInstance().getData().getStaffMembers().remove(uuid);
                 }
                 if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.spy")) {

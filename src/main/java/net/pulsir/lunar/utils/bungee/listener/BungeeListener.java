@@ -106,6 +106,50 @@ public class BungeeListener implements PluginMessageListener {
                         .getLanguage().getConfiguration().getString("BROADCAST-MESSAGE")
                         .replace("{message}", string)));
             }
+        } else if (subChannel.equalsIgnoreCase("FreezeChannel")) {
+            char[] input = byteArrayDataInput.readUTF().toCharArray();
+            char[] finalInput = Arrays.copyOfRange(input, 2, input.length);
+            String string = "";
+
+            for (char c : finalInput) {
+                if (string.isEmpty()) {
+                    string = String.valueOf(c);
+                } else {
+                    string = string + c;
+                }
+            }
+
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayer.hasPermission("lunar.staff")) {
+                    if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.COMPONENT)) {
+                        onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    } else if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.LEGACY)) {
+                        onlinePlayer.sendMessage(Lunar.getInstance().getMessage().forceLegacy(string));
+                    }
+                }
+            }
+        } else if (subChannel.equalsIgnoreCase("UnFreezeChannel")) {
+            char[] input = byteArrayDataInput.readUTF().toCharArray();
+            char[] finalInput = Arrays.copyOfRange(input, 2, input.length);
+            String string = "";
+
+            for (char c : finalInput) {
+                if (string.isEmpty()) {
+                    string = String.valueOf(c);
+                } else {
+                    string = string + c;
+                }
+            }
+
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayer.hasPermission("lunar.staff")) {
+                    if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.COMPONENT)) {
+                        onlinePlayer.sendMessage(MiniMessage.miniMessage().deserialize(string));
+                    } else if (Lunar.getInstance().getMessage().getMessageType().equals(MessageType.LEGACY)) {
+                        onlinePlayer.sendMessage(Lunar.getInstance().getMessage().forceLegacy(string));
+                    }
+                }
+            }
         }
     }
 }

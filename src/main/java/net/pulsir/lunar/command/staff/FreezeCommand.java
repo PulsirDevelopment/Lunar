@@ -1,6 +1,8 @@
 package net.pulsir.lunar.command.staff;
 
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.bungee.Bungee;
+import net.pulsir.lunar.utils.bungee.message.ChannelType;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -67,6 +69,25 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                             .replace("{staff}", sender.getName())
                             .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))));
                 }
+
+                if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
+                    if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                            .equalsIgnoreCase("bungee")) {
+                        if (sender instanceof Player player) {
+                            Bungee.sendMessage(player,
+                                    Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-UNFROZEN"))
+                                            .replace("{player}", target.getName())
+                                            .replace("{staff}", sender.getName())
+                                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance()
+                                                    .getConfiguration().getConfiguration().getString("server-name"))),
+                                    ChannelType.UNFREEZE);
+                        }
+                    } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                            .equalsIgnoreCase("redis")) {
+                        String message = target.getName() + "<splitter>" + sender.getName() + "<splitter>" + ".";
+                        Lunar.getInstance().getRedisManager().publish("unfreeze-chat", message);
+                    }
+                }
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
@@ -88,6 +109,25 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                             .replace("{player}", target.getName())
                             .replace("{staff}", sender.getName())
                             .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))));
+                }
+
+                if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
+                    if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                            .equalsIgnoreCase("bungee")) {
+                        if (sender instanceof Player player) {
+                            Bungee.sendMessage(player,
+                                    Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-FROZEN"))
+                                            .replace("{player}", target.getName())
+                                            .replace("{staff}", sender.getName())
+                                            .replace("{server}", Objects.requireNonNull(Lunar.getInstance()
+                                                    .getConfiguration().getConfiguration().getString("server-name"))),
+                                    ChannelType.FREEZE);
+                        }
+                    } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                            .equalsIgnoreCase("redis")) {
+                        String message = target.getName() + "<splitter>" + sender.getName() + "<splitter>" + ".";
+                        Lunar.getInstance().getRedisManager().publish("freeze-chat", message);
+                    }
                 }
             }
         }

@@ -4,6 +4,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.session.SessionPlayer;
+import net.pulsir.lunar.utils.bungee.Bungee;
+import net.pulsir.lunar.utils.bungee.message.ChannelType;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
 import net.pulsir.lunar.utils.time.Time;
@@ -267,7 +269,26 @@ public class StaffModeListener implements Listener {
                 Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                                 .getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-UNFROZEN"))
                         .replace("{player}", target.getName())
-                        .replace("{staff}", event.getPlayer().getName())));
+                        .replace("{staff}", event.getPlayer().getName())
+                        .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                                .getString("server-name")))));
+            }
+
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
+                if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                        .equalsIgnoreCase("bungee")) {
+                    Bungee.sendMessage(event.getPlayer(),
+                            Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-UNFROZEN"))
+                                    .replace("{player}", target.getName())
+                                    .replace("{staff}", event.getPlayer().getName())
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                                                    .getString("server-name"))),
+                            ChannelType.UNFREEZE);
+                } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                        .equalsIgnoreCase("redis")) {
+                    String message = target.getName() + "<splitter>" + event.getPlayer().getName() + "<splitter>" + ".";
+                    Lunar.getInstance().getRedisManager().publish("unfreeze-chat", message);
+                }
             }
         } else {
             Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
@@ -290,7 +311,25 @@ public class StaffModeListener implements Listener {
                 Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                                 .getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-FROZEN"))
                         .replace("{player}", target.getName())
-                        .replace("{staff}", event.getPlayer().getName())));
+                        .replace("{staff}", event.getPlayer().getName())
+                        .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                                .getString("server-name")))));
+            }
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-sync")) {
+                if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                        .equalsIgnoreCase("bungee")) {
+                    Bungee.sendMessage(event.getPlayer(),
+                            Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE.STAFF-FROZEN"))
+                                    .replace("{player}", target.getName())
+                                    .replace("{staff}", event.getPlayer().getName())
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
+                                            .getString("server-name"))),
+                            ChannelType.FREEZE);
+                } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
+                        .equalsIgnoreCase("redis")) {
+                    String message = target.getName() + "<splitter>" + event.getPlayer().getName() + "<splitter>" + ".";
+                    Lunar.getInstance().getRedisManager().publish("freeze-chat", message);
+                }
             }
         }
     }

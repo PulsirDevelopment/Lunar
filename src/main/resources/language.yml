@@ -59,8 +59,8 @@ FREEZE:
   FROZEN: "&aSuccessfully frozen {player} player."
   UNFROZEN: "&aSuccessfully unfrozen {player} player."
   STAFF: "&cYou can't freeze staff"
-  STAFF-FROZEN: "&8[&bFreeze&8] &b{player} &fhas been frozen by &b{staff}"
-  STAFF-UNFROZEN: "&8[&bFreeze&8] &b{player} &fhas been unfrozen by &b{staff}"
+  STAFF-FROZEN: "&7(&f{server}&7) &8[&bFreeze&8] &b{player} &fhas been frozen by &b{staff}"
+  STAFF-UNFROZEN: "&7(&f{server}&7) &8[&bFreeze&8] &b{player} &fhas been unfrozen by &b{staff}"
   QUIT: "&8[&bFreeze&8] &b{player} &fhas left while being frozen. &8(&cClick to ban&8)"
   CLICK-COMMAND: "ban {player} Left while being frozen."
   COMMAND: "&cYou cannot use this command whilst frozen."
@@ -145,6 +145,10 @@ SESSION:
   MINUTES: "&7Minutes"
   HOURS: "&7Hours"
   DAYS: "&7Days"
+
+TPHERE:
+  USAGE: "&c/tphere <player>"
+  TELEPORTED: "&aSuccessfully teleported {target} to your location."
 
 LUNAR:
   USAGE:

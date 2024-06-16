@@ -48,7 +48,7 @@ public class RedisManager {
         new Thread("Subscriber") {
             @Override
             public void run() {
-                String[] chatChannels = {"staff-chat", "admin-chat", "owner-chat", "global-chat"};
+                String[] chatChannels = {"staff-chat", "admin-chat", "owner-chat", "global-chat", "freeze-chat", "unfreeze-chat"};
                 subscriber.subscribe(new JedisPubSub() {
                     @Override
                     public void onMessage(String channel, String message) {
@@ -88,6 +88,26 @@ public class RedisManager {
                                 onlinePlayer.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                                                 .getInstance().getLanguage().getConfiguration().getString("BROADCAST-MESSAGE"))
                                         .replace("{message}", finalMessage)));
+                            }
+                        } else if (channel.equalsIgnoreCase("freeze-chat")) {
+                            for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                                Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage()
+                                        .getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                                        .getString("FREEZE.STAFF-FROZEN"))
+                                                .replace("{player}", player)
+                                                .replace("{staff}", server)
+                                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                                        .getConfiguration().getString("server-name")))));
+                            }
+                        } else if (channel.equalsIgnoreCase("unfreeze-chat")) {
+                            for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
+                                Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage()
+                                        .getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
+                                                        .getString("FREEZE.STAFF-UNFROZEN"))
+                                                .replace("{player}", player)
+                                                .replace("{staff}", server)
+                                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
+                                                        .getConfiguration().getString("server-name")))));
                             }
                         }
                     }
