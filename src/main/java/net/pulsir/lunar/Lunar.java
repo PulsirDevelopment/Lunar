@@ -11,6 +11,7 @@ import net.pulsir.lunar.command.mod.ClearChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
+import net.pulsir.lunar.command.restore.LastInventoryCommand;
 import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
@@ -189,6 +190,7 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("request")).setExecutor(new RequestCommand());
 
         Objects.requireNonNull(getCommand("restore")).setExecutor(new InventoryRestoreCommand());
+        Objects.requireNonNull(getCommand("lastinventory")).setExecutor(new LastInventoryCommand());
 
         Objects.requireNonNull(getCommand("spy")).setExecutor(new SpyCommand());
 

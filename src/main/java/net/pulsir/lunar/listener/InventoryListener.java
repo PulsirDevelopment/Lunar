@@ -56,4 +56,15 @@ public class InventoryListener implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onLastInventory(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        if (MiniMessage.miniMessage().serialize(event.getView().title())
+                .equalsIgnoreCase(Lunar.getInstance().getConfiguration().getConfiguration().getString("last-inventory.title"))
+                || LegacyComponentSerializer.legacyAmpersand().serialize(event.getView().title()).equalsIgnoreCase(Lunar.getInstance()
+                .getConfiguration().getConfiguration().getString("last-inventory.title"))) {
+            event.setCancelled(true);
+        }
+    }
 }

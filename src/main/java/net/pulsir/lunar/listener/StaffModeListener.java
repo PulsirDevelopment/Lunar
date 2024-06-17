@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -310,6 +311,9 @@ public class StaffModeListener implements Listener {
                 Lunar.getInstance().getConfiguration().getConfiguration().getInt("online-inventory.size"),
                 Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration().getString("online-inventory.title")));
 
+        int index = 0;
+        List<Integer> values = Lunar.getInstance().getConfiguration().getConfiguration().getIntegerList("online-inventory.slots");
+
         for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
             String vanish = Lunar.getInstance().getData().getVanish().contains(uuid) ? "Enabled" : "Disabled";
             ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
@@ -330,14 +334,28 @@ public class StaffModeListener implements Listener {
 
             meta.lore(lore);
             itemStack.setItemMeta(meta);
-            inventory.addItem(itemStack);
+
+            if (index < inventory.getSize()) {
+                inventory.setItem(values.get(index) - 1, itemStack);
+            }
+
+            index++;
         }
 
         if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("online-inventory.overlay")) {
-            for (int i = 0; i < inventory.getSize(); i++) {
-                if (inventory.getItem(i) == null) {
-                    inventory.setItem(i, new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration()
-                            .getConfiguration().getString("online-inventory.overlay-item"))));
+            if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("online-inventory.slot-overlay")) {
+                for (int i = 0; i < inventory.getSize(); i++) {
+                    if (inventory.getItem(i) == null) {
+                        inventory.setItem(i, new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration()
+                                .getConfiguration().getString("online-inventory.overlay-item"))));
+                    }
+                }
+            } else {
+                for (int i = 0; i < inventory.getSize(); i++) {
+                    if (inventory.getItem(i) == null && !values.contains(i)) {
+                        inventory.setItem(i, new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration()
+                                .getConfiguration().getString("online-inventory.overlay-item"))));
+                    }
                 }
             }
         }

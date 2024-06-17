@@ -41,3 +41,5 @@ commands:
     aliases: [teleporthere]
   filter:
     aliases: [filterchat]
+  lastinventory:
+    aliases: [lastinv]

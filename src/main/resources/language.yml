@@ -108,6 +108,12 @@ RESTORE:
   NO-DATABASE: "&cFailed to find {player} inventory in database."
   RESTORED: "&aSuccessfully restored {player} inventory."
 
+LAST-INVENTORY:
+  USAGE:
+    - ""
+    - "&c/lastinventory <player>"
+    - ""
+
 SPY:
   USAGE:
     - ""

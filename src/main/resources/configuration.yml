@@ -170,7 +170,9 @@ online-inventory:
   title: "&cOnline Staff"
   size: 54
   overlay: true
+  slot-overlay: false
   overlay-item: "GRAY_STAINED_GLASS_PANE"
+  slots: [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]
   item-format:
     name: "&d{player}"
     lore:
@@ -178,6 +180,16 @@ online-inventory:
       - "&dVanished&f: {vanished}"
       - "&dSession Time&f: {session_time}"
       - ""
+
+last-inventory:
+  title: "&cLast Inventory"
+  size: 54
+  overlay: true
+  slot-overlay: false
+  overlay-item: "GRAY_STAINED_GLASS_PANE"
+  slots: [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]
+  armor-slots: [3,4,6,7]
+  off-hand-slot: 5
 
 freeze-inventory:
   title: "&cFrozen Inventory"
