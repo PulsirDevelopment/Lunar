@@ -72,7 +72,7 @@ public class ChatListener implements Listener {
                                     .replace("{player}", event.getPlayer().getName())
                                     .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
                                             .getConfiguration().getString("server-name"))),
-                            ChannelType.STAFF);
+                            ChannelType.ADMIN);
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
                     String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
@@ -109,7 +109,7 @@ public class ChatListener implements Listener {
                                     .replace("{player}", event.getPlayer().getName())
                                     .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration()
                                             .getConfiguration().getString("server-name"))),
-                            ChannelType.STAFF);
+                            ChannelType.OWNER);
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
                     String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
