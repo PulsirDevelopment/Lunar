@@ -39,3 +39,5 @@ commands:
     aliases: [lunar]
   tphere:
     aliases: [teleporthere]
+  filter:
+    aliases: [filterchat]

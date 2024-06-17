@@ -16,6 +16,7 @@ public class Data {
     private final Set<UUID> adminChat = new HashSet<>();
     private final Set<UUID> ownerChat = new HashSet<>();
     private final Set<UUID> freezeChat = new HashSet<>();
+    private final Set<UUID> filterChat = new HashSet<>();
 
     private final Set<UUID> staffMembers = new HashSet<>();
     private final Set<UUID> adminMembers = new HashSet<>();

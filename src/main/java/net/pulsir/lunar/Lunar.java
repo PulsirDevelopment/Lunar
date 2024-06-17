@@ -5,10 +5,7 @@ import net.pulsir.lunar.api.API;
 import net.pulsir.lunar.chat.ChatMuteCommand;
 import net.pulsir.lunar.chat.ChatSlowDownCommand;
 import net.pulsir.lunar.chat.ChatUnMuteCommand;
-import net.pulsir.lunar.command.chat.AdminChatCommand;
-import net.pulsir.lunar.command.chat.FrozenChatCommand;
-import net.pulsir.lunar.command.chat.OwnerChatCommand;
-import net.pulsir.lunar.command.chat.StaffChatCommand;
+import net.pulsir.lunar.command.chat.*;
 import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
@@ -19,6 +16,7 @@ import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.database.impl.FlatFile;
 import net.pulsir.lunar.database.impl.Mongo;
+import net.pulsir.lunar.filter.Filter;
 import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryManager;
 import net.pulsir.lunar.listener.*;
@@ -57,6 +55,7 @@ public final class Lunar extends JavaPlugin {
 
     private IDatabase database;
     @Getter private Message message;
+    private Filter filter;
 
     private final InventoryManager inventoryManager = new InventoryManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
@@ -113,6 +112,8 @@ public final class Lunar extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlaceHolderHook().register();
         }
+
+        this.filter = new Filter();
     }
 
     @Override
@@ -173,6 +174,7 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("adminchat")).setExecutor(new AdminChatCommand());
         Objects.requireNonNull(getCommand("ownerchat")).setExecutor(new OwnerChatCommand());
         Objects.requireNonNull(getCommand("freezechat")).setExecutor(new FrozenChatCommand());
+        Objects.requireNonNull(getCommand("filter")).setExecutor(new FilterChatCommand());
         Objects.requireNonNull(getCommand("clearchat")).setExecutor(new ClearChatCommand());
 
         Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCommand());
@@ -213,6 +215,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new SpyListener(), this);
         pluginManager.registerEvents(new ChestListener(), this);
         pluginManager.registerEvents(new CommandListener(), this);
+        pluginManager.registerEvents(new FilterListener(), this);
     }
 
     private void registerTasks() {

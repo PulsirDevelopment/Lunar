@@ -117,6 +117,8 @@ public class StaffModeListener implements Listener {
                 }
             }
         }
+
+        Lunar.getInstance().getData().getFilterChat().remove(event.getPlayer().getUniqueId());
     }
 
     @EventHandler

@@ -36,6 +36,11 @@ freeze-chat: true
 freeze-blocked-commands:
   - "/tpa"
 
+chat-filter: true
+filter-messages:
+  - "kys"
+  - "faggot"
+
 spy:
   messages: true
   commands: true

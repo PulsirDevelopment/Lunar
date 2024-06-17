@@ -22,6 +22,10 @@ FREEZE-CHAT:
     - "&cYou are &c&lFROZEN"
     - "&cPlease join our discord @ discord.gg/server"
     - ""
+FILTER-CHAT:
+  ENABLED: "&aFilter Chat Enabled"
+  DISABLED: "&cFilter Chat Disabled"
+  FORMAT: "&8[&eFilter&8] &f⇢ &e{player}&f: {message}"
 
 STAFF-MODE:
   ENABLED: "&aSuccessfully enabled staff mode"

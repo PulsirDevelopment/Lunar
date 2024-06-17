@@ -184,7 +184,7 @@ public class Staff {
                     itemStack.addUnsafeEnchantment(Objects.requireNonNull(Enchantment.getByName(enchant.split(":")[0])), Integer.parseInt(enchant.split(":")[1])));
         }
         ItemMeta meta = itemStack.getItemMeta();
-        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "vanish");
+        meta.getPersistentDataContainer().set(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING, "randomminertp");
         meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration()
                 .getString("staff-items.random-miners.name")).decoration(TextDecoration.ITALIC, false));
         List<Component> lore = new ArrayList<>();
