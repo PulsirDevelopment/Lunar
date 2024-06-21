@@ -168,3 +168,7 @@ LUNAR:
     - "&c/lunar reload"
     - ""
   RELOADED: "&aSuccessfully reloaded."
+
+HIDE-STAFF:
+  ENABLED: "&aStaff hidden."
+  DISABLED: "&cStaff shown."

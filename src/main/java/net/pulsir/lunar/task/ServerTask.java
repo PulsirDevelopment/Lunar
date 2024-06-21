@@ -30,14 +30,16 @@ public class ServerTask implements Runnable {
             }
         }
 
-        if (!Lunar.getInstance().getData().getStaffTeam().isEmpty()) {
-            for (final UUID uuid : Lunar.getInstance().getData().getStaffTeam()) {
+        if (!Lunar.getInstance().getData().getStaffMembers().isEmpty()) {
+            for (final UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
                 if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("apollo.staff")) {
-                    Lunar.getInstance().getData().getStaffTeam().remove(uuid);
 
                     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(uuid);
                     apolloPlayerOpt.ifPresent(apolloPlayer -> Apollo.getModuleManager().getModule(StaffModModule.class)
                             .disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
+                    Bukkit.getConsoleSender().sendMessage("1");
+                } else {
+                    Bukkit.getConsoleSender().sendMessage("2");
                 }
             }
         }

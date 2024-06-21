@@ -1,4 +1,3 @@
-# https://docs.pulsir.net/home
 database: "flatfile" # mongo | flatfile
 mongo-uri: ""
 redis:
@@ -18,8 +17,12 @@ online-players: "bukkit" # bukkit | custom
 staff-bar: true
 staff-bar-visibility: "staff" # staff | vanish | both
 
-vanish-invis: true
-force-vanish: false
+vanish-effects:
+  - "NIGHT_VISION"
+staff-effects:
+  - "NIGHT_VISION"
+
+force-vanish: true
 
 join-message: true
 quit-message: true

@@ -198,6 +198,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("tphere")).setExecutor(new TpHereCommand());
 
+        Objects.requireNonNull(getCommand("hidestaff")).setExecutor(new HideStaffCommand());
+
         CommandManager chatManager = new CommandManager(getCommand("chat"));
 
         chatManager.addSubCommand(new ChatMuteCommand());
@@ -218,6 +220,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new ChestListener(), this);
         pluginManager.registerEvents(new CommandListener(), this);
         pluginManager.registerEvents(new FilterListener(), this);
+        pluginManager.registerEvents(new ApolloListener(), this);
     }
 
     private void registerTasks() {

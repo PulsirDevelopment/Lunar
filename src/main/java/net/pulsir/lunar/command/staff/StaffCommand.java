@@ -15,10 +15,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StaffCommand implements CommandExecutor {
 
@@ -43,6 +45,10 @@ public class StaffCommand implements CommandExecutor {
 
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("lunar-api")) {
                 Apollo.getModuleManager().getModule(NametagModule.class).resetNametag(Recipients.ofEveryone(), player.getUniqueId());
+            }
+
+            for (final String staffEffect : Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-effects")) {
+                player.removePotionEffect(Objects.requireNonNull(PotionEffectType.getByName(staffEffect)));
             }
         } else {
             Lunar.getInstance().getData().getStaffMode().add(player.getUniqueId());
@@ -70,6 +76,10 @@ public class StaffCommand implements CommandExecutor {
                 Apollo.getModuleManager().getModule(NametagModule.class).overrideNametag(Recipients.ofEveryone(),
                         player.getUniqueId(), Nametag.builder()
                                 .lines(staffNameTag).build());
+            }
+
+            for (final String staffEffect : Lunar.getInstance().getConfiguration().getConfiguration().getStringList("staff-effects")) {
+                player.addPotionEffect(Objects.requireNonNull(PotionEffectType.getByName(staffEffect)).createEffect(999999, 0));
             }
         }
 

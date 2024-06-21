@@ -43,3 +43,4 @@ commands:
     aliases: [filterchat]
   lastinventory:
     aliases: [lastinv]
+  hidestaff:
