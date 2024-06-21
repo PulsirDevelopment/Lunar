@@ -4,7 +4,7 @@ main: net.pulsir.lunar.Lunar
 api-version: '1.13'
 author: PulsirORG
 website: https://pulsir.net/
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, Apollo-Bukkit]
 commands:
   staffchat:
     aliases: [sc]

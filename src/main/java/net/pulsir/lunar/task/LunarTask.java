@@ -1,12 +1,18 @@
 package net.pulsir.lunar.task;
 
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.module.staffmod.StaffMod;
+import com.lunarclient.apollo.module.staffmod.StaffModModule;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import net.kyori.adventure.text.Component;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.session.SessionPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class LunarTask implements Runnable {
@@ -195,6 +201,18 @@ public class LunarTask implements Runnable {
                 if (!Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().containsKey(onlinePlayers.getUniqueId())) {
                     Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().put(onlinePlayers.getUniqueId(),
                             new SessionPlayer(onlinePlayers.getUniqueId(), 0));
+                }
+            }
+        }
+
+        if (!Lunar.getInstance().getData().getStaffTeam().isEmpty()) {
+            for (final UUID uuid : Lunar.getInstance().getData().getStaffTeam()) {
+                if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("apollo.staff")) {
+                    Lunar.getInstance().getData().getStaffTeam().remove(uuid);
+
+                    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(uuid);
+                    apolloPlayerOpt.ifPresent(apolloPlayer -> Apollo.getModuleManager().getModule(StaffModModule.class)
+                            .disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
                 }
             }
         }
