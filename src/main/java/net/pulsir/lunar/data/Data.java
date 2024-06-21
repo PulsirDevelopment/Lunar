@@ -36,8 +36,6 @@ public class Data {
 
     private final Map<UUID, Set<UUID>> spy = new HashMap<>();
 
-    private final Set<UUID> hideStaff = new HashSet<>();
-
     private final Set<UUID> staffTeam = new HashSet<>();
 
     @Setter

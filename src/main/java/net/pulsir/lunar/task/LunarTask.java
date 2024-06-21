@@ -244,5 +244,17 @@ public class LunarTask implements Runnable {
                 Lunar.getInstance().getData().getFightingPlayers().remove(uuid);
             }
         }
+
+        if (!Lunar.getInstance().getData().getSlowdownedPlayers().isEmpty()) {
+            for (final UUID uuid : Lunar.getInstance().getData().getSlowdownedPlayers().keySet()) {
+                if (Lunar.getInstance().getData().getSlowdownedPlayers().get(uuid) <= 0) {
+                    Lunar.getInstance().getData().getSlowdownedPlayers().remove(uuid);
+                } else {
+                    Lunar.getInstance().getData().getSlowdownedPlayers().replace(uuid,
+                            Lunar.getInstance().getData().getSlowdownedPlayers().get(uuid),
+                            Lunar.getInstance().getData().getSlowdownedPlayers().get(uuid) - 1);
+                }
+            }
+        }
     }
 }

@@ -11,12 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
-public class HideStaffCommand implements CommandExecutor {
+public class ShowStaffCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if (!(sender.hasPermission("lunar.command.hidestaff"))) {
+        if (!(sender.hasPermission("lunar.command.showstaff"))) {
             sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("NO-PERMISSIONS")));
             return false;
@@ -25,10 +25,10 @@ public class HideStaffCommand implements CommandExecutor {
         if (!(sender instanceof Player player)) return false;
 
         for (final UUID uuid : Lunar.getInstance().getData().getVanish()) {
-            player.hidePlayer(Lunar.getInstance(), Objects.requireNonNull(Bukkit.getPlayer(uuid)));
+            player.showPlayer(Lunar.getInstance(), Objects.requireNonNull(Bukkit.getPlayer(uuid)));
         }
         sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                .getConfiguration().getString("HIDE-STAFF")));
+                .getConfiguration().getString("SHOW-STAFF")));
 
         return true;
     }
