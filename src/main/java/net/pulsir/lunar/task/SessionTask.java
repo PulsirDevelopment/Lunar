@@ -1,6 +1,7 @@
 package net.pulsir.lunar.task;
 
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import org.bukkit.Bukkit;
 
 import java.util.Objects;
@@ -10,15 +11,16 @@ public class SessionTask implements Runnable {
 
     @Override
     public void run() {
-        if (!Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().isEmpty()) {
-            for (final UUID sessionUUID : Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().keySet()) {
-                if (!Objects.requireNonNull(Bukkit.getPlayer(sessionUUID)).hasPermission("lunar.staff")) {
-                    Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().remove(sessionUUID);
-                } else {
-                    Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().get(sessionUUID)
-                            .setSessionTime(Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().get(sessionUUID)
-                                    .getSessionTime() + 1);
-                }
+        SessionPlayerManager sessionManager = Lunar.getInstance().getSessionPlayerManager();
+        if (sessionManager.getSessionPlayers().isEmpty()) return;
+
+        for (final UUID sessionUUID : sessionManager.getSessionPlayers().keySet()) {
+            if (!Objects.requireNonNull(Bukkit.getPlayer(sessionUUID)).hasPermission("lunar.staff")) {
+                sessionManager.getSessionPlayers().remove(sessionUUID);
+            } else {
+                sessionManager.getSessionPlayers().get(sessionUUID)
+                        .setSessionTime(sessionManager.getSessionPlayers().get(sessionUUID)
+                                .getSessionTime() + 1);
             }
         }
     }
