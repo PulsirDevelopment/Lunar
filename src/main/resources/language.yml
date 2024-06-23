@@ -171,3 +171,8 @@ LUNAR:
 
 HIDE-STAFF: "&aStaff Hidden"
 SHOW-STAFF: "&aStaff Shown"
+
+MINE-ALERTS:
+  ENABLED: "&aSuccessfully enabled mine alerts."
+  DISABLED: "&cSuccessfully disabled mine alerts."
+  ALERT: "&e{player} &7has mined &e{block}"

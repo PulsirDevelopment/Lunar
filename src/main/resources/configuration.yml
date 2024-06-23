@@ -7,7 +7,6 @@ redis:
   password: ""
 allow-sync: true
 sync-system: "bungee" # bungee | redis
-lunar-api: true
 server-name: "Hub"
 
 message-format: "legacy" # legacy | modern
@@ -231,7 +230,7 @@ silent-inventory:
 clear-chat:
   lines: 200
 
-lunar-client:
-  staff-nametag:
-    - "&e{player}"
-    - "&8[&7Staff-Mode&8]"
+mine-alert:
+  enabled: true
+  block-trigger:
+    - "DIAMOND_ORE"

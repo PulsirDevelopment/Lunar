@@ -47,3 +47,5 @@ commands:
     aliases: [hidemod]
   showstaff:
     aliases: [showmod]
+  minealerts:
+    aliases: [minealert]

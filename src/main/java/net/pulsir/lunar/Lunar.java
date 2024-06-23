@@ -65,6 +65,7 @@ public final class Lunar extends JavaPlugin {
     @Getter private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
 
     private final API api = new API();
+    private boolean lunarAPI = false;
 
     @Override
     public void onEnable() {
@@ -112,6 +113,9 @@ public final class Lunar extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlaceHolderHook().register();
+        }
+        if (Bukkit.getPluginManager().getPlugin("Apollo-Bukkit") != null) {
+            lunarAPI = true;
         }
 
         this.filter = new Filter();
@@ -201,6 +205,8 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("hidestaff")).setExecutor(new HideStaffCommand());
         Objects.requireNonNull(getCommand("showstaff")).setExecutor(new ShowStaffCommand());
 
+        Objects.requireNonNull(getCommand("minealerts")).setExecutor(new MineAlertCommand());
+
         CommandManager chatManager = new CommandManager(getCommand("chat"));
 
         chatManager.addSubCommand(new ChatMuteCommand());
@@ -221,7 +227,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new ChestListener(), this);
         pluginManager.registerEvents(new CommandListener(), this);
         pluginManager.registerEvents(new FilterListener(), this);
-        pluginManager.registerEvents(new ApolloListener(), this);
+        pluginManager.registerEvents(new MineAlertListener(), this);
     }
 
     private void registerTasks() {

@@ -38,6 +38,8 @@ public class Data {
 
     private final Set<UUID> staffTeam = new HashSet<>();
 
+    private final Set<UUID> mineAlerts = new HashSet<>();
+
     @Setter
     private boolean isChatMuted = false;
     @Setter private int chatSlowdown = 0;
