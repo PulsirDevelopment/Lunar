@@ -53,7 +53,8 @@ import java.util.UUID;
 @Getter
 public final class Lunar extends JavaPlugin {
 
-    @Getter private static Lunar instance;
+    @Getter
+    private static Lunar instance;
     private Data data;
     private RedisManager redisManager;
 
@@ -63,14 +64,17 @@ public final class Lunar extends JavaPlugin {
     private Config messages;
 
     private IDatabase database;
-    @Getter private Message message;
+    @Getter
+    private Message message;
     private Filter filter;
 
     private final InventoryManager inventoryManager = new InventoryManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
 
-    @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
-    @Getter private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
+    @Getter
+    private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
+    @Getter
+    private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
 
     private final API api = new API();
     private boolean lunarAPI = false;
@@ -256,11 +260,9 @@ public final class Lunar extends JavaPlugin {
     }
 
     private void registerTasks() {
-        if (getConfiguration().getConfiguration().getBoolean("staff-bar")) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new LunarTask(), 0L, 20L);
-        } else {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ServerTask(), 0L, 20L);
-        }
+        boolean useStaffBar = getConfiguration().getConfiguration().getBoolean("staff-bar");
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, useStaffBar ? new LunarTask() : new ServerTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
     }
