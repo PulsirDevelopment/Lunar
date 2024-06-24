@@ -2,73 +2,89 @@ package net.pulsir.lunar.task;
 
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.session.SessionPlayer;
+import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class ServerTask implements Runnable {
 
     @Override
     public void run() {
-        if (!Lunar.getInstance().getData().getStaffMembers().isEmpty()) {
-            for (final UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
-                if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.staff")) {
-                    Lunar.getInstance().getData().getStaffMode().remove(uuid);
-                    Lunar.getInstance().getData().getStaffMembers().remove(uuid);
-                }
-                if (!Objects.requireNonNull(Bukkit.getPlayer(uuid)).hasPermission("lunar.spy")) {
-                    Lunar.getInstance().getData().getSpy().remove(uuid);
+        Map<UUID, Set<UUID>> spyMap = Lunar.getInstance().getData().getSpy();
+        Set<UUID> staffModeSet = Lunar.getInstance().getData().getStaffMode();
+        Set<UUID> staffMembersSet = Lunar.getInstance().getData().getStaffMembers();
+
+        if (!staffMembersSet.isEmpty()) {
+            for (final UUID uuid : staffMembersSet) {
+                Player player = Bukkit.getPlayer(uuid);
+                if (player != null) {
+                    if (!player.hasPermission("lunar.staff")) {
+                        staffModeSet.remove(uuid);
+                        staffMembersSet.remove(uuid);
+                    }
+                    if (!player.hasPermission("lunar.spy")) {
+                        spyMap.remove(uuid);
+                    }
                 }
             }
         }
 
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             if (onlinePlayers.hasPermission("lunar.staff")) {
-                Lunar.getInstance().getData().getStaffMembers().add(onlinePlayers.getUniqueId());
-            }
+                staffMembersSet.add(onlinePlayers.getUniqueId());
 
-            if (!Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().containsKey(onlinePlayers.getUniqueId())) {
-                Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().put(onlinePlayers.getUniqueId(),
-                        new SessionPlayer(onlinePlayers.getUniqueId(), 0));
+                SessionPlayerManager sessionManager = Lunar.getInstance().getSessionPlayerManager();
+                sessionManager.getSessionPlayers().computeIfAbsent(
+                        onlinePlayers.getUniqueId(),
+                        uuid -> new SessionPlayer(onlinePlayers.getUniqueId(), 0));
             }
         }
 
-        for (UUID uuid : Lunar.getInstance().getData().getRequestCooldown().keySet()) {
-            if (Lunar.getInstance().getData().getRequestCooldown().get(uuid) <= 1) {
-                Lunar.getInstance().getData().getRequestCooldown().remove(uuid);
+        Map<UUID, Integer> requestCooldown = Lunar.getInstance().getData().getRequestCooldown();
+        for (UUID uuid : requestCooldown.keySet()) {
+            if (requestCooldown.get(uuid) <= 1) {
+                requestCooldown.remove(uuid);
             } else {
-                Lunar.getInstance().getData().getRequestCooldown().replace(uuid,
-                        Lunar.getInstance().getData().getRequestCooldown().get(uuid),
-                        Lunar.getInstance().getData().getRequestCooldown().get(uuid) - 1);
+                requestCooldown.replace(
+                        uuid,
+                        requestCooldown.get(uuid),
+                        requestCooldown.get(uuid) - 1);
             }
         }
 
-        for (UUID uuid : Lunar.getInstance().getData().getReportCooldown().keySet()) {
-            if (Lunar.getInstance().getData().getReportCooldown().get(uuid) <= 1) {
-                Lunar.getInstance().getData().getReportCooldown().remove(uuid);
+        Map<UUID, Integer> reportCooldown = Lunar.getInstance().getData().getReportCooldown();
+        for (UUID uuid : reportCooldown.keySet()) {
+            if (reportCooldown.get(uuid) <= 1) {
+                reportCooldown.remove(uuid);
             } else {
-                Lunar.getInstance().getData().getReportCooldown().replace(uuid,
-                        Lunar.getInstance().getData().getReportCooldown().get(uuid),
-                        Lunar.getInstance().getData().getReportCooldown().get(uuid) - 1);
+                reportCooldown.replace(
+                        uuid,
+                        reportCooldown.get(uuid),
+                        reportCooldown.get(uuid) - 1);
             }
         }
 
-        for (final UUID uuid : Lunar.getInstance().getData().getFightingPlayers().keySet()) {
-            if (Lunar.getInstance().getData().getFightingPlayers().get(uuid) <= 1) {
-                Lunar.getInstance().getData().getFightingPlayers().remove(uuid);
+        Map<UUID, Integer> fightingMap = Lunar.getInstance().getData().getFightingPlayers();
+        for (final UUID uuid : fightingMap.keySet()) {
+            if (fightingMap.get(uuid) <= 1) {
+                fightingMap.remove(uuid);
             }
         }
 
-        if (!Lunar.getInstance().getData().getSlowdownedPlayers().isEmpty()) {
-            for (final UUID uuid : Lunar.getInstance().getData().getSlowdownedPlayers().keySet()) {
-                if (Lunar.getInstance().getData().getSlowdownedPlayers().get(uuid) <= 0) {
-                    Lunar.getInstance().getData().getSlowdownedPlayers().remove(uuid);
+        Map<UUID, Integer> slowedMap = Lunar.getInstance().getData().getSlowdownedPlayers();
+        if (!slowedMap.isEmpty()) {
+            for (final UUID uuid : slowedMap.keySet()) {
+                if (slowedMap.get(uuid) <= 0) {
+                    slowedMap.remove(uuid);
                 } else {
-                    Lunar.getInstance().getData().getSlowdownedPlayers().replace(uuid,
-                            Lunar.getInstance().getData().getSlowdownedPlayers().get(uuid),
-                            Lunar.getInstance().getData().getSlowdownedPlayers().get(uuid) - 1);
+                    slowedMap.replace(
+                            uuid,
+                            slowedMap.get(uuid),
+                            slowedMap.get(uuid) - 1);
                 }
             }
         }

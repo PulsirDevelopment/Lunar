@@ -5,7 +5,11 @@ import net.pulsir.lunar.api.API;
 import net.pulsir.lunar.chat.ChatMuteCommand;
 import net.pulsir.lunar.chat.ChatSlowDownCommand;
 import net.pulsir.lunar.chat.ChatUnMuteCommand;
-import net.pulsir.lunar.command.chat.*;
+import net.pulsir.lunar.command.chat.AdminChatCommand;
+import net.pulsir.lunar.command.chat.FilterChatCommand;
+import net.pulsir.lunar.command.chat.FrozenChatCommand;
+import net.pulsir.lunar.command.chat.OwnerChatCommand;
+import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
@@ -32,7 +36,11 @@ import net.pulsir.lunar.utils.command.completer.type.CompleterType;
 import net.pulsir.lunar.utils.command.manager.CommandManager;
 import net.pulsir.lunar.utils.config.Config;
 import net.pulsir.lunar.utils.message.Message;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -45,7 +53,8 @@ import java.util.UUID;
 @Getter
 public final class Lunar extends JavaPlugin {
 
-    @Getter private static Lunar instance;
+    @Getter
+    private static Lunar instance;
     private Data data;
     private RedisManager redisManager;
 
@@ -55,14 +64,17 @@ public final class Lunar extends JavaPlugin {
     private Config messages;
 
     private IDatabase database;
-    @Getter private Message message;
+    @Getter
+    private Message message;
     private Filter filter;
 
     private final InventoryManager inventoryManager = new InventoryManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
 
-    @Getter private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
-    @Getter private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
+    @Getter
+    private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
+    @Getter
+    private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
 
     private final API api = new API();
     private boolean lunarAPI = false;
@@ -74,16 +86,7 @@ public final class Lunar extends JavaPlugin {
         this.loadConfiguration();
         this.message = new Message();
 
-        if (Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).equalsIgnoreCase("mongo")) {
-            database = new Mongo();
-            Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded MONGO as database.");
-        } else if (Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).equalsIgnoreCase("flatfile")) {
-            database = new FlatFile();
-            Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded FLATFILE as database.");
-        } else {
-            Bukkit.getConsoleSender().sendMessage("[Lunar] Unsupported database. Loading default one [FLATFILE].");
-            database = new FlatFile();
-        }
+        this.setupDatabase();
 
         this.registerCommands();
         Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded commands.");
@@ -92,22 +95,7 @@ public final class Lunar extends JavaPlugin {
 
         this.data = new Data();
 
-        if (configuration.getConfiguration().getBoolean("allow-sync")) {
-            if (Objects.requireNonNull(configuration.getConfiguration().getString("sync-system")).equalsIgnoreCase("bungee")) {
-                Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
-                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded BUNGEE as sync system.");
-            } else if (Objects.requireNonNull(configuration.getConfiguration().getString("sync-system")).equalsIgnoreCase("redis")) {
-                this.redisManager = new RedisManager(configuration.getConfiguration().getBoolean("redis.auth"));
-                this.redisManager.subscribe();
-                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded REDIS as sync system.");
-            } else {
-                Bukkit.getConsoleSender().sendMessage("[Lunar] Unsupported sync system. Loading default one [BUNGEE].");
-                Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
-                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded BUNGEE as sync system.");
-            }
-        }
+        this.setupSyncSystem();
 
         this.registerTasks();
 
@@ -138,7 +126,6 @@ public final class Lunar extends JavaPlugin {
                 getData().getStaffMode().clear();
 
                 Location location = player.getLocation();
-
                 if (location.getBlock().getType().equals(Material.AIR)) {
 
                     for (int i = location.getBlockY(); i > 1; i--) {
@@ -172,6 +159,48 @@ public final class Lunar extends JavaPlugin {
         this.language.create();
         this.inventory.create();
         this.messages.create();
+    }
+
+    private void setupDatabase() {
+        String databaseType = Objects.requireNonNull(getConfiguration().getConfiguration().getString("database")).toLowerCase();
+
+        switch (databaseType) {
+            case "mongo" -> {
+                database = new Mongo();
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded MONGO as database.");
+            }
+            case "flatfile" -> {
+                database = new FlatFile();
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded FLATFILE as database.");
+            }
+            default -> {
+                database = new FlatFile();
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Unsupported database. Loading FLATFILE as default.");
+            }
+        }
+    }
+
+    private void setupSyncSystem() {
+        if (!configuration.getConfiguration().getBoolean("allow-sync")) return;
+
+        String syncSystem = Objects.requireNonNull(configuration.getConfiguration().getString("sync-system")).toLowerCase();
+        switch (syncSystem) {
+            case "redis" -> {
+                this.redisManager = new RedisManager(configuration.getConfiguration().getBoolean("redis.auth"));
+                this.redisManager.subscribe();
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded REDIS as sync system.");
+            }
+            case "bungee" -> {
+                Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
+                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded BUNGEE as sync system.");
+            }
+            default -> {
+                Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
+                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Unsupported sync system. Loading BUNGEE as default sync system.");
+            }
+        }
     }
 
     private void registerCommands() {
@@ -231,11 +260,9 @@ public final class Lunar extends JavaPlugin {
     }
 
     private void registerTasks() {
-        if (getConfiguration().getConfiguration().getBoolean("staff-bar")) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new LunarTask(), 0L, 20L);
-        } else {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new ServerTask(), 0L, 20L);
-        }
+        boolean useStaffBar = getConfiguration().getConfiguration().getBoolean("staff-bar");
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, useStaffBar ? new LunarTask() : new ServerTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
     }
