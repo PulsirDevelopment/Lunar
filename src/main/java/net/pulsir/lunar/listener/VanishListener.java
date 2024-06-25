@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -44,6 +46,15 @@ public class VanishListener implements Listener {
                 event.setCancelled(true);
             }
         }
+
+        if (event.getDamager() instanceof Player player) {
+            if (Lunar.getInstance().getData().getVanish().contains(player.getUniqueId())) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                        .getLanguage().getConfiguration().getString("VANISH.DECLINE-ATTACK")));
+                event.setDamage(0);
+                event.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
@@ -63,6 +74,24 @@ public class VanishListener implements Listener {
                 event.setDamage(0);
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        if (Lunar.getInstance().getData().getVanish().contains(event.getPlayer().getUniqueId())) {
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("VANISH.DECLINE-PLACE-BLOCK")));
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        if (Lunar.getInstance().getData().getVanish().contains(event.getPlayer().getUniqueId())) {
+            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("VANISH.DECLINE-BREAK-BLOCK")));
+            event.setCancelled(true);
         }
     }
 }

@@ -34,6 +34,9 @@ STAFF-MODE:
 VANISH:
   ENABLED: "&aVanish has been enabled."
   DISABLED: "&cVanish has been disabled."
+  DECLINE-BREAK-BLOCK: "&cYou can't break blocks while being in vanish."
+  DECLINE-PLACE-BLOCK: "&cYou can't place blocks while being in vanish."
+  DECLINE-ATTACK: "&cYou can't attack entities while being in vanish."
 
 STAFF-BAR: "&dChat&f: {chat} &f| &dVanish&f: {vanish} &f| &dOnline&f: {online} &f| &dStaff&f: {staff}"
 
