@@ -265,25 +265,26 @@ public class StaffModeListener implements Listener {
 
     @EventHandler
     public void onVanish(PlayerInteractEvent event) {
-        if (!event.getPlayer().hasPermission("lunar.staff")) return;
+        Player player = event.getPlayer();
+        ItemStack item = player.getInventory().getItemInMainHand();
+
+        if (!player.hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
 
-        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+        if (item.getItemMeta() == null) return;
+        if (!item.getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) {
+            return;
+        }
+
+        String key = item.getItemMeta()
+                .getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
 
         if (key == null || !key.equalsIgnoreCase("vanish")) return;
-        event.getPlayer().performCommand("vanish");
-
-        if (Lunar.getInstance().getData().getVanish().contains(event.getPlayer().getUniqueId())) {
-            event.getPlayer().getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
-                    .getInt("staff-items.vanish.slot"), Staff.unvanish());
-        } else {
-            event.getPlayer().getInventory().setItem(Lunar.getInstance().getConfiguration().getConfiguration()
-                    .getInt("staff-items.vanish.slot"), Staff.vanish());
-        }
+        player.performCommand("vanish");
     }
 
     @EventHandler
