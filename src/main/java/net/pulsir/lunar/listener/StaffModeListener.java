@@ -1,5 +1,6 @@
 package net.pulsir.lunar.listener;
 
+import io.papermc.paper.event.entity.EntityDamageItemEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.pulsir.lunar.Lunar;
@@ -8,7 +9,6 @@ import net.pulsir.lunar.utils.bungee.Bungee;
 import net.pulsir.lunar.utils.bungee.message.ChannelType;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
-import net.pulsir.lunar.utils.staff.Staff;
 import net.pulsir.lunar.utils.time.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -20,17 +20,30 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 
 public class StaffModeListener implements Listener {
 
@@ -152,8 +165,10 @@ public class StaffModeListener implements Listener {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
+            return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
@@ -181,8 +196,10 @@ public class StaffModeListener implements Listener {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
+            return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
@@ -226,8 +243,10 @@ public class StaffModeListener implements Listener {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
+            return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
@@ -291,9 +310,12 @@ public class StaffModeListener implements Listener {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
+            return;
+        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
+            return;
 
         String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
@@ -360,9 +382,12 @@ public class StaffModeListener implements Listener {
     public void onFreeze(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null)
+            return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
+            return;
         if (!(event.getRightClicked() instanceof Player target)) return;
         if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
 
@@ -407,7 +432,7 @@ public class StaffModeListener implements Listener {
                                     .replace("{player}", target.getName())
                                     .replace("{staff}", event.getPlayer().getName())
                                     .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration()
-                                                    .getString("server-name"))),
+                                            .getString("server-name"))),
                             ChannelType.UNFREEZE);
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
@@ -463,9 +488,12 @@ public class StaffModeListener implements Listener {
     public void onInspect(PlayerInteractAtEntityEvent event) {
         if (!event.getPlayer().hasPermission("lunar.staff")) return;
         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null)
+            return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
+            return;
+        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
+            return;
         if (!(event.getRightClicked() instanceof Player target)) return;
         if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
         Player player = event.getPlayer();
@@ -477,5 +505,76 @@ public class StaffModeListener implements Listener {
 
         InspectionInventory inventory = new InspectionInventory(target);
         inventory.open(player);
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        Set<UUID> staffSet = Lunar.getInstance().getData().getStaffMode();
+        if (event.getEntity() instanceof Player player) {
+            if (staffSet.contains(player.getUniqueId())) {
+                event.setDamage(0);
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+        Set<UUID> staffSet = Lunar.getInstance().getData().getStaffMode();
+
+        if (event.getEntity() instanceof Player player) {
+            if (staffSet.contains(player.getUniqueId())) {
+                event.setDamage(0);
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onItemDamage(EntityDamageItemEvent event) {
+        Set<UUID> staffSet = Lunar.getInstance().getData().getStaffMode();
+
+        if (event.getEntity() instanceof Player player) {
+            if (staffSet.contains(player.getUniqueId())) {
+                event.setDamage(0);
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageByBlockEvent event) {
+        Set<UUID> staffSet = Lunar.getInstance().getData().getStaffMode();
+
+        if (event.getEntity() instanceof Player player) {
+            if (staffSet.contains(player.getUniqueId())) {
+                event.setDamage(0);
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onLivingEntityTarget(EntityTargetLivingEntityEvent event) {
+        Set<UUID> staffModeSet = Lunar.getInstance().getData().getStaffMode();
+
+        if (event.getTarget() instanceof Player player) {
+            if (staffModeSet.contains(player.getUniqueId())) {
+                event.setTarget(null);
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityTarget(EntityTargetEvent event) {
+        Set<UUID> staffModeSet = Lunar.getInstance().getData().getStaffMode();
+
+        if (event.getTarget() instanceof Player player) {
+            if (staffModeSet.contains(player.getUniqueId())) {
+                event.setTarget(null);
+                event.setCancelled(true);
+            }
+        }
     }
 }
