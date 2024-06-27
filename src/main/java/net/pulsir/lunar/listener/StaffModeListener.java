@@ -15,6 +15,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -270,9 +271,7 @@ public class StaffModeListener implements Listener {
 
         if (!player.hasPermission("lunar.staff")) return;
         if (!event.hasItem() || event.getItem() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null) return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) return;
+        if (event.getClickedBlock() != null && event.useInteractedBlock() == Event.Result.DENY) return;
 
         if (item.getItemMeta() == null) return;
         if (!item.getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey())) {
