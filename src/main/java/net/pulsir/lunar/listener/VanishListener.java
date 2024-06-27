@@ -13,6 +13,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Set;
@@ -118,6 +120,32 @@ public class VanishListener implements Listener {
         if (vanishSet.contains(event.getPlayer().getUniqueId())) {
             event.getPlayer().sendMessage(message.getMessage(language.getConfiguration().getString("VANISH.DECLINE-BREAK-BLOCK")));
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onLivingEntityTarget(EntityTargetLivingEntityEvent event) {
+        Set<UUID> vanishSet = Lunar.getInstance().getData().getVanish();
+
+        if (event.getTarget() instanceof Player player) {
+            if (vanishSet.contains(player.getUniqueId())) {
+                event.setTarget(null);
+                event.setCancelled(true);
+                player.sendMessage(event.getReason() + " vanish living");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityTarget(EntityTargetEvent event) {
+        Set<UUID> vanishSet = Lunar.getInstance().getData().getVanish();
+
+        if (event.getTarget() instanceof Player player) {
+            if (vanishSet.contains(player.getUniqueId())) {
+                event.setTarget(null);
+                event.setCancelled(true);
+                player.sendMessage(event.getReason() + " vanish");
+            }
         }
     }
 }
