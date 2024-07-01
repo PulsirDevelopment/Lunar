@@ -131,7 +131,6 @@ public class VanishListener implements Listener {
             if (vanishSet.contains(player.getUniqueId())) {
                 event.setTarget(null);
                 event.setCancelled(true);
-                player.sendMessage(event.getReason() + " vanish living");
             }
         }
     }
@@ -144,7 +143,6 @@ public class VanishListener implements Listener {
             if (vanishSet.contains(player.getUniqueId())) {
                 event.setTarget(null);
                 event.setCancelled(true);
-                player.sendMessage(event.getReason() + " vanish");
             }
         }
     }
