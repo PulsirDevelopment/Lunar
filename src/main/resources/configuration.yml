@@ -226,6 +226,7 @@ inspect-inventory:
 silent-inventory:
   chest-title: "&7Silent Chest"
   enderchest-title: "&7Silent EnderChest"
+  shulker-title: "&7Shulker Box"
 
 clear-chat:
   lines: 200

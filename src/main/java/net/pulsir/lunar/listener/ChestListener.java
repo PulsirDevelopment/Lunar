@@ -6,6 +6,7 @@ import net.pulsir.lunar.Lunar;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -57,6 +58,22 @@ public class ChestListener implements Listener {
                                 .getInstance().getLanguage().getConfiguration()
                                 .getString("SILENT.ENDER-CHEST")));
                     }
+
+                    if (event.getClickedBlock().getType().name().contains("SHULKER_BOX")) {
+                        ShulkerBox shulkerBox = (ShulkerBox) event.getClickedBlock().getState();
+                        Inventory inventory = Bukkit.createInventory(event.getPlayer(), 27, Lunar.getInstance().getMessage()
+                                .getMessage(Lunar.getInstance().getConfiguration()
+                                        .getConfiguration().getString("silent-inventory.shulker-title")));
+
+                        inventory.setContents(shulkerBox.getInventory().getContents());
+
+                        event.getPlayer().openInventory(inventory);
+                        event.setCancelled(true);
+
+                        event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
+                                .getInstance().getLanguage().getConfiguration()
+                                .getString("SILENT.SHULKER-BOX")));
+                    }
                 }
             }
         }
@@ -75,6 +92,13 @@ public class ChestListener implements Listener {
                 .equalsIgnoreCase(Lunar.getInstance().getConfiguration().getConfiguration().getString("silent-inventory.enderchest-title"))
                 || LegacyComponentSerializer.legacyAmpersand().serialize(event.getView().title()).equalsIgnoreCase(Lunar.getInstance()
                 .getConfiguration().getConfiguration().getString("silent-inventory.enderchest-title"))) {
+            event.setCancelled(true);
+        }
+
+        if (MiniMessage.miniMessage().serialize(event.getView().title())
+                .equalsIgnoreCase(Lunar.getInstance().getConfiguration().getConfiguration().getString("silent-inventory.shulker-title"))
+                || LegacyComponentSerializer.legacyAmpersand().serialize(event.getView().title()).equalsIgnoreCase(Lunar.getInstance()
+                .getConfiguration().getConfiguration().getString("silent-inventory.shulker-title"))) {
             event.setCancelled(true);
         }
     }

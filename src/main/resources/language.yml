@@ -154,12 +154,19 @@ CHAT-SLOWDOWN:
 SILENT:
   CHEST: "&7Opening chest silently."
   ENDER-CHEST: "&7Opening enderchest silently."
+  SHULKER-BOX: "&7Opening shulker box silently."
 
 SESSION:
   SECONDS: "&7Seconds"
   MINUTES: "&7Minutes"
   HOURS: "&7Hours"
   DAYS: "&7Days"
+  USAGE:
+    - ""
+    - "&c/session check <player>"
+    - ""
+  CHECK: "&e{player}'s &7session time is &e{time}"
+  FAILED: "&e{player} doesn't exists in session database."
 
 TPHERE:
   USAGE: "&c/tphere <player>"

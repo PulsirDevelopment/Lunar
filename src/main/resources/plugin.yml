@@ -49,3 +49,5 @@ commands:
     aliases: [showmod]
   minealerts:
     aliases: [minealert]
+  session:
+    aliases: [sessions]

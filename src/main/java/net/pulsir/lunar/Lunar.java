@@ -16,6 +16,7 @@ import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
 import net.pulsir.lunar.command.restore.LastInventoryCommand;
+import net.pulsir.lunar.command.session.SessionCommand;
 import net.pulsir.lunar.command.staff.*;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
@@ -235,6 +236,8 @@ public final class Lunar extends JavaPlugin {
         Objects.requireNonNull(getCommand("showstaff")).setExecutor(new ShowStaffCommand());
 
         Objects.requireNonNull(getCommand("minealerts")).setExecutor(new MineAlertCommand());
+
+        Objects.requireNonNull(getCommand("session")).setExecutor(new SessionCommand());
 
         CommandManager chatManager = new CommandManager(getCommand("chat"));
 
