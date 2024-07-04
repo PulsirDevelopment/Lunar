@@ -22,7 +22,8 @@ public class ChestListener implements Listener {
     public void onRightClick(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("silent-chests")) {
-                if (Lunar.getInstance().getData().getStaffMode().contains(event.getPlayer().getUniqueId())) {
+                if (Lunar.getInstance().getData().getStaffMode().contains(event.getPlayer().getUniqueId())
+                || Lunar.getInstance().getData().getVanish().contains(event.getPlayer().getUniqueId())) {
                     if (Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.CHEST)
                             || event.getClickedBlock().getType().equals(Material.TRAPPED_CHEST)) {
                         Chest chest = (Chest) event.getClickedBlock().getState();
