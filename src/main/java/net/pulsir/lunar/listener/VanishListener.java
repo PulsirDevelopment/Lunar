@@ -1,6 +1,7 @@
 package net.pulsir.lunar.listener;
 
 import io.papermc.paper.event.entity.EntityDamageItemEvent;
+import lombok.Setter;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.config.Config;
 import net.pulsir.lunar.utils.message.Message;
@@ -26,6 +27,7 @@ public class VanishListener implements Listener {
     Hides joining staff to already online players who don't have permissions.
      */
     @EventHandler
+    @SuppressWarnings("ALL")
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Config config = Lunar.getInstance().getConfiguration();
@@ -39,6 +41,17 @@ public class VanishListener implements Listener {
                     .stream()
                     .filter(online -> !vanishSet.contains(online.getUniqueId()))
                     .forEach(onlinePlayer -> onlinePlayer.hidePlayer(Lunar.getInstance(), player));
+        }
+
+        if (!player.hasPermission("lunar.command.vanish")) {
+            if (Lunar.getInstance().getData().getVanish().isEmpty()) return;
+            for (final UUID vanishedPlayers : Lunar.getInstance().getData().getVanish()) {
+                Player vanishedPlayer = Bukkit.getPlayer(vanishedPlayers);
+
+                if (vanishedPlayer != null) {
+                    player.hidePlayer(vanishedPlayer);
+                }
+            }
         }
     }
 

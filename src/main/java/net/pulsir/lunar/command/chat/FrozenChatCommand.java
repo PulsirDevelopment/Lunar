@@ -20,6 +20,7 @@ public class FrozenChatCommand implements CommandExecutor {
         }
 
         if (Lunar.getInstance().getData().getFreezeChat().contains(player.getUniqueId())) {
+            Lunar.getInstance().getData().getFreezeChat().remove(player.getUniqueId());
             player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                     .getConfiguration().getString("FREEZE-CHAT.DISABLED")));
         } else {
