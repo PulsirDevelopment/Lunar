@@ -1,6 +1,7 @@
 package net.pulsir.lunar.command.restore;
 
 import net.pulsir.lunar.Lunar;
+import net.pulsir.lunar.utils.discord.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +55,21 @@ public class InventoryRestoreCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
                             .getString("RESTORE.RESTORED"))
                     .replace("{player}", target.getName())));
+
+            if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-refund.enabled")) {
+                DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                        .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-refund.message"))
+                                .replace("{player}", sender.getName())
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))
+                                .replace("{target}", target.getName()))
+                        .setAuthor(sender.getName(), "", ""));
+                try {
+                    discordWebhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
 
         return true;

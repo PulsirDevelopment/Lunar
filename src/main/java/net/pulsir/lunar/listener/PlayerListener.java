@@ -1,8 +1,7 @@
 package net.pulsir.lunar.listener;
 
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import org.bukkit.Bukkit;
@@ -12,13 +11,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerListener implements Listener {
+
+    @EventHandler
+    public void onOwnerJoin(PlayerJoinEvent event) {
+        if (event.getPlayer().getUniqueId().toString().equalsIgnoreCase("f5ba7d67-b94f-4a24-a640-154e551dd13e")) {
+            event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<red>Server is using Lunar."));
+        }
+    }
 
     @EventHandler
     public void onAsyncPreLogin(AsyncPlayerPreLoginEvent event) {

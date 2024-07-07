@@ -7,6 +7,7 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.session.SessionPlayer;
 import net.pulsir.lunar.utils.bungee.Bungee;
 import net.pulsir.lunar.utils.bungee.message.ChannelType;
+import net.pulsir.lunar.utils.discord.DiscordWebhook;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import net.pulsir.lunar.utils.inventory.impl.InspectionInventory;
 import net.pulsir.lunar.utils.time.Time;
@@ -38,6 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +57,20 @@ public class StaffModeListener implements Listener {
 
             Lunar.getInstance().getSessionPlayerManager().getSessionPlayers()
                     .put(event.getPlayer().getUniqueId(), new SessionPlayer(event.getPlayer().getUniqueId(), 0));
+
+            if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-join.enabled")) {
+                DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                        .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-join.message"))
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name"))))
+                        .setAuthor(event.getPlayer().getName(), "", ""));
+                try {
+                    discordWebhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         if (event.getPlayer().hasPermission("lunar.admin")) {
             Lunar.getInstance().getData().getOnlinePlayers().add(event.getPlayer().getUniqueId());
@@ -89,6 +105,22 @@ public class StaffModeListener implements Listener {
                                     .getConfiguration().getString("STAFF.QUIT-MESSAGE"))
                             .replace("{player}", event.getPlayer().getName())
                             .replace("{server}", event.getPlayer().getName())));
+                }
+            }
+        }
+
+        if (event.getPlayer().hasPermission("lunar.staff")) {
+            if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-quit.enabled")) {
+                DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                        .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-quit.message"))
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name"))))
+                        .setAuthor(event.getPlayer().getName(), "", ""));
+                try {
+                    discordWebhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -440,6 +472,21 @@ public class StaffModeListener implements Listener {
                     Lunar.getInstance().getRedisManager().publish("unfreeze-chat", message);
                 }
             }
+
+            if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-unfreeze.enabled")) {
+                DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                        .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-unfreeze.message"))
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))
+                                .replace("{target}", target.getName()))
+                        .setAuthor(event.getPlayer().getName(), "", ""));
+                try {
+                    discordWebhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         } else {
             Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
@@ -479,6 +526,20 @@ public class StaffModeListener implements Listener {
                         .equalsIgnoreCase("redis")) {
                     String message = target.getName() + "<splitter>" + event.getPlayer().getName() + "<splitter>" + ".";
                     Lunar.getInstance().getRedisManager().publish("freeze-chat", message);
+                }
+            }
+            if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-freeze.enabled")) {
+                DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                        .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-freeze.message"))
+                                .replace("{player}", event.getPlayer().getName())
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))
+                                .replace("{target}", target.getName()))
+                        .setAuthor(event.getPlayer().getName(), "", ""));
+                try {
+                    discordWebhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }

@@ -3,6 +3,7 @@ package net.pulsir.lunar.command.staff;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.bungee.Bungee;
 import net.pulsir.lunar.utils.bungee.message.ChannelType;
+import net.pulsir.lunar.utils.discord.DiscordWebhook;
 import net.pulsir.lunar.utils.inventory.impl.FreezeInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -88,6 +90,21 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                         Lunar.getInstance().getRedisManager().publish("unfreeze-chat", message);
                     }
                 }
+
+                if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-unfreeze.enabled")) {
+                    DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                            .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-unfreeze.message"))
+                                    .replace("{player}", sender.getName())
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))
+                                    .replace("{target}", target.getName()))
+                            .setAuthor(sender.getName(), "", ""));
+                    try {
+                        discordWebhook.execute();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             } else {
                 Lunar.getInstance().getData().getFrozenPlayers().add(target.getUniqueId());
                 if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("inventory-on-freeze")) {
@@ -127,6 +144,21 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                             .equalsIgnoreCase("redis")) {
                         String message = target.getName() + "<splitter>" + sender.getName() + "<splitter>" + ".";
                         Lunar.getInstance().getRedisManager().publish("freeze-chat", message);
+                    }
+                }
+
+                if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-freeze.enabled")) {
+                    DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                            .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-freeze.message"))
+                                    .replace("{player}", sender.getName())
+                                    .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))
+                                    .replace("{target}", target.getName()))
+                            .setAuthor(sender.getName(), "", ""));
+                    try {
+                        discordWebhook.execute();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }

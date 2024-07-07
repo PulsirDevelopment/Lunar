@@ -1,0 +1,22 @@
+enabled: false
+webhook-url: ""
+
+staff-join:
+  enabled: true
+  message: "**{player}** has joined (**{server}**)"
+
+staff-quit:
+  enabled: true
+  message: "**{player}** has quit (**{server}**)"
+
+staff-freeze:
+  enabled: true
+  message: "(**{server}**) **{target}** has been frozen by **{player}**"
+
+staff-unfreeze:
+  enabled: true
+  message: "(**{server}**) **{target}** has been unfrozen by **{player}**"
+
+staff-refund:
+  enabled: true
+  message: "(**{server}**) **{target}'s** inventory has been refunded by **{player}**"
