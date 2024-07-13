@@ -218,8 +218,10 @@ public class StaffModeListener implements Listener {
                                 .getConfiguration().getString("STAFF.TELEPORTED"))
                         .replace("{player}", randomPlayer.getName())));
             } else {
-                event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
-                        .getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")));
+                if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")).isEmpty()) {
+                    event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                            .getLanguage().getConfiguration().getString("STAFF.TELEPORT-FAIL")));
+                }
             }
         }
     }

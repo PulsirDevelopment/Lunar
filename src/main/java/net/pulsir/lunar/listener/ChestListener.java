@@ -38,9 +38,11 @@ public class ChestListener implements Listener {
                         event.getPlayer().openInventory(playerInventory);
                         event.setCancelled(true);
 
-                        event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
-                                .getInstance().getLanguage().getConfiguration()
-                                .getString("SILENT.CHEST")));
+                        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("SILENT.CHEST")).isEmpty()) {
+                            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
+                                    .getInstance().getLanguage().getConfiguration()
+                                    .getString("SILENT.CHEST")));
+                        }
                     }
 
                     if (event.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
@@ -55,9 +57,11 @@ public class ChestListener implements Listener {
                         event.getPlayer().openInventory(playerInventory);
                         event.setCancelled(true);
 
-                        event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
-                                .getInstance().getLanguage().getConfiguration()
-                                .getString("SILENT.ENDER-CHEST")));
+                        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("SILENT.ENDER-CHEST")).isEmpty()) {
+                            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
+                                    .getInstance().getLanguage().getConfiguration()
+                                    .getString("SILENT.ENDER-CHEST")));
+                        }
                     }
 
                     if (event.getClickedBlock().getType().name().contains("SHULKER_BOX")) {
@@ -71,9 +75,11 @@ public class ChestListener implements Listener {
                         event.getPlayer().openInventory(inventory);
                         event.setCancelled(true);
 
-                        event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
-                                .getInstance().getLanguage().getConfiguration()
-                                .getString("SILENT.SHULKER-BOX")));
+                        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("SILENT.SHULKER-BOX")).isEmpty()) {
+                            event.getPlayer().sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar
+                                    .getInstance().getLanguage().getConfiguration()
+                                    .getString("SILENT.SHULKER-BOX")));
+                        }
                     }
                 }
             }
