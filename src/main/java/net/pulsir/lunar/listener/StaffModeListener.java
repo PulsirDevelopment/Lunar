@@ -37,6 +37,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.IOException;
@@ -547,25 +548,22 @@ public class StaffModeListener implements Listener {
 
     @EventHandler
     public void onInspect(PlayerInteractAtEntityEvent event) {
-        if (!event.getPlayer().hasPermission("lunar.staff")) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getPlayer().getInventory().getItemInMainHand() == null || event.getPlayer().getInventory().getItemInMainHand().getItemMeta() == null)
-            return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() == null)
-            return;
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(Lunar.getInstance().getNamespacedKey()))
-            return;
-        if (!(event.getRightClicked() instanceof Player target)) return;
-        if (!(event.getHand().equals(EquipmentSlot.HAND))) return;
         Player player = event.getPlayer();
+        ItemStack itemInHand = player.getInventory().getItemInMainHand();
 
-        String key = event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                .get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
+        if (!player.hasPermission("lunar.staff")
+                || itemInHand.getItemMeta() == null
+                || !event.getHand().equals(EquipmentSlot.HAND)
+                || !(event.getRightClicked() instanceof Player target)) {
+            return;
+        }
 
-        if (key == null || !key.equalsIgnoreCase("inspect")) return;
+        PersistentDataContainer dataContainer = itemInHand.getItemMeta().getPersistentDataContainer();
+        String key = dataContainer.get(Lunar.getInstance().getNamespacedKey(), PersistentDataType.STRING);
 
-        InspectionInventory inventory = new InspectionInventory(target);
-        inventory.open(player);
+        if (!"inspect".equalsIgnoreCase(key)) return;
+
+        new InspectionInventory(target).open(player);
     }
 
     @EventHandler
