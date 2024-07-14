@@ -110,8 +110,6 @@ public final class Lunar extends JavaPlugin {
         }
 
         this.filter = new Filter();
-
-        Bukkit.getConsoleSender().sendMessage(Color.WHITE + "|-------------------------------------|");
     }
 
     @Override
