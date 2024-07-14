@@ -37,11 +37,7 @@ import net.pulsir.lunar.utils.command.completer.type.CompleterType;
 import net.pulsir.lunar.utils.command.manager.CommandManager;
 import net.pulsir.lunar.utils.config.Config;
 import net.pulsir.lunar.utils.message.Message;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -78,8 +74,17 @@ public final class Lunar extends JavaPlugin {
     private boolean lunarAPI = false;
 
     @Override
+    @SuppressWarnings("ALL")
     public void onEnable() {
         instance = this;
+
+        Bukkit.getConsoleSender().sendMessage(" ");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + ",--.   ,--. ,--.,--.  ,--.  ,---.  ,------.");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  |   |  | |  ||  ,'.|  | /  O  \\ |  .--. ' ");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  |   |  | |  ||  |' '  ||  .-.  ||  '--'.' " + ChatColor.YELLOW + "Lunar " + ChatColor.WHITE + "v.2.1.4");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  '--.'  '-'  '|  | `   ||  | |  ||  |\\  \\  ");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "`-----' `-----' `--'  `--'`--' `--'`--' '--' ");
+        Bukkit.getConsoleSender().sendMessage(" ");
 
         this.loadConfiguration();
         this.message = new Message();
@@ -105,6 +110,8 @@ public final class Lunar extends JavaPlugin {
         }
 
         this.filter = new Filter();
+
+        Bukkit.getConsoleSender().sendMessage(Color.WHITE + "|-------------------------------------|");
     }
 
     @Override
