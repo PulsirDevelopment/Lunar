@@ -239,6 +239,8 @@ public final class Lunar extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("session")).setExecutor(new SessionCommand());
 
+        Objects.requireNonNull(getCommand("serverfreeze")).setExecutor(new ServerFreezeCommand());
+
         CommandManager chatManager = new CommandManager(getCommand("chat"));
 
         chatManager.addSubCommand(new ChatMuteCommand());
@@ -260,6 +262,7 @@ public final class Lunar extends JavaPlugin {
         pluginManager.registerEvents(new CommandListener(), this);
         pluginManager.registerEvents(new FilterListener(), this);
         pluginManager.registerEvents(new MineAlertListener(), this);
+        pluginManager.registerEvents(new ServerFreezeListener(), this);
     }
 
     private void registerTasks() {

@@ -51,3 +51,5 @@ commands:
     aliases: [minealert]
   session:
     aliases: [sessions]
+  serverfreeze:
+    aliases: [freezeserver, freezeall]
