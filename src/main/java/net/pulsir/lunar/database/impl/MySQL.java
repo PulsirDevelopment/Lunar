@@ -35,6 +35,8 @@ public class MySQL implements IDatabase {
             if (inventoryPlayer != null) {
                 Lunar.getInstance().getInventoryManager().getInventories()
                         .put(uuid, inventoryPlayer);
+
+                mySQLManager.clearInventory(uuid);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
