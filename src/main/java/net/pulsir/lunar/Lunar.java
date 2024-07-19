@@ -22,6 +22,7 @@ import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.database.impl.FlatFile;
 import net.pulsir.lunar.database.impl.Mongo;
+import net.pulsir.lunar.database.impl.MySQL;
 import net.pulsir.lunar.filter.Filter;
 import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryManager;
@@ -178,6 +179,10 @@ public final class Lunar extends JavaPlugin {
             case "flatfile" -> {
                 database = new FlatFile();
                 Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded FLATFILE as database.");
+            }
+            case "mysql" -> {
+                database = new MySQL();
+                Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded MYSQL as database.");
             }
             default -> {
                 database = new FlatFile();

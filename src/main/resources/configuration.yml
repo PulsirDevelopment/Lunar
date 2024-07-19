@@ -1,5 +1,12 @@
-database: "flatfile" # mongo | flatfile
+database: "flatfile" # mongo | mysql | flatfile
 mongo-uri: ""
+mysql:
+  host: ""
+  port: 3306
+  database: "lunar"
+  auth:
+    username: ""
+    password: ""
 redis:
   host: ""
   port: 6379
