@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public class InventoryManager {
+public class InventoryPlayerManager {
 
     private final Map<UUID, InventoryPlayer> inventories = new HashMap<>();
 

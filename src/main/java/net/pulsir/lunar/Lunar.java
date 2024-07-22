@@ -1,7 +1,12 @@
 package net.pulsir.lunar;
 
 import lombok.Getter;
-import net.pulsir.lunar.api.API;
+import net.pulsir.api.LunarAPI;
+import net.pulsir.api.LunarPluginAPI;
+import net.pulsir.api.chat.ChatManager;
+import net.pulsir.api.inventory.InventoryManager;
+import net.pulsir.api.session.SessionManager;
+import net.pulsir.api.staff.StaffManager;
 import net.pulsir.lunar.chat.ChatMuteCommand;
 import net.pulsir.lunar.chat.ChatSlowDownCommand;
 import net.pulsir.lunar.chat.ChatUnMuteCommand;
@@ -25,8 +30,12 @@ import net.pulsir.lunar.database.impl.Mongo;
 import net.pulsir.lunar.database.impl.MySQL;
 import net.pulsir.lunar.filter.Filter;
 import net.pulsir.lunar.hook.PlaceHolderHook;
-import net.pulsir.lunar.inventories.manager.InventoryManager;
+import net.pulsir.lunar.inventories.manager.InventoryPlayerManager;
 import net.pulsir.lunar.listener.*;
+import net.pulsir.lunar.manager.ChatManagerImpl;
+import net.pulsir.lunar.manager.InventoryManagerImpl;
+import net.pulsir.lunar.manager.SessionManagerImpl;
+import net.pulsir.lunar.manager.StaffManagerImpl;
 import net.pulsir.lunar.redis.RedisManager;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import net.pulsir.lunar.task.LunarTask;
@@ -49,7 +58,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-public final class Lunar extends JavaPlugin {
+public final class Lunar extends JavaPlugin implements LunarPluginAPI {
 
     @Getter
     private static Lunar instance;
@@ -63,16 +72,23 @@ public final class Lunar extends JavaPlugin {
     private Message message;
     private Filter filter;
 
-    private final InventoryManager inventoryManager = new InventoryManager();
+    private final InventoryPlayerManager inventoryPlayerManager = new InventoryPlayerManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
+
+    private final StaffManagerImpl staffManager = new StaffManagerImpl();
+    private final SessionManagerImpl sessionManager = new SessionManagerImpl();
+    private final InventoryManagerImpl inventoryManager = new InventoryManagerImpl();
+    private final ChatManagerImpl chatManager = new ChatManagerImpl();
 
     @Getter
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
     @Getter
     private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
 
-    private final API api = new API();
-    private boolean lunarAPI = false;
+    @Override
+    public void onLoad() {
+        LunarAPI.setPlugin(this);
+    }
 
     @Override
     @SuppressWarnings("ALL")
@@ -82,7 +98,7 @@ public final class Lunar extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(" ");
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + ",--.   ,--. ,--.,--.  ,--.  ,---.  ,------.");
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  |   |  | |  ||  ,'.|  | /  O  \\ |  .--. ' ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  |   |  | |  ||  |' '  ||  .-.  ||  '--'.' " + ChatColor.YELLOW + "Lunar " + ChatColor.WHITE + "v.2.1.4");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  |   |  | |  ||  |' '  ||  .-.  ||  '--'.' " + ChatColor.YELLOW + "Lunar " + ChatColor.WHITE + "v." + getDescription().getVersion());
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "|  '--.'  '-'  '|  | `   ||  | |  ||  |\\  \\  ");
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "`-----' `-----' `--'  `--'`--' `--'`--' '--' ");
         Bukkit.getConsoleSender().sendMessage(" ");
@@ -105,9 +121,6 @@ public final class Lunar extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlaceHolderHook().register();
-        }
-        if (Bukkit.getPluginManager().getPlugin("Apollo-Bukkit") != null) {
-            lunarAPI = true;
         }
 
         this.filter = new Filter();
@@ -283,14 +296,30 @@ public final class Lunar extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
     }
 
-    public API getAPI() {
-        return api;
-    }
-
     public void reloadConfigs() {
         this.configuration.reload();
         this.language.reload();
         this.inventory.reload();
         this.messages.reload();
+    }
+
+    @Override
+    public StaffManager staffManager() {
+        return this.staffManager;
+    }
+
+    @Override
+    public SessionManager sessionManager() {
+        return this.sessionManager;
+    }
+
+    @Override
+    public InventoryManager inventoryManager() {
+        return this.inventoryManager;
+    }
+
+    @Override
+    public ChatManager chatManager() {
+        return this.chatManager;
     }
 }

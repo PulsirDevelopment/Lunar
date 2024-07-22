@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+    implementation project(":API")
+
     compileOnly('org.projectlombok:lombok:1.18.28')
     annotationProcessor('org.projectlombok:lombok:1.18.28')
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
