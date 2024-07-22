@@ -472,7 +472,7 @@ public class StaffModeListener implements Listener {
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
                     String message = target.getName() + "<splitter>" + event.getPlayer().getName() + "<splitter>" + ".";
-                    Lunar.getInstance().getRedisManager().publish("unfreeze-chat", message);
+                    Lunar.getInstance().getRedisAdapter().publish("unfreeze-chat", message);
                 }
             }
 
@@ -528,7 +528,7 @@ public class StaffModeListener implements Listener {
                 } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                         .equalsIgnoreCase("redis")) {
                     String message = target.getName() + "<splitter>" + event.getPlayer().getName() + "<splitter>" + ".";
-                    Lunar.getInstance().getRedisManager().publish("freeze-chat", message);
+                    Lunar.getInstance().getRedisAdapter().publish("freeze-chat", message);
                 }
             }
             if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("staff-freeze.enabled")) {

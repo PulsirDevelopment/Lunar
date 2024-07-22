@@ -8,11 +8,11 @@ import redis.clients.jedis.*;
 import java.util.Objects;
 import java.util.UUID;
 
-public class RedisManager {
+public class RedisAdapter {
 
     private final JedisPool jedisPool;
 
-    public RedisManager(boolean auth) {
+    public RedisAdapter(boolean auth) {
 
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(64);

@@ -87,7 +87,7 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                     } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                             .equalsIgnoreCase("redis")) {
                         String message = target.getName() + "<splitter>" + sender.getName() + "<splitter>" + ".";
-                        Lunar.getInstance().getRedisManager().publish("unfreeze-chat", message);
+                        Lunar.getInstance().getRedisAdapter().publish("unfreeze-chat", message);
                     }
                 }
 
@@ -143,7 +143,7 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                     } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system"))
                             .equalsIgnoreCase("redis")) {
                         String message = target.getName() + "<splitter>" + sender.getName() + "<splitter>" + ".";
-                        Lunar.getInstance().getRedisManager().publish("freeze-chat", message);
+                        Lunar.getInstance().getRedisAdapter().publish("freeze-chat", message);
                     }
                 }
 

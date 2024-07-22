@@ -40,7 +40,7 @@ public class ChatListener implements Listener {
                         .equalsIgnoreCase("redis")) {
                     String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
                             .getConfiguration().getString("server-name")) + "<splitter>" + event.getMessage();
-                    Lunar.getInstance().getRedisManager().publish("staff-chat", message);
+                    Lunar.getInstance().getRedisAdapter().publish("staff-chat", message);
                 }
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getStaffMembers()) {
@@ -77,7 +77,7 @@ public class ChatListener implements Listener {
                         .equalsIgnoreCase("redis")) {
                     String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
                             .getConfiguration().getString("server-name")) + "<splitter>" + event.getMessage();
-                    Lunar.getInstance().getRedisManager().publish("admin-chat", message);
+                    Lunar.getInstance().getRedisAdapter().publish("admin-chat", message);
                 }
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getAdminMembers()) {
@@ -114,7 +114,7 @@ public class ChatListener implements Listener {
                         .equalsIgnoreCase("redis")) {
                     String message = event.getPlayer().getName() + "<splitter>" + Objects.requireNonNull(Lunar.getInstance().getConfiguration()
                             .getConfiguration().getString("server-name")) + "<splitter>" + event.getMessage();
-                    Lunar.getInstance().getRedisManager().publish("owner-chat", message);
+                    Lunar.getInstance().getRedisAdapter().publish("owner-chat", message);
                 }
             } else {
                 for (UUID uuid : Lunar.getInstance().getData().getOwnerMembers()) {

@@ -57,7 +57,7 @@ public class BroadcastCommand implements CommandExecutor, TabCompleter {
                         Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("BROADCAST-MESSAGE")).replace("{message}", message)));
                     } else if (Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("sync-system")).equalsIgnoreCase("redis")) {
-                        Lunar.getInstance().getRedisManager().publish("global-chat", message);
+                        Lunar.getInstance().getRedisAdapter().publish("global-chat", message);
                         Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("BROADCAST-MESSAGE")).replace("{message}", message)));
                     } else {

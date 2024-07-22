@@ -3,8 +3,10 @@ package net.pulsir.lunar;
 import lombok.Getter;
 import net.pulsir.api.LunarAPI;
 import net.pulsir.api.LunarPluginAPI;
+import net.pulsir.api.bungee.BungeeManager;
 import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.inventory.InventoryManager;
+import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
 import net.pulsir.lunar.chat.ChatMuteCommand;
@@ -32,11 +34,8 @@ import net.pulsir.lunar.filter.Filter;
 import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryPlayerManager;
 import net.pulsir.lunar.listener.*;
-import net.pulsir.lunar.manager.ChatManagerImpl;
-import net.pulsir.lunar.manager.InventoryManagerImpl;
-import net.pulsir.lunar.manager.SessionManagerImpl;
-import net.pulsir.lunar.manager.StaffManagerImpl;
-import net.pulsir.lunar.redis.RedisManager;
+import net.pulsir.lunar.manager.*;
+import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.MessagesTask;
@@ -63,7 +62,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     @Getter
     private static Lunar instance;
     private Data data;
-    private RedisManager redisManager;
+    private RedisAdapter redisAdapter;
 
     private Config configuration, language, inventory, messages, discord;
 
@@ -79,6 +78,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final SessionManagerImpl sessionManager = new SessionManagerImpl();
     private final InventoryManagerImpl inventoryManager = new InventoryManagerImpl();
     private final ChatManagerImpl chatManager = new ChatManagerImpl();
+    private final RedisManagerImpl redisManager = new RedisManagerImpl();
+    private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
 
     @Getter
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
@@ -210,8 +211,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         String syncSystem = Objects.requireNonNull(configuration.getConfiguration().getString("sync-system")).toLowerCase();
         switch (syncSystem) {
             case "redis" -> {
-                this.redisManager = new RedisManager(configuration.getConfiguration().getBoolean("redis.auth"));
-                this.redisManager.subscribe();
+                this.redisAdapter = new RedisAdapter(configuration.getConfiguration().getBoolean("redis.auth"));
+                this.redisAdapter.subscribe();
                 Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded REDIS as sync system.");
             }
             case "bungee" -> {
@@ -304,22 +305,32 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     }
 
     @Override
-    public StaffManager staffManager() {
+    public StaffManager getStaffManager() {
         return this.staffManager;
     }
 
     @Override
-    public SessionManager sessionManager() {
+    public SessionManager getSessionManager() {
         return this.sessionManager;
     }
 
     @Override
-    public InventoryManager inventoryManager() {
+    public InventoryManager getInventoryManager() {
         return this.inventoryManager;
     }
 
     @Override
-    public ChatManager chatManager() {
+    public ChatManager getChatManager() {
         return this.chatManager;
+    }
+
+    @Override
+    public RedisManager getRedisManager() {
+        return this.redisManager;
+    }
+
+    @Override
+    public BungeeManager getBungeeManager() {
+        return this.bungeeManager;
     }
 }

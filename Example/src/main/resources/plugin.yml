@@ -1,0 +1,6 @@
+name: Example
+version: '${version}'
+main: net.pulsir.example.Example
+api-version: '1.20'
+depend:
+  - Lunar
