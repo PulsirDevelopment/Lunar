@@ -9,11 +9,11 @@ public class InventoryManagerImpl implements InventoryManager {
 
     @Override
     public boolean hasSavedInventory(Player player) {
-        return Lunar.getInstance().getInventoryManager().getInventories().containsKey(player.getUniqueId());
+        return Lunar.getInstance().getInventoryPlayerManager().getInventories().containsKey(player.getUniqueId());
     }
 
     @Override
     public ItemStack[] getSavedInventory(Player player) {
-       return Lunar.getInstance().getInventoryManager().getInventories().get(player.getUniqueId()).getInventory();
+       return Lunar.getInstance().getInventoryPlayerManager().getInventories().get(player.getUniqueId()).getInventory();
     }
 }
