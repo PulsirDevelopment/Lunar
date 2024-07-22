@@ -42,7 +42,7 @@ public class LastInventoryCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
 
-            if (!Lunar.getInstance().getInventoryManager().getInventories().containsKey(target.getUniqueId())) {
+            if (!Lunar.getInstance().getInventoryPlayerManager().getInventories().containsKey(target.getUniqueId())) {
                 sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("RESTORE.NO-DATABASE"))
                         .replace("{player}", target.getName())));
@@ -57,20 +57,20 @@ public class LastInventoryCommand implements CommandExecutor, TabCompleter {
 
             List<Integer> inventoryValues = Lunar.getInstance().getConfiguration().getConfiguration().getIntegerList("last-inventory.slots");
             List<Integer> armorValues = Lunar.getInstance().getConfiguration().getConfiguration().getIntegerList("last-inventory.armor-slots");
-            boolean isOffHandNull = Lunar.getInstance().getInventoryManager().getInventories().get(target.getUniqueId()).getInventory()[40] == null;
+            boolean isOffHandNull = Lunar.getInstance().getInventoryPlayerManager().getInventories().get(target.getUniqueId()).getInventory()[40] == null;
 
-            for (int i = 0; i < Lunar.getInstance().getInventoryManager().getInventories().get(target.getUniqueId()).getInventory().length; i++) {
+            for (int i = 0; i < Lunar.getInstance().getInventoryPlayerManager().getInventories().get(target.getUniqueId()).getInventory().length; i++) {
                 if (i > 35 && i < 40) {
-                    inventory.setItem(armorValues.get(armorIndex) - 1, Lunar.getInstance().getInventoryManager().getInventories().get(target.getUniqueId()).getInventory()[i]);
+                    inventory.setItem(armorValues.get(armorIndex) - 1, Lunar.getInstance().getInventoryPlayerManager().getInventories().get(target.getUniqueId()).getInventory()[i]);
                     armorIndex++;
                 }
                 if (i == 40) {
                     inventory.setItem(Lunar.getInstance().getConfiguration().getConfiguration().getInt("last-inventory.off-hand-slot") - 1,
-                            Lunar.getInstance().getInventoryManager().getInventories().get(target.getUniqueId()).getInventory()[i]);
+                            Lunar.getInstance().getInventoryPlayerManager().getInventories().get(target.getUniqueId()).getInventory()[i]);
                 }
 
                 if (inventoryIndex < inventoryValues.size()) {
-                    inventory.setItem(inventoryValues.get(inventoryIndex) - 1, Lunar.getInstance().getInventoryManager().getInventories().get(target.getUniqueId()).getInventory()[i]);
+                    inventory.setItem(inventoryValues.get(inventoryIndex) - 1, Lunar.getInstance().getInventoryPlayerManager().getInventories().get(target.getUniqueId()).getInventory()[i]);
                 }
 
                 inventoryIndex++;

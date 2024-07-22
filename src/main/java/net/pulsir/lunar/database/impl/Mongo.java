@@ -16,7 +16,7 @@ public class Mongo implements IDatabase {
 
     @Override
     public void saveInventory() {
-        Lunar.getInstance().getInventoryManager().getInventories().values().forEach(inventory ->
+        Lunar.getInstance().getInventoryPlayerManager().getInventories().values().forEach(inventory ->
                 mongoHandler.getInventories().replaceOne(Filters.eq("uuid", inventory.getUuid().toString()),
                 new InventoryWrapper().wrap(inventory), new ReplaceOptions().upsert(true)));
     }
@@ -25,7 +25,7 @@ public class Mongo implements IDatabase {
     public void loadInventory(UUID uuid) {
         Document document = mongoHandler.getInventories().find(Filters.eq("uuid", uuid.toString())).first();
         if (document != null) {
-            Lunar.getInstance().getInventoryManager().getInventories()
+            Lunar.getInstance().getInventoryPlayerManager().getInventories()
                     .put(uuid, new InventoryWrapper().unwrap(document));
         }
     }

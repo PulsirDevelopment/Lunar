@@ -14,7 +14,7 @@ public class MySQL implements IDatabase {
 
     @Override
     public void saveInventory() {
-        for (final UUID uuid : Lunar.getInstance().getInventoryManager().getInventories().keySet()) {
+        for (final UUID uuid : Lunar.getInstance().getInventoryPlayerManager().getInventories().keySet()) {
             try {
                 if (mySQLManager.findInventory(uuid) != null) {
                     mySQLManager.updateInventory(uuid);
@@ -33,7 +33,7 @@ public class MySQL implements IDatabase {
             InventoryPlayer inventoryPlayer = mySQLManager.findInventory(uuid);
 
             if (inventoryPlayer != null) {
-                Lunar.getInstance().getInventoryManager().getInventories()
+                Lunar.getInstance().getInventoryPlayerManager().getInventories()
                         .put(uuid, inventoryPlayer);
 
                 mySQLManager.clearInventory(uuid);

@@ -15,7 +15,7 @@ public class FlatFile implements IDatabase {
 
     @Override
     public void saveInventory() {
-        Lunar.getInstance().getInventoryManager().getInventories().values().forEach(inventory -> {
+        Lunar.getInstance().getInventoryPlayerManager().getInventories().values().forEach(inventory -> {
             List<String> string = new ArrayList<>();
             for (final ItemStack itemStack : inventory.getInventory()) {
                 string.add(ItemStackSerializer.serialize(itemStack));
@@ -38,7 +38,7 @@ public class FlatFile implements IDatabase {
                 itemStacks[i] = ItemStackSerializer.deSerialize(strings.get(i));
             }
 
-            Lunar.getInstance().getInventoryManager().getInventories()
+            Lunar.getInstance().getInventoryPlayerManager().getInventories()
                     .put(uuid, new InventoryPlayer(uuid, itemStacks));
         }
     }

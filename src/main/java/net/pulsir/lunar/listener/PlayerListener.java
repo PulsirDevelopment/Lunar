@@ -33,9 +33,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        Lunar.getInstance().getInventoryManager().getInventories().remove(event.getPlayer().getUniqueId());
+        Lunar.getInstance().getInventoryPlayerManager().getInventories().remove(event.getPlayer().getUniqueId());
 
-        Lunar.getInstance().getInventoryManager().getInventories()
+        Lunar.getInstance().getInventoryPlayerManager().getInventories()
                 .put(event.getPlayer().getUniqueId(),
                         new InventoryPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getInventory().getContents()));
     }

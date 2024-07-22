@@ -41,16 +41,16 @@ public class InventoryRestoreCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
 
-            if (!Lunar.getInstance().getInventoryManager().getInventories().containsKey(target.getUniqueId())) {
+            if (!Lunar.getInstance().getInventoryPlayerManager().getInventories().containsKey(target.getUniqueId())) {
                 sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
                                 .getConfiguration().getString("RESTORE.NO-DATABASE"))
                         .replace("{player}", target.getName())));
                 return false;
             }
 
-            target.getInventory().setContents(Lunar.getInstance().getInventoryManager().getInventories().get(target.getUniqueId()).getInventory());
+            target.getInventory().setContents(Lunar.getInstance().getInventoryPlayerManager().getInventories().get(target.getUniqueId()).getInventory());
             if (Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("delete-on-restore")) {
-                Lunar.getInstance().getInventoryManager().getInventories().remove(target.getUniqueId());
+                Lunar.getInstance().getInventoryPlayerManager().getInventories().remove(target.getUniqueId());
             }
             sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration()
                             .getString("RESTORE.RESTORED"))

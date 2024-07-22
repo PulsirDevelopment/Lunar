@@ -62,7 +62,7 @@ public class MySQLManager {
         try {
             PreparedStatement preparedStatement = hikariDataSource.getConnection().prepareStatement("INSERT INTO inventories(uuid, inventory) VALUES (?,?)");
             preparedStatement.setString(1, uuid.toString());
-            preparedStatement.setString(2, Base64.toBase64(Lunar.getInstance().getInventoryManager().getInventories().get(uuid).getInventoryString()));
+            preparedStatement.setString(2, Base64.toBase64(Lunar.getInstance().getInventoryPlayerManager().getInventories().get(uuid).getInventoryString()));
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -73,7 +73,7 @@ public class MySQLManager {
     public void updateInventory(UUID uuid) {
         try {
             PreparedStatement preparedStatement = hikariDataSource.getConnection().prepareStatement("UPDATE inventories SET inventory = ? WHERE uuid = ?");
-            preparedStatement.setString(1, Base64.toBase64(Lunar.getInstance().getInventoryManager().getInventories().get(uuid).getInventoryString()));
+            preparedStatement.setString(1, Base64.toBase64(Lunar.getInstance().getInventoryPlayerManager().getInventories().get(uuid).getInventoryString()));
             preparedStatement.setString(2, uuid.toString());
             preparedStatement.executeUpdate();
             preparedStatement.close();
