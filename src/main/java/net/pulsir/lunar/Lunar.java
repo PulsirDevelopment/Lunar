@@ -6,6 +6,7 @@ import net.pulsir.api.LunarPluginAPI;
 import net.pulsir.api.bungee.BungeeManager;
 import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.inventory.InventoryManager;
+import net.pulsir.api.note.NoteManager;
 import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
@@ -19,6 +20,9 @@ import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
+import net.pulsir.lunar.command.note.NoteCheckCommand;
+import net.pulsir.lunar.command.note.NoteCreateCommand;
+import net.pulsir.lunar.command.note.NoteDeleteCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
@@ -80,6 +84,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final ChatManagerImpl chatManager = new ChatManagerImpl();
     private final RedisManagerImpl redisManager = new RedisManagerImpl();
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
+    private final NotesManagerImpl notesManager = new NotesManagerImpl();
 
     @Getter
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
@@ -265,13 +270,19 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
 
         Objects.requireNonNull(getCommand("serverfreeze")).setExecutor(new ServerFreezeCommand());
 
-        CommandManager chatManager = new CommandManager(getCommand("chat"));
+        CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
+        CommandManager noteCommandManager = new CommandManager(getCommand("note"));
 
-        chatManager.addSubCommand(new ChatMuteCommand());
-        chatManager.addSubCommand(new ChatUnMuteCommand());
-        chatManager.addSubCommand(new ChatSlowDownCommand());
+        chatCommandManager.addSubCommand(new ChatMuteCommand());
+        chatCommandManager.addSubCommand(new ChatUnMuteCommand());
+        chatCommandManager.addSubCommand(new ChatSlowDownCommand());
 
-        chatManager.registerCommands(() -> CompleterType.CHAT);
+        noteCommandManager.addSubCommand(new NoteCreateCommand());
+        noteCommandManager.addSubCommand(new NoteDeleteCommand());
+        noteCommandManager.addSubCommand(new NoteCheckCommand());
+
+        chatCommandManager.registerCommands(() -> CompleterType.CHAT);
+        noteCommandManager.registerCommands(() -> CompleterType.NOTE);
     }
 
     private void registerListeners(PluginManager pluginManager) {
@@ -332,5 +343,10 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     @Override
     public BungeeManager getBungeeManager() {
         return this.bungeeManager;
+    }
+
+    @Override
+    public NoteManager getNoteManager() {
+        return this.notesManager;
     }
 }

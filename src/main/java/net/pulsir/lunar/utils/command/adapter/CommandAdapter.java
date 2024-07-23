@@ -55,9 +55,11 @@ public class CommandAdapter implements CommandExecutor, TabCompleter {
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("slowdown")) {
                     return new ArrayList<>(List.of("1", "2", "3", "4", "5"));
-                } else {
-                    Bukkit.getConsoleSender().sendMessage(args[1]);
                 }
+            }
+        } else if (completer.type().equals(CompleterType.NOTE)) {
+            if (args.length == 1) {
+                return new ArrayList<>(List.of("create", "delete", "check"));
             }
         }
 

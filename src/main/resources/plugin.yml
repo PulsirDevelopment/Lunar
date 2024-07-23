@@ -53,3 +53,5 @@ commands:
     aliases: [sessions]
   serverfreeze:
     aliases: [freezeserver, freezeall]
+  note:
+    aliases: [notes]
