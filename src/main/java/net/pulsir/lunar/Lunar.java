@@ -270,6 +270,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
 
         Objects.requireNonNull(getCommand("serverfreeze")).setExecutor(new ServerFreezeCommand());
 
+        Objects.requireNonNull(getCommand("world")).setExecutor(new WorldCommand());
+
         CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
         CommandManager noteCommandManager = new CommandManager(getCommand("note"));
 

@@ -55,3 +55,5 @@ commands:
     aliases: [freezeserver, freezeall]
   note:
     aliases: [notes]
+  world:
+    aliases: [worlds]

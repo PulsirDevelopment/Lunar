@@ -200,3 +200,8 @@ NOTES:
   CHECK: "&e{staff} &7has added note &e{note} &7to &e{player} at &e{date}"
   EXISTS: "&c{note} note already exists in {player} database."
   NOT-EXISTS: "&c{note} note doesn't exists in {player} database."
+
+WORLD:
+  USAGE: "&c/world <world_name>"
+  TELEPORTED: "&aSuccessfully teleported to {world}"
+  NULL: "&c{world} world doesn't exists. Existing worlds: {existing_worlds}"
