@@ -16,7 +16,7 @@ public class NotesManagerImpl implements NoteManager {
         Note playerNote = new Note(UUID.randomUUID(), playerUUID, staffUUID, new Date(), note);
 
         if (Lunar.getInstance().getData().getPlayerNotes().get(playerUUID) == null) {
-            Lunar.getInstance().getData().getPlayerNotes().put(playerUUID, new HashSet<>(List.of(playerNote)));
+            Lunar.getInstance().getData().getPlayerNotes().put(playerUUID, new ArrayList<>(List.of(playerNote)));
         } else {
             Lunar.getInstance().getData().getPlayerNotes().get(playerUUID).add(playerNote);
         }
