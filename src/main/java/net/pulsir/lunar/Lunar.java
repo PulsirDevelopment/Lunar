@@ -41,6 +41,7 @@ import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.manager.*;
 import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
+import net.pulsir.lunar.storage.impl.NoteStorage;
 import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
@@ -86,6 +87,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
     private final NotesManagerImpl notesManager = new NotesManagerImpl();
 
+    private NoteStorage noteStorage;
+
     @Getter
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
     @Getter
@@ -130,6 +133,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         }
 
         this.filter = new Filter();
+
+        this.noteStorage = new NoteStorage();
     }
 
     @Override
@@ -308,6 +313,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, useStaffBar ? new LunarTask() : new ServerTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
+
+        Bukkit.getScheduler().runTaskAsynchronously(this, this.noteStorage.storageTask());
     }
 
     public void reloadConfigs() {

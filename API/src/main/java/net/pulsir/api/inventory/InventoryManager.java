@@ -12,7 +12,7 @@ public interface InventoryManager {
     boolean hasSavedInventory(Player player);
 
     /**
-     * Returns itemstacks of player saved inventory.
+     * Returns array of itemstack of player saved inventory.
      * @param player - Player which those methods will be invoked on.
      */
     ItemStack[] getSavedInventory(Player player);
