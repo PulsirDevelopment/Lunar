@@ -5,12 +5,10 @@ import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.note.Note;
 import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class FlatFile implements IDatabase {
 
@@ -46,7 +44,19 @@ public class FlatFile implements IDatabase {
 
     @Override
     public void fetchNotesAsynchronously(UUID uuid) {
+        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> {
+            for (final String players : Objects.requireNonNull(Lunar.getInstance().getNotes().getConfiguration().getConfigurationSection("player")).getKeys(false)) {
+                for (final String notes : Objects.requireNonNull(Lunar.getInstance().getNotes().getConfiguration().getConfigurationSection("player." + players + ".notes")).getKeys(false)) {
+                    Note note = new Note(UUID.fromString(Objects.requireNonNull(Lunar.getInstance().getNotes().getConfiguration().getString("player." + players + ".notes." + notes + ".id"))),
+                            UUID.fromString(Objects.requireNonNull(Lunar.getInstance().getNotes().getConfiguration().getString("player." + players + ".notes." + notes + ".uuid"))),
+                            UUID.fromString(Objects.requireNonNull(Lunar.getInstance().getNotes().getConfiguration().getString("player." + players + ".notes." + notes + ".staffUUID"))),
+                            new Date(Lunar.getInstance().getNotes().getConfiguration().getLong("player." + players + ".notes." + notes + ".createdAt")),
+                            Lunar.getInstance().getNotes().getConfiguration().getString("player." + players + ".notes." + notes + ".note"));
 
+                    Lunar.getInstance().getNoteStorage().addFetchedUser(note);
+                }
+            }
+        });
     }
 
     @Override
@@ -56,15 +66,15 @@ public class FlatFile implements IDatabase {
 
             for (final Note note : notes) {
                 Lunar.getInstance().getNotes().getConfiguration()
-                        .set("player." + uuid.toString() + "noteID", note.getNoteID().toString());
+                                .set("player." + uuid.toString() + "notes." + note.getNoteID().toString() + ".id", note.getNoteID().toString());
                 Lunar.getInstance().getNotes().getConfiguration()
-                        .set("player." + uuid + "uuid", note.getUuid().toString());
+                        .set("player." + uuid + "notes." + note.getNoteID().toString() + ".uuid", note.getUuid().toString());
                 Lunar.getInstance().getNotes().getConfiguration()
-                        .set("player." + uuid + "staffUUID", note.getStaffUUID().toString());
+                        .set("player." + uuid + "notes." + note.getNoteID().toString() + ".staffUUID", note.getStaffUUID().toString());
                 Lunar.getInstance().getNotes().getConfiguration()
-                        .set("player." + uuid + "note", note.getNote());
+                        .set("player." + uuid + "notes." + note.getNoteID().toString() + ".note", note.getNote());
                 Lunar.getInstance().getNotes().getConfiguration()
-                        .set("player." + uuid + "createdAt", note.getCreatedAt().getTime());
+                        .set("player." + uuid + "notes." + note.getNoteID().toString() + ".createdAt", note.getCreatedAt().getTime());
 
                 Lunar.getInstance().getNotes().save();
             }
