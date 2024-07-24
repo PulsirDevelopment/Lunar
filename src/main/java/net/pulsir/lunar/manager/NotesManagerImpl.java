@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NotesManagerImpl implements NoteManager {
 
@@ -55,17 +56,21 @@ public class NotesManagerImpl implements NoteManager {
         String playerName = Bukkit.getOfflinePlayer(playerUUID).getName();
         staff.sendMessage("Notes history of " + playerName);
 
-        int currentQuery = 0;
-        for (final Note notes : Lunar.getInstance().getData().getPlayerNotes().get(playerUUID)) {
-            staff.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
-                            .getLanguage().getConfiguration().getString("NOTES.CHECK"))
-                    .replace("{player}", Objects.requireNonNull(playerName))
-                    .replace("{staff}", Objects.requireNonNull(Bukkit.getOfflinePlayer(notes.getStaffUUID()).getName()))
-                    .replace("{date}", notes.getCreatedAt().toString())
-                    .replace("{note}", notes.getNote())));
-            currentQuery++;
+        List<Note> playerNotes = Lunar.getInstance().getNoteStorage().getAllNotes(playerUUID);
 
-            if (currentQuery >= queries) break;
-        }
+        AtomicInteger currentQuery = new AtomicInteger(0);
+        Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> {
+            for (final Note notes : playerNotes) {
+                staff.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                                .getLanguage().getConfiguration().getString("NOTES.CHECK"))
+                        .replace("{player}", Objects.requireNonNull(playerName))
+                        .replace("{staff}", Objects.requireNonNull(Bukkit.getOfflinePlayer(notes.getStaffUUID()).getName()))
+                        .replace("{date}", notes.getCreatedAt().toString())
+                        .replace("{note}", notes.getNote())));
+                currentQuery.incrementAndGet();
+
+                if (currentQuery.get() >= queries) break;
+            }
+        }, 5L);
     }
 }

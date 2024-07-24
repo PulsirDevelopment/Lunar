@@ -41,7 +41,7 @@ public class Data {
 
     private final Set<UUID> mineAlerts = new HashSet<>();
 
-    private final Map<UUID, Set<Note>> playerNotes = new HashMap<>();
+    private final Map<UUID, List<Note>> playerNotes = new HashMap<>();
 
     @Setter
     private boolean isServerFrozen = false;

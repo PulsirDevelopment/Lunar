@@ -37,7 +37,7 @@ public class NoteStorage implements Storage<Note> {
 
     @Override
     public void fetchUser(UUID uuid) {
-        Lunar.getInstance().getDatabase().fetchAsynchronously(uuid);
+        Lunar.getInstance().getDatabase().fetchNotesAsynchronously(uuid);
     }
 
     @Override
@@ -47,15 +47,20 @@ public class NoteStorage implements Storage<Note> {
         } else {
             cacheMap.put(note.getUuid(), new ArrayList<>(List.of(note)));
         }
+
+        expiryMap.put(note.getUuid(), resetTime());
     }
 
     public List<Note> getAllNotes(UUID uuid) {
         List<Note> allNotes = new ArrayList<>();
 
-        List<Note> cacheNotes = cacheMap.get(uuid);
-        Set<Note> notes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
+        if (cacheMap.get(uuid) == null && expiryMap.get(uuid) == null) {
+            fetchUser(uuid);
+        }
 
-        allNotes.addAll(cacheNotes);
+        List<Note> notes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
+
+        allNotes.addAll(cacheMap.get(uuid));
         allNotes.addAll(notes);
 
         allNotes.sort(Comparator.comparing(Note::getCreatedAt));

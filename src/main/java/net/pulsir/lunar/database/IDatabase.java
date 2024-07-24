@@ -6,5 +6,6 @@ public interface IDatabase {
 
     void saveInventory();
     void loadInventory(UUID uuid);
-    void fetchAsynchronously(UUID uuid);
+    void fetchNotesAsynchronously(UUID uuid);
+    void saveNotes();
 }

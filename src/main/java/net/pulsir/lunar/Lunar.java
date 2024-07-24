@@ -69,7 +69,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private Data data;
     private RedisAdapter redisAdapter;
 
-    private Config configuration, language, inventory, messages, discord;
+    private Config configuration, language, inventory, messages, discord, notes;
 
     private IDatabase database;
     @Getter
@@ -184,12 +184,15 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
                 new YamlConfiguration(), "messages.yml");
         this.discord = new Config(this, new File(getDataFolder(), "discord.yml"),
                 new YamlConfiguration(), "discord.yml");
+        this.notes = new Config(this, new File(getDataFolder(), "notes.yml"),
+                new YamlConfiguration(), "notes.yml");
 
         this.configuration.create();
         this.language.create();
         this.inventory.create();
         this.messages.create();
         this.discord.create();
+        this.notes.create();
     }
 
     private void setupDatabase() {

@@ -42,4 +42,14 @@ public class MySQL implements IDatabase {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void fetchNotesAsynchronously(UUID uuid) {
+
+    }
+
+    @Override
+    public void saveNotes() {
+
+    }
 }

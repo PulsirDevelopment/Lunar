@@ -1,7 +1,6 @@
 package net.pulsir.lunar.database.impl;
 
 import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
@@ -39,7 +38,7 @@ public class Mongo implements IDatabase {
     }
 
     @Override
-    public void fetchAsynchronously(UUID uuid) {
+    public void fetchNotesAsynchronously(UUID uuid) {
         Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> {
             AggregateIterable<Document> iterable = mongoHandler.getNotes()
                     .aggregate(List.of(Aggregates.match(Filters.eq("uuid", uuid.toString()))));
@@ -57,5 +56,24 @@ public class Mongo implements IDatabase {
                 }
             }
         });
+    }
+
+    @Override
+    public void saveNotes() {
+        for (final UUID uuid : Lunar.getInstance().getData().getPlayerNotes().keySet()) {
+            List<Note> notes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
+
+            for (final Note note : notes) {
+                Document document = new Document();
+                document.put("noteId", note.getNoteID());
+                document.put("uuid", note.getUuid());
+                document.put("staffUUID", note.getStaffUUID());
+                document.put("note", note.getNote());
+                document.put("createdAt", note.getCreatedAt().getTime());
+
+                mongoHandler.getNotes().replaceOne(Filters.eq("noteId", note.getNoteID()),
+                        document, new ReplaceOptions().upsert(true));
+            }
+        }
     }
 }
