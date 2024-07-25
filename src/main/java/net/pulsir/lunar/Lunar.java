@@ -123,6 +123,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded listeners.");
 
         this.data = new Data();
+        this.noteStorage = new NoteStorage();
 
         this.setupSyncSystem();
 
@@ -133,8 +134,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         }
 
         this.filter = new Filter();
-
-        this.noteStorage = new NoteStorage();
     }
 
     @Override
@@ -142,6 +141,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
         this.database.saveInventory();
+        this.database.saveNotes();
 
         if (getData().getInventories().isEmpty()) return;
         for (UUID uuid : getData().getInventories().keySet()) {
@@ -317,7 +317,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
 
-        Bukkit.getScheduler().runTaskAsynchronously(this, this.noteStorage.storageTask());
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.noteStorage.storageTask(), 0L, 20L);
     }
 
     public void reloadConfigs() {

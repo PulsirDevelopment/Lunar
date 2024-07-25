@@ -1,20 +1,22 @@
 package net.pulsir.lunar.storage.impl;
 
 import lombok.Getter;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.note.Note;
 import net.pulsir.lunar.storage.Storage;
+import org.bukkit.Bukkit;
 
 import java.util.*;
 
 public class NoteStorage implements Storage<Note> {
 
-    private final Map<UUID, Integer> expiryMap = new HashMap<>();
+    @Getter private final Map<UUID, Integer> expiryMap = new HashMap<>();
     @Getter private final Map<UUID, List<Note>> cacheMap = new HashMap<>();
 
     @Override
     public int resetTime() {
-        return 60 * 10;
+        return 60 * 5;
     }
 
     @Override
@@ -28,6 +30,8 @@ public class NoteStorage implements Storage<Note> {
                         if (expiryMap.get(uuid) <= 1) {
                             expiryMap.remove(uuid);
                             cacheMap.remove(uuid);
+
+                            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<red>Removed from cache"));
                         }
                     }
                 }
@@ -47,8 +51,6 @@ public class NoteStorage implements Storage<Note> {
         } else {
             cacheMap.put(note.getUuid(), new ArrayList<>(List.of(note)));
         }
-
-        expiryMap.put(note.getUuid(), resetTime());
     }
 
     public List<Note> getAllNotes(UUID uuid) {
@@ -56,12 +58,22 @@ public class NoteStorage implements Storage<Note> {
 
         if (cacheMap.get(uuid) == null && expiryMap.get(uuid) == null) {
             fetchUser(uuid);
+
+            Bukkit.getConsoleSender().sendMessage(cacheMap.toString());
+            Bukkit.getConsoleSender().sendMessage(expiryMap.toString());
+            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>fetchedddd"));
+        } else {
+            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<green>No need to fetch"));
         }
 
         List<Note> notes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
 
-        allNotes.addAll(cacheMap.get(uuid));
-        allNotes.addAll(notes);
+        if (!cacheMap.isEmpty()) {
+            allNotes.addAll(cacheMap.get(uuid));
+        }
+        if (notes != null && !notes.isEmpty()) {
+            allNotes.addAll(notes);
+        }
 
         allNotes.sort(Comparator.comparing(Note::getCreatedAt));
 
