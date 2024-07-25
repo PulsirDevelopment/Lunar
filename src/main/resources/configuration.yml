@@ -1,5 +1,5 @@
-database: "flatfile" # mongo | mysql | flatfile
-mongo-uri: ""
+database: "mongo" # mongo | mysql | flatfile
+mongo-uri: "mongodb://179.61.181.201:56723/"
 mysql:
   host: ""
   port: 3306

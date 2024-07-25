@@ -39,6 +39,7 @@ public class Mongo implements IDatabase {
 
     @Override
     public void fetchNotesAsynchronously(UUID uuid) {
+        Lunar.getInstance().getNoteStorage().getExpiryMap().put(uuid, Lunar.getInstance().getNoteStorage().resetTime());
         Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> {
             AggregateIterable<Document> iterable = mongoHandler.getNotes()
                     .aggregate(List.of(Aggregates.match(Filters.eq("uuid", uuid.toString()))));
@@ -65,13 +66,13 @@ public class Mongo implements IDatabase {
 
             for (final Note note : notes) {
                 Document document = new Document();
-                document.put("noteId", note.getNoteID());
-                document.put("uuid", note.getUuid());
-                document.put("staffUUID", note.getStaffUUID());
+                document.put("noteId", note.getNoteID().toString());
+                document.put("uuid", note.getUuid().toString());
+                document.put("staffUUID", note.getStaffUUID().toString());
                 document.put("note", note.getNote());
                 document.put("createdAt", note.getCreatedAt().getTime());
 
-                mongoHandler.getNotes().replaceOne(Filters.eq("noteId", note.getNoteID()),
+                mongoHandler.getNotes().replaceOne(Filters.eq("noteId", note.getNoteID().toString()),
                         document, new ReplaceOptions().upsert(true));
             }
         }

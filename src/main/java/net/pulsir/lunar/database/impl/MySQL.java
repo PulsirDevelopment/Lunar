@@ -47,6 +47,7 @@ public class MySQL implements IDatabase {
 
     @Override
     public void fetchNotesAsynchronously(UUID uuid) {
+        Lunar.getInstance().getNoteStorage().getExpiryMap().put(uuid, Lunar.getInstance().getNoteStorage().resetTime());
         Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.fetchNotes(uuid));
     }
 
