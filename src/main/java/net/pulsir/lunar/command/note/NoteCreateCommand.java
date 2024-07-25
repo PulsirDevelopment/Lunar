@@ -39,6 +39,13 @@ public class NoteCreateCommand extends Command {
                     }
                 }
 
+                if (note.toCharArray().length >= 256) {
+                    player.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                            .getLanguage().getConfiguration().getString("NOTES.CHARACTER-LIMIT")).replace("{current}",
+                                    String.valueOf(note.toCharArray().length))));
+                    return;
+                }
+
                 if (Lunar.getInstance().getNoteManager().noteExists(offlinePlayer.getUniqueId(), note)) {
                     player.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
                                     .getLanguage().getConfiguration().getString("NOTES.EXISTS"))

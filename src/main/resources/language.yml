@@ -200,6 +200,7 @@ NOTES:
   CHECK: "&e{staff} &7has added note &e{note} &7to &e{player} at &e{date}"
   EXISTS: "&c{note} note already exists in {player} database."
   NOT-EXISTS: "&c{note} note doesn't exists in {player} database."
+  CHARACTER-LIMIT: "&cCharacter's limit exceeded the limit is 512 and you have {current}."
 
 WORLD:
   USAGE: "&c/world <world_name>"

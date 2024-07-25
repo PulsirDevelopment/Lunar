@@ -4,6 +4,8 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.mysql.MySQLManager;
+import net.pulsir.lunar.note.Note;
+import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -45,11 +47,15 @@ public class MySQL implements IDatabase {
 
     @Override
     public void fetchNotesAsynchronously(UUID uuid) {
-
+        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.fetchNotes(uuid));
     }
 
     @Override
     public void saveNotes() {
-
+        if (Lunar.getInstance().getData().getPlayerNotes().isEmpty()) return;
+        for (final UUID uuid : Lunar.getInstance().getData().getPlayerNotes().keySet()) {
+            List<Note> playersNotes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
+            mySQLManager.saveNotes(playersNotes);
+        }
     }
 }
