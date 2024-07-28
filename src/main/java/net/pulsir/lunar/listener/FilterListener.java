@@ -25,8 +25,9 @@ public class FilterListener implements Listener {
                             .replace("{message}", event.getMessage())));
                 }
 
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Lunar.getInstance().getFilter().getFilterWords().get(filteredWord)
-                        .replace("{player}", event.getPlayer().getName()));
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Lunar.getInstance(), () ->
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Lunar.getInstance().getFilter().getFilterWords().get(filteredWord)
+                                .replace("{player}", event.getPlayer().getName())), 2L);
 
                 event.setCancelled(true);
                 return;

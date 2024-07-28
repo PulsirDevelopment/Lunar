@@ -3,7 +3,6 @@ package net.pulsir.lunar.data;
 import lombok.Getter;
 import lombok.Setter;
 import net.pulsir.lunar.Lunar;
-import net.pulsir.lunar.note.Note;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,8 +39,6 @@ public class Data {
     private final Set<UUID> staffTeam = new HashSet<>();
 
     private final Set<UUID> mineAlerts = new HashSet<>();
-
-    private final Map<UUID, List<Note>> playerNotes = new HashMap<>();
 
     @Setter
     private boolean isServerFrozen = false;

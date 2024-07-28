@@ -64,7 +64,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private Data data;
     private RedisAdapter redisAdapter;
 
-    private Config configuration, language, inventory, messages, discord, notes;
+    private Config configuration, language, inventory, messages, discord;
 
     private IDatabase database;
     @Getter
@@ -174,15 +174,12 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
                 new YamlConfiguration(), "messages.yml");
         this.discord = new Config(this, new File(getDataFolder(), "discord.yml"),
                 new YamlConfiguration(), "discord.yml");
-        this.notes = new Config(this, new File(getDataFolder(), "notes.yml"),
-                new YamlConfiguration(), "notes.yml");
 
         this.configuration.create();
         this.language.create();
         this.inventory.create();
         this.messages.create();
         this.discord.create();
-        this.notes.create();
     }
 
     private void setupDatabase() {
@@ -271,14 +268,12 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Objects.requireNonNull(getCommand("world")).setExecutor(new WorldCommand());
 
         CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
-        CommandManager noteCommandManager = new CommandManager(getCommand("note"));
 
         chatCommandManager.addSubCommand(new ChatMuteCommand());
         chatCommandManager.addSubCommand(new ChatUnMuteCommand());
         chatCommandManager.addSubCommand(new ChatSlowDownCommand());
 
         chatCommandManager.registerCommands(() -> CompleterType.CHAT);
-        noteCommandManager.registerCommands(() -> CompleterType.NOTE);
     }
 
     private void registerListeners(PluginManager pluginManager) {

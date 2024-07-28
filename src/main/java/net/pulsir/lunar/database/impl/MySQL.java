@@ -4,11 +4,9 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.mysql.MySQLManager;
-import net.pulsir.lunar.note.Note;
-import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.UUID;
 
 public class MySQL implements IDatabase {
 
