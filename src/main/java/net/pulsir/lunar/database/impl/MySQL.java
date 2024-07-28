@@ -44,19 +44,4 @@ public class MySQL implements IDatabase {
             throw new RuntimeException(e);
         }
     }
-
-    @Override
-    public void fetchNotesAsynchronously(UUID uuid) {
-        Lunar.getInstance().getNoteStorage().getExpiryMap().put(uuid, Lunar.getInstance().getNoteStorage().resetTime());
-        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.fetchNotes(uuid));
-    }
-
-    @Override
-    public void saveNotes() {
-        if (Lunar.getInstance().getData().getPlayerNotes().isEmpty()) return;
-        for (final UUID uuid : Lunar.getInstance().getData().getPlayerNotes().keySet()) {
-            List<Note> playersNotes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
-            mySQLManager.saveNotes(playersNotes);
-        }
-    }
 }

@@ -36,45 +36,4 @@ public class Mongo implements IDatabase {
                     .put(uuid, new InventoryWrapper().unwrap(document));
         }
     }
-
-    @Override
-    public void fetchNotesAsynchronously(UUID uuid) {
-        Lunar.getInstance().getNoteStorage().getExpiryMap().put(uuid, Lunar.getInstance().getNoteStorage().resetTime());
-        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> {
-            AggregateIterable<Document> iterable = mongoHandler.getNotes()
-                    .aggregate(List.of(Aggregates.match(Filters.eq("uuid", uuid.toString()))));
-            try (MongoCursor<Document> cursor = iterable.iterator()) {
-                while (cursor.hasNext()) {
-                    Document document = new Document();
-
-                    Note note = new Note(UUID.fromString("noteID"),
-                            UUID.fromString("uuid"),
-                            UUID.fromString("staffUUID"),
-                            new Date(document.getLong("createdAt")),
-                            document.getString("note"));
-
-                    Lunar.getInstance().getNoteStorage().addFetchedUser(note);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void saveNotes() {
-        for (final UUID uuid : Lunar.getInstance().getData().getPlayerNotes().keySet()) {
-            List<Note> notes = Lunar.getInstance().getData().getPlayerNotes().get(uuid);
-
-            for (final Note note : notes) {
-                Document document = new Document();
-                document.put("noteId", note.getNoteID().toString());
-                document.put("uuid", note.getUuid().toString());
-                document.put("staffUUID", note.getStaffUUID().toString());
-                document.put("note", note.getNote());
-                document.put("createdAt", note.getCreatedAt().getTime());
-
-                mongoHandler.getNotes().replaceOne(Filters.eq("noteId", note.getNoteID().toString()),
-                        document, new ReplaceOptions().upsert(true));
-            }
-        }
-    }
 }

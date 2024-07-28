@@ -6,7 +6,6 @@ import net.pulsir.api.LunarPluginAPI;
 import net.pulsir.api.bungee.BungeeManager;
 import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.inventory.InventoryManager;
-import net.pulsir.api.note.NoteManager;
 import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
@@ -20,9 +19,6 @@ import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
-import net.pulsir.lunar.command.note.NoteCheckCommand;
-import net.pulsir.lunar.command.note.NoteCreateCommand;
-import net.pulsir.lunar.command.note.NoteDeleteCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
@@ -41,7 +37,6 @@ import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.manager.*;
 import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
-import net.pulsir.lunar.storage.impl.NoteStorage;
 import net.pulsir.lunar.task.LunarTask;
 import net.pulsir.lunar.task.MessagesTask;
 import net.pulsir.lunar.task.ServerTask;
@@ -85,9 +80,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final ChatManagerImpl chatManager = new ChatManagerImpl();
     private final RedisManagerImpl redisManager = new RedisManagerImpl();
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
-    private final NotesManagerImpl notesManager = new NotesManagerImpl();
-
-    private NoteStorage noteStorage;
 
     @Getter
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
@@ -123,7 +115,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded listeners.");
 
         this.data = new Data();
-        this.noteStorage = new NoteStorage();
 
         this.setupSyncSystem();
 
@@ -141,7 +132,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
         this.database.saveInventory();
-        this.database.saveNotes();
 
         if (getData().getInventories().isEmpty()) return;
         for (UUID uuid : getData().getInventories().keySet()) {
@@ -287,10 +277,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         chatCommandManager.addSubCommand(new ChatUnMuteCommand());
         chatCommandManager.addSubCommand(new ChatSlowDownCommand());
 
-        noteCommandManager.addSubCommand(new NoteCreateCommand());
-        noteCommandManager.addSubCommand(new NoteDeleteCommand());
-        noteCommandManager.addSubCommand(new NoteCheckCommand());
-
         chatCommandManager.registerCommands(() -> CompleterType.CHAT);
         noteCommandManager.registerCommands(() -> CompleterType.NOTE);
     }
@@ -316,8 +302,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, useStaffBar ? new LunarTask() : new ServerTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.noteStorage.storageTask(), 0L, 20L);
     }
 
     public void reloadConfigs() {
@@ -355,10 +339,5 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     @Override
     public BungeeManager getBungeeManager() {
         return this.bungeeManager;
-    }
-
-    @Override
-    public NoteManager getNoteManager() {
-        return this.notesManager;
     }
 }
