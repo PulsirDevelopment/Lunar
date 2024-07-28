@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class StaffChatCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -20,14 +22,19 @@ public class StaffChatCommand implements CommandExecutor {
 
         if (Lunar.getInstance().getData().getStaffChat().contains(player.getUniqueId())) {
             Lunar.getInstance().getData().getStaffChat().remove(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("STAFF-CHAT.DISABLED")));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF-CHAT.DISABLED")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("STAFF-CHAT.DISABLED")));
+            }
         } else {
             Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getStaffChat().add(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("STAFF-CHAT.ENABLED")));
 
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("STAFF-CHAT.ENABLED")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("STAFF-CHAT.ENABLED")));
+            }
         }
 
         return true;

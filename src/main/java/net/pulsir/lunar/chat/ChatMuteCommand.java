@@ -25,11 +25,16 @@ public class ChatMuteCommand extends Command {
         }
 
         Lunar.getInstance().getData().setChatMuted(true);
-        sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
-                .getLanguage().getConfiguration().getString("CHAT-MUTE.SENDER"))));
-        Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
-                        .getInstance().getLanguage().getConfiguration().getString("CHAT-MUTE.GLOBAL"))
-                .replace("{sender}", sender.getName())));
+        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CHAT-MUTE.SENDER")).isEmpty()) {
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("CHAT-MUTE.SENDER"))));
+        }
+
+        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CHAT-MUTE.GLOBAL")).isEmpty()) {
+            Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
+                            .getInstance().getLanguage().getConfiguration().getString("CHAT-MUTE.GLOBAL"))
+                    .replace("{sender}", sender.getName())));
+        }
     }
 
     @Override

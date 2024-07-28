@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class FrozenChatCommand implements CommandExecutor {
 
     @Override
@@ -21,13 +23,19 @@ public class FrozenChatCommand implements CommandExecutor {
 
         if (Lunar.getInstance().getData().getFreezeChat().contains(player.getUniqueId())) {
             Lunar.getInstance().getData().getFreezeChat().remove(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("FREEZE-CHAT.DISABLED")));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE-CHAT.DISABLED")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("FREEZE-CHAT.DISABLED")));
+            }
         } else {
             Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getFreezeChat().add(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("FREEZE-CHAT.ENABLED")));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("FREEZE-CHAT.ENABLED")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("FREEZE-CHAT.ENABLED")));
+            }
         }
 
         return true;

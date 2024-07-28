@@ -24,12 +24,17 @@ public class ChatSlowDownCommand extends Command {
             int seconds = Integer.parseInt(args[1]);
 
             Lunar.getInstance().getData().setChatSlowdown(seconds);
-            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
-                    .getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.SENDER")));
-            Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
-                            .getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.GLOBAL"))
-                    .replace("{sender}", sender.getName())
-                    .replace("{time}", String.valueOf(seconds))));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.SENDER")).isEmpty()) {
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                        .getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.SENDER")));
+            }
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.GLOBAL")).isEmpty()) {
+                Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                                .getLanguage().getConfiguration().getString("CHAT-SLOWDOWN.GLOBAL"))
+                        .replace("{sender}", sender.getName())
+                        .replace("{time}", String.valueOf(seconds))));
+            }
         }
     }
 

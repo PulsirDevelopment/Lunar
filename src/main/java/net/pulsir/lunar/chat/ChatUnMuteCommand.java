@@ -25,11 +25,17 @@ public class ChatUnMuteCommand extends Command {
         }
 
         Lunar.getInstance().getData().setChatMuted(false);
-        sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
-                .getLanguage().getConfiguration().getString("CHAT-UNMUTE.SENDER"))));
-        Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
-                        .getInstance().getLanguage().getConfiguration().getString("CHAT-UNMUTE.GLOBAL"))
-                .replace("{sender}", sender.getName())));
+
+        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CHAT-UNMUTE.SENDER")).isEmpty()) {
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("CHAT-UNMUTE.SENDER"))));
+        }
+
+        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CHAT-UNMUTE.GLOBAL")).isEmpty()) {
+            Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
+                            .getInstance().getLanguage().getConfiguration().getString("CHAT-UNMUTE.GLOBAL"))
+                    .replace("{sender}", sender.getName())));
+        }
     }
 
     @Override

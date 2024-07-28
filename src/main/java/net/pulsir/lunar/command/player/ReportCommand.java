@@ -75,8 +75,10 @@ public class ReportCommand implements CommandExecutor, TabCompleter {
                                     .replace("{target}", target))), ChannelType.STAFF);
                 }
 
-                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                        .getConfiguration().getString("REPORT.SUCCESS")));
+                if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("REPORT.SUCCESS")).isEmpty()) {
+                    player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                            .getConfiguration().getString("REPORT.SUCCESS")));
+                }
             }
         }
 

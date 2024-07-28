@@ -190,18 +190,6 @@ MINE-ALERTS:
 SERVER-FROZEN: "&cServer is currently frozen."
 SERVER-UNFROZEN: "&aServer has been unfrozen."
 
-NOTES:
-  USAGE:
-    CREATE: "&c/note create <player> <note>"
-    DELETE: "&c/note delete <player> <note>"
-    CHECK: "&c/note check <player> <queries>"
-  CREATED: "&aSuccessfully created note for {player} player."
-  DELETED: "&aSuccessfully deleted note for {player} player."
-  CHECK: "&e{staff} &7has added note &e{note} &7to &e{player} at &e{date}"
-  EXISTS: "&c{note} note already exists in {player} database."
-  NOT-EXISTS: "&c{note} note doesn't exists in {player} database."
-  CHARACTER-LIMIT: "&cCharacter's limit exceeded the limit is 512 and you have {current}."
-
 WORLD:
   USAGE: "&c/world <world_name>"
   TELEPORTED: "&aSuccessfully teleported to {world}"

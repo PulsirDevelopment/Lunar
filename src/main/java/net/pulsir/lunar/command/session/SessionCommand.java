@@ -43,12 +43,16 @@ public class SessionCommand implements CommandExecutor, TabCompleter {
 
                 SessionPlayer sessionPlayer = Lunar.getInstance().getSessionPlayerManager().getSessionPlayers().get(player.getUniqueId());
                 if (sessionPlayer != null) {
-                    sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
-                            .getConfiguration().getString("SESSION.CHECK")).replace("{player}",
-                                    player.getName()).replace("{time}", Time.parse(sessionPlayer.getSessionTime()))));
+                    if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("SESSION.CHECK")).isEmpty()) {
+                        sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance().getLanguage()
+                                .getConfiguration().getString("SESSION.CHECK")).replace("{player}",
+                                player.getName()).replace("{time}", Time.parse(sessionPlayer.getSessionTime()))));
+                    }
                 } else {
-                    sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
-                            .getLanguage().getConfiguration().getString("SESSION.FAILED")).replace("{player}", args[1])));
+                    if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("SESSION.FAILED")).isEmpty()) {
+                        sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
+                                .getLanguage().getConfiguration().getString("SESSION.FAILED")).replace("{player}", args[1])));
+                    }
                 }
             }
         }

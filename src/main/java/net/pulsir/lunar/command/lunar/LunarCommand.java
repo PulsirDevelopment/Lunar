@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LunarCommand implements CommandExecutor, TabCompleter {
 
@@ -28,8 +29,11 @@ public class LunarCommand implements CommandExecutor, TabCompleter {
             }
         } else if (args[0].equalsIgnoreCase("reload")) {
             Lunar.getInstance().reloadConfigs();
-            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("LUNAR.RELOADED")));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("LUNAR.RELOADED")).isEmpty()) {
+                sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("LUNAR.RELOADED")));
+            }
         }
 
         return true;

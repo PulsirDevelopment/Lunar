@@ -8,6 +8,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ClearChatCommand implements CommandExecutor {
 
     @Override
@@ -22,8 +24,11 @@ public class ClearChatCommand implements CommandExecutor {
         for (int i = 0; i < Lunar.getInstance().getConfiguration().getConfiguration().getInt("clear-chat.lines"); i++) {
             Bukkit.broadcast(MiniMessage.miniMessage().deserialize(" "));
         }
-        Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                .getConfiguration().getString("CLEAR-CHAT.FINISH")));
+
+        if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("CLEAR-CHAT.FINISH")).isEmpty()) {
+            Bukkit.broadcast(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                    .getConfiguration().getString("CLEAR-CHAT.FINISH")));
+        }
 
         return true;
     }

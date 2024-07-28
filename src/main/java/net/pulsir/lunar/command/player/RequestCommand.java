@@ -66,8 +66,10 @@ public class RequestCommand implements CommandExecutor, TabCompleter {
                                         .getConfiguration().getString("server-name"))))), ChannelType.STAFF);
             }
 
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("REQUEST.SUCCESS")));
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("REQUEST.SUCCESS")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("REQUEST.SUCCESS")));
+            }
         }
 
         return true;

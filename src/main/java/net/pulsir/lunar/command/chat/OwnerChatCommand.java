@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class OwnerChatCommand implements CommandExecutor {
 
     @Override
@@ -21,13 +23,19 @@ public class OwnerChatCommand implements CommandExecutor {
 
         if (Lunar.getInstance().getData().getOwnerChat().contains(player.getUniqueId())) {
             Lunar.getInstance().getData().getOwnerChat().remove(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("OWNER-CHAT.DISABLED")));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("OWNER-CHAT.DISABLED")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("OWNER-CHAT.DISABLED")));
+            }
         } else {
             Lunar.getInstance().getData().clearChat(player.getUniqueId());
             Lunar.getInstance().getData().getOwnerChat().add(player.getUniqueId());
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
-                    .getConfiguration().getString("OWNER-CHAT.ENABLED")));
+
+            if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("OWNER-CHAT.ENABLED")).isEmpty()) {
+                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
+                        .getConfiguration().getString("OWNER-CHAT.ENABLED")));
+            }
         }
 
         return true;
