@@ -16,7 +16,7 @@ public class FilterListener implements Listener {
     public void onFilter(AsyncPlayerChatEvent event){
         if (event.getPlayer().hasPermission("lunar.filter.bypass")) return;
 
-        for (final String filteredWord : Lunar.getInstance().getFilter().getFilterWords()) {
+        for (final String filteredWord : Lunar.getInstance().getFilter().getFilterWords().keySet()) {
             if (event.getMessage().contains(filteredWord)) {
                 for (final UUID uuid : Lunar.getInstance().getData().getFilterChat()) {
                     Objects.requireNonNull(Bukkit.getPlayer(uuid)).sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
@@ -24,6 +24,10 @@ public class FilterListener implements Listener {
                             .replace("{player}", event.getPlayer().getName())
                             .replace("{message}", event.getMessage())));
                 }
+
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Lunar.getInstance().getFilter().getFilterWords().get(filteredWord)
+                        .replace("{player}", event.getPlayer().getName()));
+
                 event.setCancelled(true);
                 return;
             }

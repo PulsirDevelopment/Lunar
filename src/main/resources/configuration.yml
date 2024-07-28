@@ -48,8 +48,12 @@ freeze-blocked-commands:
 
 chat-filter: true
 filter-messages:
-  - "kys"
-  - "faggot"
+  1:
+    message: "nigger"
+    command: "tempmute {player} 30d racism -s"
+  2:
+    message: "faggot"
+    command: "tempmute {player} 30d homophobia -s"
 
 spy:
   messages: true
