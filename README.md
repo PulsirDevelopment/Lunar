@@ -31,7 +31,7 @@
     <dependency>
       <groupId>net.pulsir</groupId>
       <artifactId>Lunar</artifactId>
-      <version>VERSION</version>
+      <version>2.1.6</version>
       <scope>provided</score>
     </dependency>
 </dependencies>
@@ -48,11 +48,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly "net.pulsir:Lunar:VERSION"
+    compileOnly "net.pulsir:Lunar:2.1.6"
 }
 ```
-
-Make sure you replace `VERSION` with the newest version.
 
 ## License
 
