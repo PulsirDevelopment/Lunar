@@ -194,3 +194,6 @@ WORLD:
   USAGE: "&c/world <world_name>"
   TELEPORTED: "&aSuccessfully teleported to {world}"
   NULL: "&c{world} world doesn't exists. Existing worlds: {existing_worlds}"
+
+CAPTCHA:
+  KICK-MESSAGE: "&cSorry! You failed the Captcha."

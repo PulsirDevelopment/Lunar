@@ -82,6 +82,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
 
     @Getter
+    private final NamespacedKey captchaKey = new NamespacedKey(this, "captcha");
+    @Getter
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
     @Getter
     private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
@@ -289,6 +291,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         pluginManager.registerEvents(new FilterListener(), this);
         pluginManager.registerEvents(new MineAlertListener(), this);
         pluginManager.registerEvents(new ServerFreezeListener(), this);
+        pluginManager.registerEvents(new FirstJoinListener(), this);
     }
 
     private void registerTasks() {

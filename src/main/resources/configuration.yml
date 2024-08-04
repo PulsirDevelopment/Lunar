@@ -46,6 +46,8 @@ freeze-chat: true
 freeze-blocked-commands:
   - "/tpa"
 
+captcha-on-join: true
+
 chat-filter: true
 filter-messages:
   1:
@@ -238,6 +240,21 @@ silent-inventory:
   chest-title: "&7Silent Chest"
   enderchest-title: "&7Silent EnderChest"
   shulker-title: "&7Shulker Box"
+
+captcha-inventory:
+  title: "&cCaptcha Verification"
+  size: 27
+  items:
+    confirm:
+      item: "GREEN_WOOL"
+      name: "&aClick me!"
+      lore:
+        - "&6To enter the pearly gates"
+    failure:
+      item: "RED_WOOL"
+      name: "&cDon't click me!"
+      lore:
+        - "&4OR ELSE"
 
 clear-chat:
   lines: 200
