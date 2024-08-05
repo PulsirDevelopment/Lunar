@@ -22,31 +22,28 @@ import net.pulsir.lunar.utils.inventory.LInventory;
 public class CaptchaInventory implements LInventory {
 
     @Override
-    public Inventory inventory(Player player)
-    {
-        Lunar plugin = Lunar.getInstance();
-        YamlConfiguration config = plugin.getConfiguration().getConfiguration();
+    public Inventory inventory(Player player) {
+        YamlConfiguration config = Lunar.getInstance().getConfiguration().getConfiguration();
 
         int inventorySize = config.getInt("captcha-inventory.size");
         Component inventoryTitle = Lunar.getInstance().getMessage().getMessage(config.getString("captcha-inventory.title"));
+
         Inventory captchaInventory = Bukkit.createInventory(player, inventorySize, inventoryTitle);
 
         String confirmItemMaterialName = config.getString("captcha-inventory.items.confirm.item");
         String faulireItemMaterialName = config.getString("captcha-inventory.items.failure.item");
-        
+
         String confirmItemName = config.getString("captcha-inventory.items.confirm.name");
         String failureItemName = config.getString("captcha-inventory.items.failure.name");
-        
+
         List<Component> confirmItemLoreList = new ArrayList<>();
         List<Component> failureItemLoreList = new ArrayList<>();
 
-        for (String line : config.getStringList("captcha-inventory.items.confirm.lore"))
-        {
+        for (String line : config.getStringList("captcha-inventory.items.confirm.lore")) {
             confirmItemLoreList.add(Lunar.getInstance().getMessage().getMessage(line));
         }
 
-        for (String line : config.getStringList("captcha-inventory.items.failure.lore"))
-        {
+        for (String line : config.getStringList("captcha-inventory.items.failure.lore")) {
             failureItemLoreList.add(Lunar.getInstance().getMessage().getMessage(line));
         }
 
@@ -68,7 +65,7 @@ public class CaptchaInventory implements LInventory {
         PersistentDataContainer playerData = player.getPersistentDataContainer();
         PersistentDataContainer confirmItemMetaData = confirmItemMeta.getPersistentDataContainer();
         PersistentDataContainer failureItemMetaData = failureItemMeta.getPersistentDataContainer();
-        
+
         playerData.set(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER, 1);
         confirmItemMetaData.set(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER, 1);
         failureItemMetaData.set(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER, 0);
@@ -76,10 +73,7 @@ public class CaptchaInventory implements LInventory {
         confirmItem.setItemMeta(confirmItemMeta);
         failureItem.setItemMeta(failureItemMeta);
 
-        for (int i = 0; i < captchaInventory.getSize(); i++)
-        {
-            captchaInventory.setItem(i, failureItem);
-        }
+        for (int i = 0; i < captchaInventory.getSize(); i++) captchaInventory.setItem(i, failureItem);
 
         Random random = new Random();
         captchaInventory.setItem(random.nextInt(captchaInventory.getSize()), confirmItem);
