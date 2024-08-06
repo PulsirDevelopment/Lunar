@@ -291,7 +291,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         pluginManager.registerEvents(new FilterListener(), this);
         pluginManager.registerEvents(new MineAlertListener(), this);
         pluginManager.registerEvents(new ServerFreezeListener(), this);
-        pluginManager.registerEvents(new FirstJoinListener(), this);
+        pluginManager.registerEvents(new CaptchaListener(), this);
     }
 
     private void registerTasks() {

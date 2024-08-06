@@ -8,21 +8,21 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent.Reason;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.inventory.impl.CaptchaInventory;
 
-public class FirstJoinListener implements Listener {
+public class CaptchaListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (player.hasPermission("lunar.bot.bypass")) return;
         if (!Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("captcha-on-join")) return;
+        if (player.getPersistentDataContainer().has(Lunar.getInstance().getCaptchaKey())) return;
+
         Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> new CaptchaInventory().open(player), 5L);
     }
 
