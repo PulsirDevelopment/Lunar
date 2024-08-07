@@ -1,4 +1,4 @@
-database: "mongo" # mongo | mysql | flatfile
+database: "flatfile" # mongo | mysql | flatfile
 mongo-uri: "mongodb://179.61.181.201:56723/"
 mysql:
   host: ""
@@ -261,6 +261,5 @@ clear-chat:
 
 mine-alert:
   enabled: true
-  detect-amount: false
   block-trigger:
     - "DIAMOND_ORE"

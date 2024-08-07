@@ -21,9 +21,9 @@ public class CaptchaListener implements Listener {
         Player player = event.getPlayer();
         if (player.hasPermission("lunar.bot.bypass")) return;
         if (!Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("captcha-on-join")) return;
-        if (player.getPersistentDataContainer().has(Lunar.getInstance().getCaptchaKey())) return;
+        if (player.getPersistentDataContainer().get(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER) == 1) return;
 
-        Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> new CaptchaInventory().open(player), 5L);
+        new CaptchaInventory().open(player);
     }
 
     @EventHandler
@@ -41,14 +41,13 @@ public class CaptchaListener implements Listener {
         if (!itemMetaData.has(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER)) return;
 
         if (itemMetaData.get(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER) == 1) {
-            Lunar.getInstance().getLogger().info("pass");
-            playerData.set(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER, 0);
+            playerData.set(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER, 1);
             player.closeInventory(Reason.CANT_USE);
             return;
         }
 
         if (itemMetaData.get(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER) == 0) {
-            Lunar.getInstance().getLogger().info("fail");
+            playerData.set(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER, 0);
             String kickMessage = Lunar.getInstance().getLanguage().getConfiguration().getString("CAPTCHA.KICK-MESSAGE");
             player.kick(Lunar.getInstance().getMessage().getMessage(kickMessage));
         }
@@ -63,8 +62,8 @@ public class CaptchaListener implements Listener {
         PersistentDataContainer playerData = player.getPersistentDataContainer();
 
         if (!playerData.has(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER)) return;
-        if (playerData.get(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER) == 0) return;
+        if (playerData.get(Lunar.getInstance().getCaptchaKey(), PersistentDataType.INTEGER) == 1) return;
 
-        Bukkit.getScheduler().runTaskLater(Lunar.getInstance(), () -> new CaptchaInventory().open(player), 5L);
+        new CaptchaInventory().open(player);
     }
 }
