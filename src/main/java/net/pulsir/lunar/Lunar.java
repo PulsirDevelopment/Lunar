@@ -6,6 +6,7 @@ import net.pulsir.api.LunarPluginAPI;
 import net.pulsir.api.bungee.BungeeManager;
 import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.inventory.InventoryManager;
+import net.pulsir.api.maintenance.MaintenanceManager;
 import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
@@ -18,6 +19,7 @@ import net.pulsir.lunar.command.chat.FrozenChatCommand;
 import net.pulsir.lunar.command.chat.OwnerChatCommand;
 import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.lunar.LunarCommand;
+import net.pulsir.lunar.command.maintenance.MaintenanceCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
@@ -34,6 +36,7 @@ import net.pulsir.lunar.filter.Filter;
 import net.pulsir.lunar.hook.PlaceHolderHook;
 import net.pulsir.lunar.inventories.manager.InventoryPlayerManager;
 import net.pulsir.lunar.listener.*;
+import net.pulsir.lunar.maintenance.manager.ServerMaintenanceManager;
 import net.pulsir.lunar.manager.*;
 import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
@@ -64,7 +67,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private Data data;
     private RedisAdapter redisAdapter;
 
-    private Config configuration, language, inventory, messages, discord;
+    private Config configuration, language, inventory, messages, discord, maintenances;
 
     private IDatabase database;
     @Getter
@@ -73,6 +76,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
 
     private final InventoryPlayerManager inventoryPlayerManager = new InventoryPlayerManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
+    private final ServerMaintenanceManager serverMaintenanceManager = new ServerMaintenanceManager();
 
     private final StaffManagerImpl staffManager = new StaffManagerImpl();
     private final SessionManagerImpl sessionManager = new SessionManagerImpl();
@@ -80,6 +84,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final ChatManagerImpl chatManager = new ChatManagerImpl();
     private final RedisManagerImpl redisManager = new RedisManagerImpl();
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
+    private final MaintenanceManagerImpl maintenanceManager = new MaintenanceManagerImpl();
 
     @Getter
     private final NamespacedKey captchaKey = new NamespacedKey(this, "captcha");
@@ -110,6 +115,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.message = new Message();
 
         this.setupDatabase();
+        this.getDatabase().loadMaintenances();
 
         this.registerCommands();
         Bukkit.getConsoleSender().sendMessage("[Lunar] Successfully loaded commands.");
@@ -176,12 +182,15 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
                 new YamlConfiguration(), "messages.yml");
         this.discord = new Config(this, new File(getDataFolder(), "discord.yml"),
                 new YamlConfiguration(), "discord.yml");
+        this.maintenances = new Config(this, new File(getDataFolder(), "maintenances.yml"),
+                new YamlConfiguration(), "maintenances.yml");;
 
         this.configuration.create();
         this.language.create();
         this.inventory.create();
         this.messages.create();
         this.discord.create();
+        this.maintenances.create();
     }
 
     private void setupDatabase() {
@@ -254,6 +263,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
 
         Objects.requireNonNull(getCommand("spy")).setExecutor(new SpyCommand());
 
+        Objects.requireNonNull(getCommand("maintenance")).setExecutor(new MaintenanceCommand());
+
         Objects.requireNonNull(getCommand("lunar")).setExecutor(new LunarCommand());
 
         Objects.requireNonNull(getCommand("tphere")).setExecutor(new TpHereCommand());
@@ -292,6 +303,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         pluginManager.registerEvents(new MineAlertListener(), this);
         pluginManager.registerEvents(new ServerFreezeListener(), this);
         pluginManager.registerEvents(new CaptchaListener(), this);
+        pluginManager.registerEvents(new MaintenanceListener(), this);
     }
 
     private void registerTasks() {
@@ -337,5 +349,10 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     @Override
     public BungeeManager getBungeeManager() {
         return this.bungeeManager;
+    }
+
+    @Override
+    public MaintenanceManager getMaintenanceManager() {
+        return maintenanceManager;
     }
 }

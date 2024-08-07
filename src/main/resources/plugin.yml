@@ -55,3 +55,4 @@ commands:
     aliases: [freezeserver, freezeall]
   world:
     aliases: [worlds]
+  maintenance:

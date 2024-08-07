@@ -197,3 +197,30 @@ WORLD:
 
 CAPTCHA:
   KICK-MESSAGE: "&cSorry! You failed the Captcha."
+
+MAINTENANCES:
+  SERVER-ENTRY:
+    - ""
+    - "&cMaintenance"
+    - "Maintenance &c{name} &fhas begin"
+    - "Reason: &c{reason}"
+    - ""
+  USAGE:
+    - ""
+    - "&c/maintenance create <name> <duration_in_minutes> [reason...]"
+    - "&c/maintenance delete <name>"
+    - "&c/maintenance start <name>"
+    - "&c/maintenance stop <name>"
+    - ""
+  CREATE-USAGE: "&cCorrect usage: &f/maintenance create <name> <duration_in_minutes> [reason...]"
+  CREATE-MUST-BE-A-NUMBER: "&cDuration must be a number!"
+  CREATE-DURATION-MUST-BE-POSITIVE: "%cDuration must be positive number!"
+  CREATED: "&aSuccessfully created new maintenance {name}"
+  CREATED-EXISTS: "&cMaintenance {name} exists."
+  DELETE-USAGE: "&cCorrect usage: /maintenance delete <name>"
+  DELETED: "&aSuccessfully deleted maintenance {name}"
+  START-USAGE: "&cCorrect usage: /maintenance start <name>"
+  START: "&aSuccessfully started maintenance {name}"
+  STOP-USAGE: "&cCorrect usage: /maintenance stop <name>"
+  STOP: "&aSuccessfully stopped maintenance {name}"
+  NULL: "&cMaintenance {name} doesn't exists."
