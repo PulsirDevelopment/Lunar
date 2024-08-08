@@ -35,6 +35,8 @@ quit-message: true
 
 silent-chests: true
 
+captcha-on-join: true
+
 report-cooldown: 60
 request-cooldown: 60
 
@@ -45,8 +47,6 @@ inventory-on-freeze: false
 freeze-chat: true
 freeze-blocked-commands:
   - "/tpa"
-
-captcha-on-join: true
 
 chat-filter: true
 filter-messages:
