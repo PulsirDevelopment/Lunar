@@ -261,5 +261,6 @@ clear-chat:
 
 mine-alert:
   enabled: true
+  detect-amount: true
   block-trigger:
     - "DIAMOND_ORE"

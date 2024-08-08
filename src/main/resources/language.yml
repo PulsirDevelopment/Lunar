@@ -185,7 +185,7 @@ SHOW-STAFF: "&aStaff Shown"
 MINE-ALERTS:
   ENABLED: "&aSuccessfully enabled mine alerts."
   DISABLED: "&cSuccessfully disabled mine alerts."
-  ALERT: "&e{player} &7has mined &e{block}"
+  ALERT: "&e{player} &7has mined &e{amount} &7of &e{block}"
 
 SERVER-FROZEN: "&cServer is currently frozen."
 SERVER-UNFROZEN: "&aServer has been unfrozen."
