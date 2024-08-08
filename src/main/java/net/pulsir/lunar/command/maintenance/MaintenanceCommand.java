@@ -139,7 +139,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         }
 
         String name = args[1];
-        String messagePath = Lunar.getInstance().getServerMaintenanceManager().deleteMaintenance(name)
+        String messagePath = Lunar.getInstance().getServerMaintenanceManager().startMaintenance(name)
                 ? "MAINTENANCES.START"
                 : "MAINTENANCES.NULL";
         sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
@@ -155,7 +155,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         }
 
         String name = args[1];
-        String messagePath = Lunar.getInstance().getServerMaintenanceManager().deleteMaintenance(name)
+        String messagePath = Lunar.getInstance().getServerMaintenanceManager().stopMaintenance(name)
                 ? "MAINTENANCES.STOP"
                 : "MAINTENANCES.NULL";
         sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
