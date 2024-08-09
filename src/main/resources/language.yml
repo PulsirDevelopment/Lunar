@@ -185,7 +185,7 @@ SHOW-STAFF: "&aStaff Shown"
 MINE-ALERTS:
   ENABLED: "&aSuccessfully enabled mine alerts."
   DISABLED: "&cSuccessfully disabled mine alerts."
-  ALERT: "&e{player} &7has mined &e{block}"
+  ALERT: "&e{player} &7has mined &e{amount} &7of &e{block}"
 
 SERVER-FROZEN: "&cServer is currently frozen."
 SERVER-UNFROZEN: "&aServer has been unfrozen."
@@ -194,3 +194,39 @@ WORLD:
   USAGE: "&c/world <world_name>"
   TELEPORTED: "&aSuccessfully teleported to {world}"
   NULL: "&c{world} world doesn't exists. Existing worlds: {existing_worlds}"
+
+CAPTCHA:
+  KICK-MESSAGE: "&cSorry! You failed the Captcha."
+
+MAINTENANCES:
+  SERVER-ENTRY:
+    - ""
+    - "&cMaintenance"
+    - "Maintenance &c{name} &fhas begin"
+    - "Reason: &c{reason}"
+    - ""
+    - "&fExpires at: &c{end_date}"
+    - ""
+  USAGE:
+    - ""
+    - "&c/maintenance create <name> <duration_in_minutes> [reason...]"
+    - "&c/maintenance delete <name>"
+    - "&c/maintenance start <name>"
+    - "&c/maintenance stop <name>"
+    - ""
+  CREATE-USAGE: "&cCorrect usage: &f/maintenance create <name> <duration_in_minutes> [reason...]"
+  CREATE-MUST-BE-A-NUMBER: "&cDuration must be a number!"
+  CREATE-DURATION-MUST-BE-POSITIVE: "%cDuration must be positive number!"
+  CREATED: "&aSuccessfully created new maintenance {name}"
+  CREATED-EXISTS: "&cMaintenance {name} exists."
+  DELETE-USAGE: "&cCorrect usage: /maintenance delete <name>"
+  DELETED: "&aSuccessfully deleted maintenance {name}"
+  START-USAGE: "&cCorrect usage: /maintenance start <name>"
+  START: "&aSuccessfully started maintenance {name}"
+  STOP-USAGE: "&cCorrect usage: /maintenance stop <name>"
+  STOP: "&aSuccessfully stopped maintenance {name}"
+  NOT-EXISTS: "&cMaintenance {name} doesn't exists."
+  LIST: "&fMaintenance name: &c{name}"
+  LIST-EMPTY: "&cThere are no maintenances created."
+  ACTIVE: "&fMaintenance with name &c{name} &fis already active."
+  NOT-ACTIVE: "&fMaintenance with name &c{name} &fis not active."

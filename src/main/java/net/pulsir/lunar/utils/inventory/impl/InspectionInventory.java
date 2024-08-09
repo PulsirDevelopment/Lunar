@@ -37,14 +37,11 @@ public class InspectionInventory implements LInventory {
         Inventory inventory = Bukkit.createInventory(target, 54, title);
 
         PlayerInventory targetInventory = target.getInventory();
-        // Iterate through Inventory contents.
         ItemStack[] contents = targetInventory.getContents();
 
         for (int i = 0; i < contents.length; i++) {
             ItemStack item = contents[i];
             if (item != null) {
-                // If the item is within the first 36 slots, place it as is.
-                // Otherwise, place it 9 slots ahead to show them at the bottom of the inventory. (Armor & Off-Hand)
                 inventory.setItem(i < 36 ? i : i + 9, item);
             }
         }

@@ -14,7 +14,7 @@ import java.util.Objects;
 @Getter
 public class MongoHandler {
 
-    private final MongoCollection<Document> inventories, notes;
+    private final MongoCollection<Document> inventories, notes, maintenances;
 
     public MongoHandler(){
 
@@ -25,5 +25,6 @@ public class MongoHandler {
 
         this.inventories = mongoDatabase.getCollection("inventories");
         this.notes = mongoDatabase.getCollection("notes");
+        this.maintenances = mongoDatabase.getCollection("maintenances");
     }
 }
