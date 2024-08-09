@@ -31,7 +31,7 @@
     <dependency>
       <groupId>net.pulsir</groupId>
       <artifactId>Lunar</artifactId>
-      <version>2.1.6</version>
+      <version>2.1.7</version>
       <scope>provided</score>
     </dependency>
 </dependencies>
@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "net.pulsir:Lunar:2.1.6"
+    compileOnly "net.pulsir:Lunar:2.1.7"
 }
 ```
 
