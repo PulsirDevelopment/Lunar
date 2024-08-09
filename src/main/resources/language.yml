@@ -228,3 +228,5 @@ MAINTENANCES:
   NOT-EXISTS: "&cMaintenance {name} doesn't exists."
   LIST: "&fMaintenance name: &c{name}"
   LIST-EMPTY: "&cThere are no maintenances created."
+  ACTIVE: "&fMaintenance with name &c{name} &fis already active."
+  NOT-ACTIVE: "&fMaintenance with name &c{name} &fis not active."

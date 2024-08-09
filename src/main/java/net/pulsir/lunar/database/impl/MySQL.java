@@ -46,26 +46,19 @@ public class MySQL implements IDatabase {
     }
 
     public void saveMaintenance(Maintenance maintenance) {
-        if (mySQLManager.findMaintenance(maintenance.getName()) != null) {
-            mySQLManager.removeMaintenance(maintenance);
-        }
-
-        this.mySQLManager.createMaintenance(maintenance);
-    }
-
-    public void updateMaintenance(Maintenance maintenance, boolean isClosing) {
-        if (!isClosing) {
-            Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.updateMaintenance(maintenance));
+        if (mySQLManager.findMaintenance(maintenance.getName()) == null) {
+            mySQLManager.createMaintenance(maintenance);
         } else {
-            this.mySQLManager.updateMaintenance(maintenance);
+            mySQLManager.updateMaintenance(maintenance);
         }
-    }
-
-    public void removeMaintenance(Maintenance maintenance) {
-        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.removeMaintenance(maintenance));
     }
 
     public void loadMaintenances() {
         this.mySQLManager.loadMaintenances().forEach(maintenance -> Lunar.getInstance().getServerMaintenanceManager().getMaintenances().add(maintenance));
+    }
+
+    @Override
+    public void deleteMaintenance(String name) {
+        this.mySQLManager.deleteMaintenance(name);
     }
 }

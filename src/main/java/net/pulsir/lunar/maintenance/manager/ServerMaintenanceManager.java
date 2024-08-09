@@ -1,26 +1,34 @@
 package net.pulsir.lunar.maintenance.manager;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import lombok.Getter;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.maintenance.Maintenance;
+import org.bukkit.Bukkit;
 
 @Getter
 public class ServerMaintenanceManager {
 
-    private final Set<Maintenance> maintenances = new HashSet<>();
+    private final List<Maintenance> maintenances = new ArrayList<>();
 
     public boolean isMaintenanceActive() {
-        return this.maintenances.stream()
-                .anyMatch(Maintenance::isActive);
+        for (final Maintenance maintenance : this.maintenances) {
+            if (maintenance.getEndDate() != null) return true;
+        }
+
+        return false;
     }
 
     public Maintenance getFirstActivatedMaintenance() {
-        return this.maintenances.stream()
-                .filter(Maintenance::isActive)
-                .findFirst().orElse(null);
+        for (final Maintenance maintenance : this.maintenances) {
+            if (maintenance.getEndDate() != null) return maintenance;
+        }
+
+        return null;
     }
 
     public Maintenance getMaintenanceByName(String name) {
@@ -34,7 +42,6 @@ public class ServerMaintenanceManager {
 
         Maintenance maintenance = new Maintenance(name, reason, duration);
         this.maintenances.add(maintenance);
-        Lunar.getInstance().getDatabase().saveMaintenance(maintenance);
         return true;
     }
 
@@ -43,7 +50,8 @@ public class ServerMaintenanceManager {
         if (maintenance == null) return false;
 
         this.maintenances.remove(maintenance);
-        Lunar.getInstance().getDatabase().removeMaintenance(maintenance);
+
+        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> Lunar.getInstance().getDatabase().deleteMaintenance(name));
         return true;
     }
 
@@ -52,7 +60,6 @@ public class ServerMaintenanceManager {
         if (maintenance == null) return false;
 
         maintenance.start();
-        Lunar.getInstance().getDatabase().updateMaintenance(maintenance, false);
         return true;
     }
 
@@ -61,7 +68,6 @@ public class ServerMaintenanceManager {
         if (maintenance == null) return false;
 
         maintenance.stop();
-        Lunar.getInstance().getDatabase().updateMaintenance(maintenance, false);
         return true;
     }
 }

@@ -181,4 +181,15 @@ public class MySQLManager {
 
         return null;
     }
+
+    public void deleteMaintenance(String name) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("DELETE FROM maintenances WHERE name = ?");
+            preparedStatement.setString(1, name);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

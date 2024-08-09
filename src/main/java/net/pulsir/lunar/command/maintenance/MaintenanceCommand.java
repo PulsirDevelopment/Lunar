@@ -141,9 +141,17 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         }
 
         String name = args[1];
+
+        if (Lunar.getInstance().getServerMaintenanceManager().getMaintenanceByName(name) != null
+                && Lunar.getInstance().getServerMaintenanceManager().getMaintenanceByName(name).getEndDate() != null) {
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("MAINTENANCES.ACTIVE").replace("{name}", name)));
+            return;
+        }
+
         String messagePath = Lunar.getInstance().getServerMaintenanceManager().startMaintenance(name)
                 ? "MAINTENANCES.START"
-                : "MAINTENANCES.NULL";
+                : "MAINTENANCES.NOT-EXISTS";
         sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                         .getInstance().getLanguage().getConfiguration().getString(messagePath))
                 .replace("{name}", name)));
@@ -157,9 +165,17 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         }
 
         String name = args[1];
+
+        if (Lunar.getInstance().getServerMaintenanceManager().getMaintenanceByName(name) != null
+        && Lunar.getInstance().getServerMaintenanceManager().getMaintenanceByName(name).getEndDate() == null) {
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("MAINTENANCES.NOT-ACTIVE").replace("{name}", name)));
+            return;
+        }
+
         String messagePath = Lunar.getInstance().getServerMaintenanceManager().stopMaintenance(name)
                 ? "MAINTENANCES.STOP"
-                : "MAINTENANCES.NULL";
+                : "MAINTENANCES.NOT-EXISTS";
         sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                         .getInstance().getLanguage().getConfiguration().getString(messagePath))
                 .replace("{name}", name)));

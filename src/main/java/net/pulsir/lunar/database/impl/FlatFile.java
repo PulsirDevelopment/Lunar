@@ -48,14 +48,6 @@ public class FlatFile implements IDatabase {
         Lunar.getInstance().getMaintenances().save();
     }
 
-    public void updateMaintenance(Maintenance maintenance, boolean isClosing) {
-        this.saveMaintenance(maintenance);
-    }
-
-    public void removeMaintenance(Maintenance maintenance) {
-        Lunar.getInstance().getMaintenances().getConfiguration().set("maintenance." + maintenance.getName(), null);
-    }
-
     public void loadMaintenances() {
         if (Lunar.getInstance().getMaintenances().getConfiguration().getConfigurationSection("maintenance") == null) return;
         for (String maintenanceName : Objects.requireNonNull(Lunar.getInstance().getMaintenances().getConfiguration().getConfigurationSection("maintenance")).getKeys(false)) {
@@ -65,5 +57,10 @@ public class FlatFile implements IDatabase {
 
             Lunar.getInstance().getServerMaintenanceManager().getMaintenances().add(new Maintenance(maintenanceName, reason, duration, endDate == -1 ? null : new Date(endDate)));
         }
+    }
+
+    @Override
+    public void deleteMaintenance(String name) {
+
     }
 }

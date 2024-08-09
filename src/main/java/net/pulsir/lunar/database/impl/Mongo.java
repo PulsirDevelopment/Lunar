@@ -10,7 +10,6 @@ import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mongo.MongoHandler;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
 import org.bson.Document;
-import org.bukkit.Bukkit;
 
 import java.util.Date;
 import java.util.UUID;
@@ -18,10 +17,6 @@ import java.util.UUID;
 public class Mongo implements IDatabase {
 
     private final MongoHandler mongoHandler = new MongoHandler();
-
-    /**
-     * TODO RECODE MAINTENANCE TO USE MEMORY INSTEAD OPERATE ON DATABASE
-     */
 
     @Override
     public void saveInventory() {
@@ -50,21 +45,6 @@ public class Mongo implements IDatabase {
                 maintenanceDocument, new ReplaceOptions().upsert(true));
     }
 
-    public void updateMaintenance(Maintenance maintenance, boolean isClosing) {
-        this.removeMaintenance(maintenance);
-
-        if (!isClosing) {
-            Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> saveMaintenance(maintenance));
-        } else {
-            this.saveMaintenance(maintenance);
-        }
-    }
-
-    public void removeMaintenance(Maintenance maintenance) {
-        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(),
-                () -> mongoHandler.getMaintenances().findOneAndDelete(new Document("name", maintenance.getName())));
-    }
-
     public void loadMaintenances() {
         FindIterable<Document> iterable = this.mongoHandler.getMaintenances().find();
 
@@ -81,5 +61,10 @@ public class Mongo implements IDatabase {
                         .add(new Maintenance(name, reason, duration, endDate));
             }
         }
+    }
+
+    @Override
+    public void deleteMaintenance(String name) {
+
     }
 }

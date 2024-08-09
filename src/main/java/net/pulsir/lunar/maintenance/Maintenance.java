@@ -10,11 +10,8 @@ import java.util.Date;
 public class Maintenance {
 
     private final String name;
-
     private final String reason;
-
     private final int duration;
-
     private Date endDate;
 
     public Maintenance(String name, String reason, int duration, Date endDate) {

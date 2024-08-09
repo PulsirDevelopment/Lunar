@@ -1,4 +1,4 @@
-database: "mysql" # mongo | mysql | flatfile
+database: "flatfile" # mongo | mysql | flatfile
 mongo-uri: "mongodb://179.61.181.201:56723/"
 mysql:
   host: "144.217.146.128"
