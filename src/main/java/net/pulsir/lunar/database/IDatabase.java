@@ -10,7 +10,7 @@ public interface IDatabase {
     void loadInventory(UUID uuid);
 
     void saveMaintenance(Maintenance paramMaintenance);
-    void updateMaintenance(Maintenance paramMaintenance);
+    void updateMaintenance(Maintenance paramMaintenance, boolean isClosing);
     void removeMaintenance(Maintenance paramMaintenance);
     void loadMaintenances();
 }

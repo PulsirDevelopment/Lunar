@@ -205,6 +205,8 @@ MAINTENANCES:
     - "Maintenance &c{name} &fhas begin"
     - "Reason: &c{reason}"
     - ""
+    - "&fExpires at: &c{end_date}"
+    - ""
   USAGE:
     - ""
     - "&c/maintenance create <name> <duration_in_minutes> [reason...]"
@@ -223,4 +225,6 @@ MAINTENANCES:
   START: "&aSuccessfully started maintenance {name}"
   STOP-USAGE: "&cCorrect usage: /maintenance stop <name>"
   STOP: "&aSuccessfully stopped maintenance {name}"
-  NULL: "&cMaintenance {name} doesn't exists."
+  NOT-EXISTS: "&cMaintenance {name} doesn't exists."
+  LIST: "&fMaintenance name: &c{name}"
+  LIST-EMPTY: "&cThere are no maintenances created."

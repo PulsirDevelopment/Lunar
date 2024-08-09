@@ -1,6 +1,5 @@
 package net.pulsir.lunar.command.maintenance;
 
-import net.kyori.adventure.text.Component;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.maintenance.Maintenance;
 import org.bukkit.command.Command;
@@ -26,7 +25,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(generateHelpMessage());
+            sendHelpMessage(sender);
             return false;
         }
 
@@ -36,7 +35,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
             case "list" -> showMaintenancesList(sender);
             case "start" -> startMaintenance(sender, args);
             case "stop" -> stopMaintenance(sender, args);
-            default -> sender.sendMessage(generateHelpMessage());
+            default -> sendHelpMessage(sender);
         }
         return true;
     }
@@ -63,18 +62,21 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         return new ArrayList<>();
     }
 
-    private Component generateHelpMessage() {
-        Component message = Component.empty();
+    private void sendHelpMessage(CommandSender sender) {
         for (String line : Lunar.getInstance().getLanguage().getConfiguration().getStringList("MAINTENANCES.USAGE")) {
-            message.append(Lunar.getInstance().getMessage().getMessage(line));
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(line));
         }
-
-        return message;
     }
 
     private void showMaintenancesList(CommandSender sender) {
+        if (Lunar.getInstance().getServerMaintenanceManager().getMaintenances().isEmpty()) {
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("MAINTENANCES.LIST-EMPTY")));
+        }
+
         for (Maintenance maintenance : Lunar.getInstance().getServerMaintenanceManager().getMaintenances()) {
-            sender.sendMessage(maintenance.toString());
+            sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance()
+                    .getLanguage().getConfiguration().getString("MAINTENANCES.LIST").replace("{name}", maintenance.getName())));
         }
     }
 
@@ -125,7 +127,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
         String name = args[1];
         String messagePath = Lunar.getInstance().getServerMaintenanceManager().deleteMaintenance(name)
                 ? "MAINTENANCES.DELETED"
-                : "MAINTENANCES.NULL";
+                : "MAINTENANCES.NOT-EXISTS";
         sender.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar
                         .getInstance().getLanguage().getConfiguration().getString(messagePath))
                 .replace("{name}", name)));

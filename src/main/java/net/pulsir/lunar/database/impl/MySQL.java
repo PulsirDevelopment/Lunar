@@ -5,6 +5,7 @@ import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mysql.MySQLManager;
+import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -45,15 +46,23 @@ public class MySQL implements IDatabase {
     }
 
     public void saveMaintenance(Maintenance maintenance) {
+        if (mySQLManager.findMaintenance(maintenance.getName()) != null) {
+            mySQLManager.removeMaintenance(maintenance);
+        }
+
         this.mySQLManager.createMaintenance(maintenance);
     }
 
-    public void updateMaintenance(Maintenance maintenance) {
-        this.mySQLManager.updateMaintenance(maintenance);
+    public void updateMaintenance(Maintenance maintenance, boolean isClosing) {
+        if (!isClosing) {
+            Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.updateMaintenance(maintenance));
+        } else {
+            this.mySQLManager.updateMaintenance(maintenance);
+        }
     }
 
     public void removeMaintenance(Maintenance maintenance) {
-        this.mySQLManager.removeMaintenance(maintenance);
+        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> mySQLManager.removeMaintenance(maintenance));
     }
 
     public void loadMaintenances() {

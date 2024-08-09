@@ -140,6 +140,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
         this.database.saveInventory();
+        Lunar.getInstance().getServerMaintenanceManager().getMaintenances().forEach(maintenance -> this.database.saveMaintenance(maintenance));
 
         if (getData().getInventories().isEmpty()) return;
         for (UUID uuid : getData().getInventories().keySet()) {

@@ -1,5 +1,6 @@
 package net.pulsir.lunar.database.impl;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;
@@ -9,6 +10,7 @@ import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mongo.MongoHandler;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 
 import java.util.Date;
 import java.util.UUID;
@@ -16,6 +18,10 @@ import java.util.UUID;
 public class Mongo implements IDatabase {
 
     private final MongoHandler mongoHandler = new MongoHandler();
+
+    /**
+     * TODO RECODE MAINTENANCE TO USE MEMORY INSTEAD OPERATE ON DATABASE
+     */
 
     @Override
     public void saveInventory() {
@@ -39,29 +45,41 @@ public class Mongo implements IDatabase {
         maintenanceDocument.put("reason", maintenance.getReason());
         maintenanceDocument.put("duration", maintenance.getDuration());
         maintenanceDocument.put("endDate", maintenance.getEndDate() != null ? maintenance.getEndDate().getTime() : -1);
-        this.mongoHandler.getMaintenances().insertOne(maintenanceDocument);
+
+        this.mongoHandler.getMaintenances().replaceOne(Filters.eq("name", maintenance.getName()),
+                maintenanceDocument, new ReplaceOptions().upsert(true));
     }
 
-    public void updateMaintenance(Maintenance maintenance) {
+    public void updateMaintenance(Maintenance maintenance, boolean isClosing) {
         this.removeMaintenance(maintenance);
-        this.saveMaintenance(maintenance);
+
+        if (!isClosing) {
+            Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(), () -> saveMaintenance(maintenance));
+        } else {
+            this.saveMaintenance(maintenance);
+        }
     }
 
     public void removeMaintenance(Maintenance maintenance) {
-        this.mongoHandler.getMaintenances().findOneAndDelete(new Document("name", maintenance.getName()));
+        Bukkit.getScheduler().runTaskAsynchronously(Lunar.getInstance(),
+                () -> mongoHandler.getMaintenances().findOneAndDelete(new Document("name", maintenance.getName())));
     }
 
     public void loadMaintenances() {
-        for (MongoCursor<Document> cursor = this.mongoHandler.getMaintenances().find().cursor(); cursor.hasNext(); ) {
-            Document document = cursor.next();
-            String name = document.getString("name");
-            String reason = document.getString("reason");
-            int duration = document.getInteger("duration");
-            Date endDate = document.getLong("endDate") == -1 ? null : new Date(document.getLong("endDate"));
+        FindIterable<Document> iterable = this.mongoHandler.getMaintenances().find();
 
-            Lunar.getInstance().getServerMaintenanceManager().getMaintenances()
-                    .add(new Maintenance(name, reason, duration, endDate));
-            if (!cursor.hasNext()) cursor.close();
+        try (MongoCursor<Document> iterator = iterable.iterator()) {
+            while (iterator.hasNext()) {
+                Document document = iterator.next();
+
+                String name = document.getString("name");
+                String reason = document.getString("reason");
+                int duration = document.getInteger("duration");
+                Date endDate = document.getLong("endDate") == -1 ? null : new Date(document.getLong("endDate"));
+
+                Lunar.getInstance().getServerMaintenanceManager().getMaintenances()
+                        .add(new Maintenance(name, reason, duration, endDate));
+            }
         }
     }
 }

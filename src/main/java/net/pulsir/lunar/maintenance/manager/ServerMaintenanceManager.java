@@ -52,7 +52,7 @@ public class ServerMaintenanceManager {
         if (maintenance == null) return false;
 
         maintenance.start();
-        Lunar.getInstance().getDatabase().updateMaintenance(maintenance);
+        Lunar.getInstance().getDatabase().updateMaintenance(maintenance, false);
         return true;
     }
 
@@ -61,7 +61,7 @@ public class ServerMaintenanceManager {
         if (maintenance == null) return false;
 
         maintenance.stop();
-        Lunar.getInstance().getDatabase().updateMaintenance(maintenance);
+        Lunar.getInstance().getDatabase().updateMaintenance(maintenance, false);
         return true;
     }
 }
