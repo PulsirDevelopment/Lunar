@@ -1,12 +1,12 @@
 database: "flatfile" # mongo | mysql | flatfile
-mongo-uri: "mongodb://179.61.181.201:56723/"
+mongo-uri: ""
 mysql:
-  host: "144.217.146.128"
+  host: ""
   port: 3306
-  database: "lunarite_messenger"
+  database: ""
   auth:
-    username: "lunarite_admin"
-    password: "123Zenia@"
+    username: ""
+    password: ""
 redis:
   host: ""
   port: 6379
