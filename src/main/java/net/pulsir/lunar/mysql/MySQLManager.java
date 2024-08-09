@@ -5,12 +5,16 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.inventories.InventoryPlayer;
+import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.utils.base64.Base64;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -36,6 +40,7 @@ public class MySQLManager {
             Statement statement = hikariDataSource.getConnection().createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS inventories(uuid varchar(36) primary key, inventory blob)");
             statement.execute("CREATE TABLE IF NOT EXISTS notes(noteId varchar(36) primary key, uuid varchar(36), staffUUID varchar(36), createdAt bigint, note varchar(256))");
+            statement.execute("CREATE TABLE IF NOT EXISTS maintenances(name varchar(36), reason tinytext, duration int, endDate bigint)");
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -87,6 +92,100 @@ public class MySQLManager {
         try {
             PreparedStatement preparedStatement = hikariDataSource.getConnection().prepareStatement("DELETE FROM inventories WHERE uuid = ?");
             preparedStatement.setString(1, uuid.toString());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createMaintenance(Maintenance maintenance) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("INSERT INTO maintenances(name, reason, duration, endDate) VALUES (?, ?, ?, ?)");
+            preparedStatement.setString(1, maintenance.getName());
+            preparedStatement.setString(2, maintenance.getReason());
+            preparedStatement.setInt(3, maintenance.getDuration());
+            preparedStatement.setLong(4, (maintenance.getEndDate() != null) ? maintenance.getEndDate().getTime() : -1L);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateMaintenance(Maintenance maintenance) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("UPDATE maintenances SET reason = ?, duration = ?, endDate = ? WHERE name = ?");
+            preparedStatement.setString(1, maintenance.getReason());
+            preparedStatement.setInt(2, maintenance.getDuration());
+            preparedStatement.setLong(3, (maintenance.getEndDate() != null) ? maintenance.getEndDate().getTime() : -1L);
+            preparedStatement.setString(4, maintenance.getName());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeMaintenance(Maintenance maintenance) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("DELETE FROM maintenances WHERE name = ?");
+            preparedStatement.setString(1, maintenance.getName());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Set<Maintenance> loadMaintenances() {
+        Set<Maintenance> maintenances = new HashSet<>();
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("SELECT * FROM maintenances");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String name = resultSet.getString(1);
+                String reason = resultSet.getString(2);
+                int duration = resultSet.getInt(3);
+                Date endDate = resultSet.getLong(4) == -1 ? null : new Date(resultSet.getLong(4));
+
+                maintenances.add(new Maintenance(name, reason, duration, endDate));
+            }
+
+            preparedStatement.close();
+            return maintenances;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Maintenance findMaintenance(String name) {
+        try {
+            PreparedStatement preparedStatement = hikariDataSource.getConnection().prepareStatement("SELECT * FROM maintenances WHERE name = ?");
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Maintenance maintenance;
+
+            if (resultSet.next()) {
+                maintenance = new Maintenance(name, resultSet.getString("reason"),
+                        resultSet.getInt("duration"), new Date(resultSet.getLong("endDate")));
+                preparedStatement.close();
+
+                return maintenance;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void deleteMaintenance(String name) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("DELETE FROM maintenances WHERE name = ?");
+            preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {

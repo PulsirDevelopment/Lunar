@@ -1,12 +1,12 @@
-database: "mongo" # mongo | mysql | flatfile
+database: "flatfile" # mongo | mysql | flatfile
 mongo-uri: "mongodb://179.61.181.201:56723/"
 mysql:
-  host: ""
+  host: "144.217.146.128"
   port: 3306
-  database: ""
+  database: "lunarite_messenger"
   auth:
-    username: ""
-    password: ""
+    username: "lunarite_admin"
+    password: "123Zenia@"
 redis:
   host: ""
   port: 6379
@@ -34,6 +34,8 @@ join-message: true
 quit-message: true
 
 silent-chests: true
+
+captcha-on-join: true
 
 report-cooldown: 60
 request-cooldown: 60
@@ -239,10 +241,26 @@ silent-inventory:
   enderchest-title: "&7Silent EnderChest"
   shulker-title: "&7Shulker Box"
 
+captcha-inventory:
+  title: "&cCaptcha Verification"
+  size: 27
+  items:
+    confirm:
+      item: "GREEN_WOOL"
+      name: "&aClick me!"
+      lore:
+        - "&6To enter the pearly gates"
+    failure:
+      item: "RED_WOOL"
+      name: "&cDon't click me!"
+      lore:
+        - "&4OR ELSE"
+
 clear-chat:
   lines: 200
 
 mine-alert:
   enabled: true
+  detect-amount: true
   block-trigger:
     - "DIAMOND_ORE"
