@@ -17,6 +17,9 @@
 
 ### Maven
 
+> [!CAUTION]
+> API Version does not always match with plugin release version. Github & GitBook Documentation will always hold the newest API version available 
+
 ```xml
 
 <repositories>
