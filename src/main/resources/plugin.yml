@@ -56,3 +56,7 @@ commands:
   world:
     aliases: [worlds]
   maintenance:
+  staffping:
+    aliases: [ping]
+  tpall:
+    aliases: [teleportall]

@@ -21,12 +21,14 @@ import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.maintenance.MaintenanceCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
+import net.pulsir.lunar.command.ping.StaffPingCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
 import net.pulsir.lunar.command.restore.InventoryRestoreCommand;
 import net.pulsir.lunar.command.restore.LastInventoryCommand;
 import net.pulsir.lunar.command.session.SessionCommand;
 import net.pulsir.lunar.command.staff.*;
+import net.pulsir.lunar.command.teleport.TeleportAllCommand;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.database.impl.FlatFile;
@@ -56,7 +58,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -280,6 +284,9 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Objects.requireNonNull(getCommand("serverfreeze")).setExecutor(new ServerFreezeCommand());
 
         Objects.requireNonNull(getCommand("world")).setExecutor(new WorldCommand());
+
+        Objects.requireNonNull(getCommand("staffping")).setExecutor(new StaffPingCommand());
+        Objects.requireNonNull(getCommand("tpall")).setExecutor(new TeleportAllCommand());
 
         CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
 

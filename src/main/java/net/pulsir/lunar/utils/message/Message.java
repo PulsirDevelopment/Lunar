@@ -2,6 +2,7 @@ package net.pulsir.lunar.utils.message;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.pulsir.lunar.Lunar;
@@ -31,9 +32,10 @@ public class Message {
 
     public Component getMessage(String message) {
         if (messageType.equals(MessageType.LEGACY)) {
-            return LegacyComponentSerializer.legacyAmpersand().deserializeOr(message, Component.empty());
+            return LegacyComponentSerializer.legacyAmpersand().deserializeOr(message, Component.empty())
+                    .decoration(TextDecoration.ITALIC, false);
         } else if (messageType.equals(MessageType.COMPONENT)) {
-            return MiniMessage.miniMessage().deserialize(message);
+            return MiniMessage.miniMessage().deserialize(message).decoration(TextDecoration.ITALIC, false);
         }
 
         return MiniMessage.miniMessage().deserialize(message);
