@@ -15,10 +15,10 @@
 
 <a href="https://github.com/PulsirDevelopment/Lunar/blob/main/Example/src/main/java/net/pulsir/example/Example.java">Click here to view example of API usage.</a>
 
-### Maven
-
 > [!CAUTION]
 > API Version does not always match with plugin release version. Github & GitBook Documentation will always hold the newest API version available 
+
+### Maven
 
 ```xml
 
