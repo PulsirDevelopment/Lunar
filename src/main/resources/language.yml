@@ -236,7 +236,7 @@ PING:
     - ""
     - "&c/ping <player>"
     - ""
-  MESSAGE: "&fPing of &e{player} &fis &e{ping}"
+  MESSAGE: "&fPing of &e{player} &fis &e{ping} &fms"
 
 TPALL:
   TELEPORTED: "&aSuccessfully teleported {amount} players to your location."

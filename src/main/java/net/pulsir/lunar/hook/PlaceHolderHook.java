@@ -4,6 +4,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.data.Data;
 import net.pulsir.lunar.utils.config.Config;
+import net.pulsir.lunar.utils.time.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +15,7 @@ public class PlaceHolderHook extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "lunar";
+        return "Lunar";
     }
 
     @Override
@@ -24,7 +25,7 @@ public class PlaceHolderHook extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return "1.0.0";
+        return Lunar.getInstance().getDescription().getVersion();
     }
 
     @Override
@@ -72,6 +73,9 @@ public class PlaceHolderHook extends PlaceholderExpansion {
                 Config config = Lunar.getInstance().getConfiguration();
                 boolean isShowTotalPlayers = Objects.requireNonNull(config.getConfiguration().getString("online-players")).equalsIgnoreCase("bukkit");
                 return isShowTotalPlayers ? String.valueOf(Bukkit.getOnlinePlayers().size()) : String.valueOf(data.getOnlinePlayers().size());
+            }
+            case "session_time" -> {
+                return Time.parse(Lunar.getInstance().getSessionManager().getSessionTime(player));
             }
             default -> {
                 return null;

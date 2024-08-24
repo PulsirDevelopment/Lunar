@@ -256,6 +256,41 @@ captcha-inventory:
       lore:
         - "&4OR ELSE"
 
+world-inventory:
+  title: ""
+  size: 9
+  items:
+    1:
+      item: "GRASS"
+      name: "&aWorld"
+      lore:
+        - ""
+        - "&7Click to teleport to world"
+        - ""
+      slot: 0
+      world: "world"
+      command: ""
+    2:
+      item: "NETHERRACK"
+      name: "&cNether"
+      lore:
+        - ""
+        - "&7Click to teleport to nether"
+        - ""
+      slot: 4
+      world: "world_nether"
+      command: ""
+    3:
+      item: "END_PORTAL_FRAME"
+      name: "&dThe End"
+      lore:
+        - ""
+        - "&7Click to teleport to the end"
+        - ""
+      slot: 8
+      world: "world_the_end"
+      command: ""
+
 clear-chat:
   lines: 200
 
