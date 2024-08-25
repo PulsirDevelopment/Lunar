@@ -96,6 +96,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final NamespacedKey namespacedKey = new NamespacedKey(this, "staff");
     @Getter
     private final NamespacedKey onlineStaffKey = new NamespacedKey(this, "player");
+    @Getter
+    private final NamespacedKey worldKey = new NamespacedKey(this, "world");
 
     @Override
     public void onLoad() {
@@ -288,6 +290,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Objects.requireNonNull(getCommand("staffping")).setExecutor(new StaffPingCommand());
         Objects.requireNonNull(getCommand("tpall")).setExecutor(new TeleportAllCommand());
 
+        Objects.requireNonNull(getCommand("players")).setExecutor(new PlayersCommand());
+
         CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
 
         chatCommandManager.addSubCommand(new ChatMuteCommand());
@@ -312,6 +316,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         pluginManager.registerEvents(new ServerFreezeListener(), this);
         pluginManager.registerEvents(new CaptchaListener(), this);
         pluginManager.registerEvents(new MaintenanceListener(), this);
+        pluginManager.registerEvents(new WorldListener(), this);
     }
 
     private void registerTasks() {

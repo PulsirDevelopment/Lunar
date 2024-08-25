@@ -60,3 +60,5 @@ commands:
     aliases: [ping]
   tpall:
     aliases: [teleportall]
+  players:
+    aliases: [online]

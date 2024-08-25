@@ -240,3 +240,11 @@ PING:
 
 TPALL:
   TELEPORTED: "&aSuccessfully teleported {amount} players to your location."
+
+PLAYERS:
+  LIST:
+    - ""
+    - "&aWorld&7: {players_world}"
+    - "&cNether&7: {players_nether}"
+    - "&dEnd&7: {players_end}"
+    - ""

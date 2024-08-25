@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +42,8 @@ public class WorldCommand implements CommandExecutor, TabExecutor {
         for (final String item : Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getConfigurationSection("world-inventory.items")).getKeys(false)) {
             ItemStack itemStack = new ItemStack(Material.valueOf(Lunar.getInstance().getConfiguration().getConfiguration().getString("world-inventory.items." + item + ".item")));
             ItemMeta meta = itemStack.getItemMeta();
+            meta.getPersistentDataContainer().set(Lunar.getInstance().getWorldKey(), PersistentDataType.STRING,
+                    Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("world-inventory.items." + item + ".world")));
             meta.displayName(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getConfiguration().getConfiguration().getString("world-inventory.items." + item + ".name")));
             List<Component> lore = new ArrayList<>();
             Lunar.getInstance().getConfiguration().getConfiguration().getStringList("world-inventory.items." + item + ".lore").forEach(line ->
@@ -70,26 +73,3 @@ public class WorldCommand implements CommandExecutor, TabExecutor {
         return new ArrayList<>();
     }
 }
-/*
-        if (args.length == 0) {
-            usage(player);
-        } else {
-            World world = Bukkit.getWorld(args[0]);
-
-            List<String> availableWorlds = new ArrayList<>();
-            for (final World serverWorld : Bukkit.getWorlds()) {
-                availableWorlds.add(serverWorld.getName());
-            }
-
-            if (world == null) {
-                player.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Lunar.getInstance()
-                        .getLanguage().getConfiguration().getString("WORLD.NULL")).replace("{world}", args[0])
-                        .replace("{existing_worlds}", String.valueOf(availableWorlds))));
-                return false;
-            }
-
-            player.teleport(new Location(world, player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()));
-            player.sendMessage(Lunar.getInstance().getMessage().getMessage(Objects.requireNonNull(Objects.requireNonNull(Lunar.getInstance()
-                    .getLanguage().getConfiguration().getString("WORLD.TELEPORTED")).replace("{world}", world.getName()))));
-        }
- */
