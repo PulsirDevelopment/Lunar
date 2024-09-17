@@ -58,9 +58,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter

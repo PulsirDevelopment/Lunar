@@ -1,5 +1,14 @@
 package net.pulsir.lunar.command.staff;
 
+import com.google.common.collect.Lists;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.module.nametag.Nametag;
+import com.lunarclient.apollo.module.nametag.NametagModule;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.staff.Staff;
 import org.bukkit.Bukkit;
@@ -13,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -48,6 +58,8 @@ public class StaffCommand implements CommandExecutor {
         player.getInventory().setContents(Lunar.getInstance().getData().getInventories().get(player.getUniqueId()));
         Lunar.getInstance().getData().getInventories().remove(player.getUniqueId());
 
+        resetNametagsExample(player);
+
         player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                 .getConfiguration().getString("STAFF-MODE.DISABLED")));
     }
@@ -79,7 +91,31 @@ public class StaffCommand implements CommandExecutor {
                     .withParticles(false));
         }
 
+        overrideNametagExample(player);
+
         player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                 .getConfiguration().getString("STAFF-MODE.ENABLED")));
+    }
+
+    private void overrideNametagExample(Player target) {
+        Apollo.getModuleManager().getModule(NametagModule.class).overrideNametag(Recipients.ofEveryone(), target.getUniqueId(), Nametag.builder()
+                .lines(Lists.newArrayList(
+                        Component.text()
+                                .content("[StaffMode]")
+                                .decorate(TextDecoration.ITALIC)
+                                .color(NamedTextColor.GRAY)
+                                .build(),
+                        Component.text()
+                                .content(target.getName())
+                                .color(NamedTextColor.RED)
+                                .build()
+                ))
+                .build()
+        );
+    }
+
+    private void resetNametagsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(Apollo.getModuleManager().getModule(NametagModule.class)::resetNametags);
     }
 }
