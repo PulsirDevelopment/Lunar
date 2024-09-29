@@ -47,6 +47,10 @@ inventory-on-freeze: false
 freeze-chat: true
 freeze-blocked-commands:
   - "/tpa"
+blocked-commands:
+  - "plugin"
+  - "pl"
+  - "plugins"
 
 chat-filter: true
 filter-messages:

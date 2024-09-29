@@ -27,7 +27,6 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onInvseeClick(InventoryClickEvent event) {
-        Player player = (Player) event.getWhoClicked();
         if (MiniMessage.miniMessage().serialize(event.getView().title())
                 .equalsIgnoreCase(Lunar.getInstance().getConfiguration().getConfiguration().getString("inspect-inventory.title"))
         || LegacyComponentSerializer.legacyAmpersand().serialize(event.getView().title()).equalsIgnoreCase(Lunar.getInstance()

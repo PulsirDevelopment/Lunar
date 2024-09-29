@@ -21,6 +21,7 @@ public class MongoHandler {
         MongoClient mongoClient = MongoClients.create(
                 new ConnectionString(Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("mongo-uri")))
         );
+
         MongoDatabase mongoDatabase = mongoClient.getDatabase("lunar");
 
         this.inventories = mongoDatabase.getCollection("inventories");
