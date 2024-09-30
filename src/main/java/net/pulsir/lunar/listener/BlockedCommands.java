@@ -15,6 +15,7 @@ public class BlockedCommands implements Listener {
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
+        if (event.getPlayer().hasPermission("lunar.command.bypass")) return;
         List<String> commands = Lunar.getInstance().getConfiguration().getConfiguration().getStringList("blocked-commands");
         commands.forEach(all -> {
             String[] arrCommand = event.getMessage().toLowerCase().split(" ", 2);
