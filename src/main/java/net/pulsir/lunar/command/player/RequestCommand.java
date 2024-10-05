@@ -3,6 +3,7 @@ package net.pulsir.lunar.command.player;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.utils.bungee.Bungee;
 import net.pulsir.lunar.utils.bungee.message.ChannelType;
+import net.pulsir.lunar.utils.discord.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -69,6 +71,21 @@ public class RequestCommand implements CommandExecutor, TabCompleter {
             if (!Objects.requireNonNull(Lunar.getInstance().getLanguage().getConfiguration().getString("REQUEST.SUCCESS")).isEmpty()) {
                 player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                         .getConfiguration().getString("REQUEST.SUCCESS")));
+            }
+
+            if (Lunar.getInstance().getDiscord().getConfiguration().getBoolean("enabled") && Lunar.getInstance().getDiscord().getConfiguration().getBoolean("player-request.enabled")) {
+                DiscordWebhook discordWebhook = new DiscordWebhook(Lunar.getInstance().getDiscord().getConfiguration().getString("webhook-url"));
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject()
+                        .setDescription(Objects.requireNonNull(Lunar.getInstance().getDiscord().getConfiguration().getString("staff-unfreeze.message"))
+                                .replace("{player}", sender.getName())
+                                .replace("{server}", Objects.requireNonNull(Lunar.getInstance().getConfiguration().getConfiguration().getString("server-name")))
+                                .replace("{request}", message))
+                        .setAuthor(sender.getName(), "", ""));
+                try {
+                    discordWebhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 

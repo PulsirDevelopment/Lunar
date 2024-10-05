@@ -20,3 +20,11 @@ staff-unfreeze:
 staff-refund:
   enabled: true
   message: "(**{server}**) **{target}'s** inventory has been refunded by **{player}**"
+
+player-report:
+  enabled: true
+  message: "(**{server}**) **{player}'s** has been reported by **{target}** for {report}"
+
+player-request:
+  enabled: true
+  message: "(**{server}**) **{target}'s** has been requested support for {request}"
