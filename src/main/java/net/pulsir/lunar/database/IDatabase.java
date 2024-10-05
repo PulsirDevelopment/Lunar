@@ -1,6 +1,7 @@
 package net.pulsir.lunar.database;
 
 import net.pulsir.lunar.maintenance.Maintenance;
+import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
 
@@ -13,4 +14,7 @@ public interface IDatabase {
     void loadMaintenances();
 
     void deleteMaintenance(String name);
+
+    void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory);
+    void loadOfflineInventory(UUID uuid);
 }

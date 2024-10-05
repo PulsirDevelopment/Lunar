@@ -5,6 +5,7 @@ import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -61,6 +62,16 @@ public class FlatFile implements IDatabase {
 
     @Override
     public void deleteMaintenance(String name) {
+
+    }
+
+    @Override
+    public void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory) {
+
+    }
+
+    @Override
+    public void loadOfflineInventory(UUID uuid) {
 
     }
 }

@@ -10,6 +10,7 @@ import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mongo.MongoHandler;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
 import org.bson.Document;
+import org.bukkit.inventory.Inventory;
 
 import java.util.Date;
 import java.util.UUID;
@@ -65,6 +66,16 @@ public class Mongo implements IDatabase {
 
     @Override
     public void deleteMaintenance(String name) {
+
+    }
+
+    @Override
+    public void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory) {
+
+    }
+
+    @Override
+    public void loadOfflineInventory(UUID uuid) {
 
     }
 }

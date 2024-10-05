@@ -40,6 +40,7 @@ import net.pulsir.lunar.inventories.manager.InventoryPlayerManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.maintenance.manager.ServerMaintenanceManager;
 import net.pulsir.lunar.manager.*;
+import net.pulsir.lunar.offline.manager.OfflinePlayerManager;
 import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import net.pulsir.lunar.task.LunarTask;
@@ -79,6 +80,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final InventoryPlayerManager inventoryPlayerManager = new InventoryPlayerManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
     private final ServerMaintenanceManager serverMaintenanceManager = new ServerMaintenanceManager();
+    private final OfflinePlayerManager offlinePlayerManager = new OfflinePlayerManager();
 
     private final StaffManagerImpl staffManager = new StaffManagerImpl();
     private final SessionManagerImpl sessionManager = new SessionManagerImpl();
@@ -87,6 +89,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final RedisManagerImpl redisManager = new RedisManagerImpl();
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
     private final MaintenanceManagerImpl maintenanceManager = new MaintenanceManagerImpl();
+    private final OfflinePlayerManagerImpl offlineManager = new OfflinePlayerManagerImpl();
 
     @Getter
     private final NamespacedKey captchaKey = new NamespacedKey(this, "captcha");
@@ -316,6 +319,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         pluginManager.registerEvents(new MaintenanceListener(), this);
         pluginManager.registerEvents(new WorldListener(), this);
         pluginManager.registerEvents(new BlockedCommands(), this);
+        pluginManager.registerEvents(new OfflinePlayerListener(), this);
     }
 
     private void registerTasks() {
