@@ -1,17 +1,15 @@
 package net.pulsir.lunar.offline;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 @Getter
-@Setter
 public class OfflinePlayerInventory {
 
-    private Inventory offlineInventory, offlineEnderChest;
+    private final ItemStack[] personalInventory, enderChestInventory;
 
-    public OfflinePlayerInventory(Inventory offlineInventory, Inventory offlineEnderChest) {
-        this.offlineInventory = offlineInventory;
-        this.offlineEnderChest = offlineEnderChest;
+    public OfflinePlayerInventory(ItemStack[] personalInventory, ItemStack[] enderChestInventory) {
+        this.personalInventory = personalInventory;
+        this.enderChestInventory = enderChestInventory;
     }
 }
