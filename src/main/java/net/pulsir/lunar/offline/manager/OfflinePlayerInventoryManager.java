@@ -11,8 +11,4 @@ import java.util.UUID;
 public class OfflinePlayerInventoryManager {
 
     private final Map<UUID, OfflinePlayerInventory> offlinePlayersInventory = new HashMap<>();
-
-    public void loadPlayer(UUID uuid) {}
-
-    public void saveAll() {}
 }

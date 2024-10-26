@@ -141,6 +141,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         }
 
         this.filter = new Filter();
+
+        this.database.loadOfflineInventories();
     }
 
     @Override
@@ -148,8 +150,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
         this.database.saveInventory();
+        this.database.saveOfflineInventories();
         Lunar.getInstance().getServerMaintenanceManager().getMaintenances().forEach(maintenance -> this.database.saveMaintenance(maintenance));
-        Lunar.getInstance().getOfflinePlayerInventoryManager().saveAll();
 
         if (getData().getInventories().isEmpty()) return;
         for (UUID uuid : getData().getInventories().keySet()) {

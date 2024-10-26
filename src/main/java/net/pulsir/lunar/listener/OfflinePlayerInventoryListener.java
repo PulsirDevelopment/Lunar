@@ -20,6 +20,7 @@ public class OfflinePlayerInventoryListener implements Listener {
         ItemStack[] personInventory = event.getPlayer().getInventory().getContents();
         ItemStack[] enderChestInventory = event.getPlayer().getEnderChest().getContents();
 
+        Lunar.getInstance().getOfflinePlayerInventoryManager().getOfflinePlayersInventory().remove(event.getPlayer().getUniqueId());
         Lunar.getInstance().getOfflinePlayerInventoryManager().getOfflinePlayersInventory().put(event.getPlayer().getUniqueId(),
                 new OfflinePlayerInventory(personInventory, enderChestInventory));
     }

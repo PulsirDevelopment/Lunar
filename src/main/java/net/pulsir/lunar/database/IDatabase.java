@@ -15,6 +15,7 @@ public interface IDatabase {
 
     void deleteMaintenance(String name);
 
-    void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory);
-    void loadOfflineInventory(UUID uuid);
+    void loadOfflineInventories();
+
+    void saveOfflineInventories();
 }

@@ -69,20 +69,12 @@ public class FlatFile implements IDatabase {
     }
 
     @Override
-    public void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory) {
-        Lunar.getInstance().getOffline().getConfiguration().set("inventory." + uuid.toString() + ".uuid", uuid.toString());
-        Lunar.getInstance().getOffline().getConfiguration().set("inventory." + uuid + ".player", Lunar.getInstance().getOfflinePlayerManager().getInventoryAsString(playerInventory));
-        Lunar.getInstance().getOffline().getConfiguration().set("inventory." + uuid + ".enderchest", Lunar.getInstance().getOfflinePlayerManager().getInventoryAsString(enderChestInventory));
-        Lunar.getInstance().getOffline().save();
+    public void loadOfflineInventories() {
+
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid) {
-        String playerInventoryString = Lunar.getInstance().getOffline().getConfiguration().getString("inventory." + uuid.toString() + ".player");
-        String playerEnderChestString = Lunar.getInstance().getOffline().getConfiguration().getString("inventory." + uuid.toString() + ".enderchest");
+    public void saveOfflineInventories() {
 
-        Lunar.getInstance().getOfflinePlayerManager().getOfflinePlayers()
-                .put(uuid, new OfflinePlayerInventory(Base64.toInventory(playerInventoryString),
-                        Base64.toInventory(playerEnderChestString)));
     }
 }

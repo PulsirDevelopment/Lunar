@@ -64,12 +64,12 @@ public class MySQL implements IDatabase {
     }
 
     @Override
-    public void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory) {
+    public void loadOfflineInventories() {
 
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid) {
+    public void saveOfflineInventories() {
 
     }
 }
