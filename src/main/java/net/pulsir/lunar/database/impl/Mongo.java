@@ -8,8 +8,6 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mongo.MongoHandler;
-import net.pulsir.lunar.offline.OfflinePlayerInventory;
-import net.pulsir.lunar.offline.manager.OfflinePlayerInventoryManager;
 import net.pulsir.lunar.utils.base64.Base64;
 import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
@@ -74,35 +72,6 @@ public class Mongo implements IDatabase {
     @Override
     public void deleteMaintenance(String name) {
 
-    }
-
-    @Override
-    public void loadOfflineInventories() {
-        FindIterable<Document> iterable = mongoHandler.getOffline().find();
-        try (MongoCursor<Document> cursor = iterable.iterator()) {
-            while (cursor.hasNext()) {
-                Document document = cursor.next();
-
-
-            }
-        }
-    }
-
-    @Override
-    public void saveOfflineInventories() {
-        Lunar.getInstance().getOfflinePlayerInventoryManager().getOfflinePlayersInventory().keySet().forEach(uuid -> {
-            OfflinePlayerInventory offlinePlayerInventory = Lunar.getInstance().getOfflinePlayerInventoryManager().getOfflinePlayersInventory().get(uuid);
-            List<String> playerItems = convert(offlinePlayerInventory.getPersonalInventory());
-            List<String> enderChestItems = convert(offlinePlayerInventory.getEnderChestInventory());
-
-            Document document = new Document();
-            document.put("uuid", uuid.toString());
-            document.put("playerItems", Base64.toBase64(playerItems));
-            document.put("enderChestItems", Base64.toBase64(enderChestItems));
-
-            mongoHandler.getOffline().replaceOne(Filters.eq("uuid", uuid.toString()),
-                    document, new ReplaceOptions().upsert(true));
-        });
     }
 
     private List<String> convert(ItemStack[] items){

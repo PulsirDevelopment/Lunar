@@ -14,8 +14,4 @@ public interface IDatabase {
     void loadMaintenances();
 
     void deleteMaintenance(String name);
-
-    void loadOfflineInventories();
-
-    void saveOfflineInventories();
 }

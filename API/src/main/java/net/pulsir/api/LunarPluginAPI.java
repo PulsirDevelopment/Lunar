@@ -4,7 +4,6 @@ import net.pulsir.api.bungee.BungeeManager;
 import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.inventory.InventoryManager;
 import net.pulsir.api.maintenance.MaintenanceManager;
-import net.pulsir.api.offline.OfflinePlayerManager;
 import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
@@ -19,5 +18,4 @@ public interface LunarPluginAPI extends Plugin {
     RedisManager getRedisManager();
     BungeeManager getBungeeManager();
     MaintenanceManager getMaintenanceManager();
-    OfflinePlayerManager getOfflinePlayerManager();
 }

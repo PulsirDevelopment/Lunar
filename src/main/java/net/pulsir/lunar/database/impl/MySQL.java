@@ -62,14 +62,4 @@ public class MySQL implements IDatabase {
     public void deleteMaintenance(String name) {
         this.mySQLManager.deleteMaintenance(name);
     }
-
-    @Override
-    public void loadOfflineInventories() {
-
-    }
-
-    @Override
-    public void saveOfflineInventories() {
-
-    }
 }

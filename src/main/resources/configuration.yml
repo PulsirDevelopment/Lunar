@@ -1,3 +1,4 @@
+license-key: "license_key"
 database: "flatfile" # mongo | mysql | flatfile
 mongo-uri: ""
 mysql:
