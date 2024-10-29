@@ -8,13 +8,16 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mongo.MongoHandler;
-import net.pulsir.lunar.offline.OfflinePlayerInventory;
 import net.pulsir.lunar.utils.base64.Base64;
+import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
 import org.bson.Document;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Mongo implements IDatabase {
@@ -71,24 +74,12 @@ public class Mongo implements IDatabase {
 
     }
 
-    @Override
-    public void saveOfflineInventory(UUID uuid, Inventory playerInventory, Inventory enderChestInventory) {
-        Document document = new Document();
-        document.put("uuid", uuid.toString());
-        document.put("player", null);
-        document.put("enderChest", null);
-
-        this.mongoHandler.getOffline().replaceOne(Filters.eq("uuid", uuid.toString()),
-                document, new ReplaceOptions().upsert(true));
-    }
-
-    @Override
-    public void loadOfflineInventory(UUID uuid) {
-        Document document = mongoHandler.getOffline().find(Filters.eq("uuid", uuid.toString())).first();
-        if (document != null) {
-            Lunar.getInstance().getOfflinePlayerManager().getOfflinePlayers()
-                    .put(uuid, new OfflinePlayerInventory(Base64.toInventory(document.getString("player")),
-                            Base64.toInventory(document.getString("enderChest"))));
+    private List<String> convert(ItemStack[] items){
+        List<String> string = new ArrayList<>();
+        for (final ItemStack itemStack : items) {
+            string.add(ItemStackSerializer.serialize(itemStack));
         }
+
+        return string;
     }
 }

@@ -7,7 +7,6 @@ import net.pulsir.api.bungee.BungeeManager;
 import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.inventory.InventoryManager;
 import net.pulsir.api.maintenance.MaintenanceManager;
-import net.pulsir.api.offline.OfflinePlayerManager;
 import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
@@ -41,7 +40,6 @@ import net.pulsir.lunar.inventories.manager.InventoryPlayerManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.maintenance.manager.ServerMaintenanceManager;
 import net.pulsir.lunar.manager.*;
-import net.pulsir.lunar.offline.manager.OfflinePlayerInventoryManager;
 import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import net.pulsir.lunar.task.LunarTask;
@@ -71,7 +69,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private Data data;
     private RedisAdapter redisAdapter;
 
-    private Config configuration, language, inventory, messages, discord, maintenances, offline;
+    private Config configuration, language, inventory, messages, discord, maintenances;
 
     private IDatabase database;
     @Getter
@@ -81,7 +79,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final InventoryPlayerManager inventoryPlayerManager = new InventoryPlayerManager();
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
     private final ServerMaintenanceManager serverMaintenanceManager = new ServerMaintenanceManager();
-    private final OfflinePlayerInventoryManager offlinePlayerInventoryManager = new OfflinePlayerInventoryManager();
 
     private final StaffManagerImpl staffManager = new StaffManagerImpl();
     private final SessionManagerImpl sessionManager = new SessionManagerImpl();
@@ -90,7 +87,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final RedisManagerImpl redisManager = new RedisManagerImpl();
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
     private final MaintenanceManagerImpl maintenanceManager = new MaintenanceManagerImpl();
-    private final OfflinePlayerManager offlineManager = new OfflinePlayerManagerImpl();
 
     @Getter
     private final NamespacedKey captchaKey = new NamespacedKey(this, "captcha");
@@ -120,6 +116,22 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getConsoleSender().sendMessage(" ");
 
         this.loadConfiguration();
+
+        try {
+            boolean isValid = new LunarLicense(this.configuration.getConfiguration().getString("license-key")).validateLicense();
+
+            if (!isValid) {
+                Bukkit.getPluginManager().disablePlugin(this);
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Your license is invalid. Please contact support if you believe there is a mistake.");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Discord - https://discord.gg/6NRjM9N7uk");
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Thank you for purchasing Lunar!");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "In case of any question please join - https://discord.gg/6NRjM9N7uk");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         this.message = new Message();
 
         this.setupDatabase();
@@ -149,7 +161,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
         this.database.saveInventory();
         Lunar.getInstance().getServerMaintenanceManager().getMaintenances().forEach(maintenance -> this.database.saveMaintenance(maintenance));
-        Lunar.getInstance().getOfflinePlayerInventoryManager().saveAll();
 
         if (getData().getInventories().isEmpty()) return;
         for (UUID uuid : getData().getInventories().keySet()) {
@@ -194,8 +205,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
                 new YamlConfiguration(), "discord.yml");
         this.maintenances = new Config(this, new File(getDataFolder(), "maintenances.yml"),
                 new YamlConfiguration(), "maintenances.yml");
-        this.offline = new Config(this, new File(getDataFolder(), "offline.yml"),
-                new YamlConfiguration(), "offline.yml");
 
         this.configuration.create();
         this.language.create();
@@ -203,7 +212,6 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.messages.create();
         this.discord.create();
         this.maintenances.create();
-        this.offline.create();
     }
 
     private void setupDatabase() {
@@ -374,10 +382,5 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     @Override
     public MaintenanceManager getMaintenanceManager() {
         return maintenanceManager;
-    }
-
-    @Override
-    public OfflinePlayerManager getOfflinePlayerManager() {
-        return offlineManager;
     }
 }
