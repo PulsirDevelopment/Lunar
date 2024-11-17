@@ -248,3 +248,12 @@ PLAYERS:
     - "&cNether&7: {players_nether}"
     - "&dEnd&7: {players_end}"
     - ""
+
+CPS:
+  USAGE:
+    - ""
+    - ""
+    - ""
+  CHECK: "&e{player} &7is clicking {cps} cps."
+  FOLLOWED: "&aSuccessfully followed {player} cps."
+  UN-FOLLOWED: "&cSuccessfully unfollowed {player} cps."

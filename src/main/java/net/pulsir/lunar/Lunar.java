@@ -307,6 +307,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
 
         Objects.requireNonNull(getCommand("players")).setExecutor(new PlayersCommand());
 
+        Objects.requireNonNull(getCommand("cps")).setExecutor(new CPSCommand());
+
         CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
 
         chatCommandManager.addSubCommand(new ChatMuteCommand());
