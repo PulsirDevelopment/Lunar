@@ -1,4 +1,6 @@
 license-key: "license_key"
+
+# Database where every data will be saved
 database: "flatfile" # mongo | mysql | flatfile
 mongo-uri: ""
 mysql:
@@ -14,45 +16,80 @@ redis:
   auth: false
   password: ""
 allow-sync: true
+
+# Bungee - Staff chat messages will be sent through bungeecord
+# Redis - Staff chat messages will be sent through redis (best if you have multiple proxies)
 sync-system: "bungee" # bungee | redis
 server-name: "Hub"
 
+# Legacy - Supports old style of colors such as &5, &6 and so on.
+# Modern - Supports new way of colors such as <red>, <#00FF00>
 message-format: "legacy" # legacy | modern
 
+# Bukkit - Counts all players on server
+# Custom - Counts all players on server, however without vanished ones.
 online-players: "bukkit" # bukkit | custom
 
+# Should staff bar be enabled
 staff-bar: true
+
+# Staff - Staff bar will be only enabled if user is in staff mode.
+# Vanish - Staff bar will be only enabled if user is in vanish mode.
+# Both - Staff bar will be enabled if user is either in vanish or staff mode.
 staff-bar-visibility: "staff" # staff | vanish | both
 
+# Effects which player, who is in vanish will receive.
 vanish-effects:
   - "NIGHT_VISION"
+
+# Effects which player, who is in staff mode will receive.
 staff-effects:
   - "NIGHT_VISION"
 
+# Should all staff members, who join on server be put automatically in vanish.
 force-vanish: true
 
+# Should staff members receive a message when another staff joins the server
 join-message: true
+
+# Should staff members receive a message when another staff leaves the server
 quit-message: true
 
+# Should staff members be only allowed to open a chest in silent (not sound or animation will be presented)
 silent-chests: true
 
+# Should players receive a captcha on join (Inventory where they have to click). ONLY FOR NEW PLAYERS
 captcha-on-join: true
 
+# Cooldown each player will have to wait until reporting player again.
 report-cooldown: 60
+
+# Cooldown each player will have to wait until requesting support again.
 request-cooldown: 60
 
+# Should inventory be deleted from database straight away after restoring death player
 delete-on-restore: true
+
+# Should staff be allowed to spy on players messages or commands
 allow-staff-spy: false
 
+# Should inventory with an item called You are frozen be open whenever player will be frozen
 inventory-on-freeze: false
+
+# Should freeze chat be enabled where ONLY staff members and frozen player can communicate
 freeze-chat: true
+
+# Commands which frozen player cannot execute
 freeze-blocked-commands:
   - "/tpa"
+
+# Commands which player cannot execute
 blocked-commands:
   - "plugin"
   - "pl"
   - "plugins"
 
+# Should Lunar filter a chat from banned words
 chat-filter: true
 filter-messages:
   1:
@@ -63,7 +100,9 @@ filter-messages:
     command: "tempmute {player} 30d homophobia -s"
 
 spy:
+  # Should staff be allowed to spy on player messages
   messages: true
+  # Should staff be allowed to spy on player commands
   commands: true
 
 staff-items:

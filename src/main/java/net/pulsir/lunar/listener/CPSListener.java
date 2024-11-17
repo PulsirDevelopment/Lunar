@@ -1,10 +1,12 @@
 package net.pulsir.lunar.listener;
 
 import net.pulsir.lunar.Lunar;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerAnimationType;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class CPSListener implements Listener {
 
@@ -19,5 +21,10 @@ public class CPSListener implements Listener {
                 Lunar.getInstance().getCpsPlayerManager().getCpsPlayer().put(event.getPlayer().getUniqueId(), 1);
             }
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Lunar.getInstance().getCpsPlayerManager().getFollowedPlayers().remove(event.getPlayer().getUniqueId());
     }
 }

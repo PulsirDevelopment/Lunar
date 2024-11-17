@@ -63,3 +63,4 @@ commands:
   players:
     aliases: [online]
   cps:
+    aliases: [playercps]

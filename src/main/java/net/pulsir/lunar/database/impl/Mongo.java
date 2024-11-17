@@ -74,6 +74,16 @@ public class Mongo implements IDatabase {
 
     }
 
+    @Override
+    public void loadOfflineInventory(UUID uuid) {
+
+    }
+
+    @Override
+    public void saveOfflineInventory(UUID uuid) {
+
+    }
+
     private List<String> convert(ItemStack[] items){
         List<String> string = new ArrayList<>();
         for (final ItemStack itemStack : items) {

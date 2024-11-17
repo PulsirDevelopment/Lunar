@@ -42,7 +42,7 @@ public class SpyCommand implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                if (target.hasPermission("luanr.staff") && !Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-staff-spy")) {
+                if (target.hasPermission("lunar.staff") && !Lunar.getInstance().getConfiguration().getConfiguration().getBoolean("allow-staff-spy")) {
                     player.sendMessage(Lunar.getInstance().getMessage().getMessage(Lunar.getInstance().getLanguage()
                             .getConfiguration().getString("SPY.STAFF")));
                     return false;

@@ -66,4 +66,14 @@ public class FlatFile implements IDatabase {
     public void deleteMaintenance(String name) {
 
     }
+
+    @Override
+    public void loadOfflineInventory(UUID uuid) {
+
+    }
+
+    @Override
+    public void saveOfflineInventory(UUID uuid) {
+
+    }
 }

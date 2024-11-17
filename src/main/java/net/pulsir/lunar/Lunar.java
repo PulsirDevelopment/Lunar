@@ -344,7 +344,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, useStaffBar ? new LunarTask() : new ServerTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimer(this, new MessagesTask(), 0L, 20L);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new SessionTask(), 0L, 20L);
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new CPSTask(), 0L, 20L);
+        Bukkit.getScheduler().runTaskTimer(this, new CPSTask(), 0L, 20L);
     }
 
     public void reloadConfigs() {

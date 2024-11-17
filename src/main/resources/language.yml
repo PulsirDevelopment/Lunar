@@ -252,8 +252,12 @@ PLAYERS:
 CPS:
   USAGE:
     - ""
-    - ""
+    - "&c/cps check <player>"
+    - "&c/cps follow <player>"
+    - "&c/cps unfollow <player>"
     - ""
   CHECK: "&e{player} &7is clicking {cps} cps."
   FOLLOWED: "&aSuccessfully followed {player} cps."
   UN-FOLLOWED: "&cSuccessfully unfollowed {player} cps."
+  NONE-FOLLOWED: "&cYou aren't following anybody."
+  WRONG-FOLLOWER: "&cYou are not following {player}"
