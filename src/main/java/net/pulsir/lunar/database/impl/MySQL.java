@@ -6,6 +6,7 @@ import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mysql.MySQLManager;
 import net.pulsir.lunar.offline.OfflinePlayerInventory;
+import net.pulsir.lunar.utils.base64.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
@@ -66,7 +67,14 @@ public class MySQL implements IDatabase {
 
     @Override
     public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+        Inventory playerInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getPlayerInventory().length, "");
+        playerInventory.setContents(offlinePlayerInventory.getPlayerInventory());
 
+        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getEnderChestInventory().length, "");
+        enderChestInventory.setContents(offlinePlayerInventory.getEnderChestInventory());
+
+        String playerInventoryString = Base64.toBase64(playerInventory);
+        String enderChestInventoryString = Base64.toBase64(enderChestInventory);
     }
 
     @Override

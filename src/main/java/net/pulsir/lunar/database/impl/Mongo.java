@@ -13,9 +13,11 @@ import net.pulsir.lunar.utils.base64.Base64;
 import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,20 +79,34 @@ public class Mongo implements IDatabase {
 
     @Override
     public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+        Document document = mongoHandler.getOffline().find(Filters.eq("uuid", uuid.toString())).first();
+        if (document != null) {
+            String playerInventoryString = document.getString("playerInventory");
+            String enderChestInventorString = document.getString("enderChestInventory");
 
+            try {
+                ItemStack[] playerInventory = Base64.fromBase64(playerInventoryString).getContents();
+                ItemStack[] enderChestInventory = Base64.fromBase64(enderChestInventorString).getContents();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
     public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+        Inventory playerInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getPlayerInventory().length, "");
+        playerInventory.setContents(offlinePlayerInventory.getPlayerInventory());
 
-    }
+        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getEnderChestInventory().length, "");
+        enderChestInventory.setContents(offlinePlayerInventory.getEnderChestInventory());
 
-    private List<String> convert(ItemStack[] items){
-        List<String> string = new ArrayList<>();
-        for (final ItemStack itemStack : items) {
-            string.add(ItemStackSerializer.serialize(itemStack));
-        }
+        String playerInventoryString = Base64.toBase64(playerInventory);
+        String enderChestInventoryString = Base64.toBase64(enderChestInventory);
 
-        return string;
+        Document document = new Document();
+        document.put("playerInventory", playerInventoryString);
+        document.put("enderChestInventory", enderChestInventoryString);
+        mongoHandler.getOffline().replaceOne(Filters.eq("uuid", uuid.toString()), document, new ReplaceOptions().upsert(true));
     }
 }
