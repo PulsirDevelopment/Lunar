@@ -261,3 +261,9 @@ CPS:
   UN-FOLLOWED: "&cSuccessfully unfollowed {player} cps."
   NONE-FOLLOWED: "&cYou aren't following anybody."
   WRONG-FOLLOWER: "&cYou are not following {player}"
+
+OFFLINE-INVENTORY:
+  USAGE:
+    - ""
+    - "&c/offlineinventory view <player/enderchest> <player>"
+    - ""

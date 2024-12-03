@@ -4,8 +4,10 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.maintenance.Maintenance;
+import net.pulsir.lunar.offline.OfflinePlayerInventory;
 import net.pulsir.lunar.utils.base64.Base64;
 import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -68,12 +70,23 @@ public class FlatFile implements IDatabase {
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid) {
+    public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
 
     }
 
     @Override
-    public void saveOfflineInventory(UUID uuid) {
+    public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+        Inventory playerInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getPlayerInventory().length, "");
+        playerInventory.setContents(offlinePlayerInventory.getPlayerInventory());
 
+        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getEnderChestInventory().length, "");
+        enderChestInventory.setContents(offlinePlayerInventory.getEnderChestInventory());
+
+        String playerInventoryString = Base64.toBase64(playerInventory);
+        String enderChestInventoryString = Base64.toBase64(enderChestInventory);
+
+        Lunar.getInstance().getOffline().getConfiguration().set("player." + uuid.toString() + ".playerInventory", playerInventoryString);
+        Lunar.getInstance().getOffline().getConfiguration().set("player." + uuid + ".enderChestInventory", enderChestInventoryString);
+        Lunar.getInstance().getOffline().save();
     }
 }

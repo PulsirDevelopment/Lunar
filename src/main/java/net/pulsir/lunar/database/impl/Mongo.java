@@ -8,6 +8,7 @@ import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mongo.MongoHandler;
+import net.pulsir.lunar.offline.OfflinePlayerInventory;
 import net.pulsir.lunar.utils.base64.Base64;
 import net.pulsir.lunar.utils.serializer.ItemStackSerializer;
 import net.pulsir.lunar.utils.wrapper.impl.InventoryWrapper;
@@ -75,12 +76,12 @@ public class Mongo implements IDatabase {
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid) {
+    public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
 
     }
 
     @Override
-    public void saveOfflineInventory(UUID uuid) {
+    public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
 
     }
 

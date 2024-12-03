@@ -64,3 +64,5 @@ commands:
     aliases: [online]
   cps:
     aliases: [playercps]
+  offlineinventory:
+    aliases: [inventoryoffline]

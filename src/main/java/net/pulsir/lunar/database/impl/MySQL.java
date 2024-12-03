@@ -5,6 +5,7 @@ import net.pulsir.lunar.database.IDatabase;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.maintenance.Maintenance;
 import net.pulsir.lunar.mysql.MySQLManager;
+import net.pulsir.lunar.offline.OfflinePlayerInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
@@ -64,12 +65,12 @@ public class MySQL implements IDatabase {
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid) {
+    public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
 
     }
 
     @Override
-    public void saveOfflineInventory(UUID uuid) {
+    public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
 
     }
 }

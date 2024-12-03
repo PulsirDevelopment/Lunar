@@ -22,6 +22,7 @@ import net.pulsir.lunar.command.chat.StaffChatCommand;
 import net.pulsir.lunar.command.lunar.LunarCommand;
 import net.pulsir.lunar.command.maintenance.MaintenanceCommand;
 import net.pulsir.lunar.command.mod.ClearChatCommand;
+import net.pulsir.lunar.command.offlineinventory.OfflineInventoryCommand;
 import net.pulsir.lunar.command.ping.StaffPingCommand;
 import net.pulsir.lunar.command.player.ReportCommand;
 import net.pulsir.lunar.command.player.RequestCommand;
@@ -42,6 +43,7 @@ import net.pulsir.lunar.inventories.manager.InventoryPlayerManager;
 import net.pulsir.lunar.listener.*;
 import net.pulsir.lunar.maintenance.manager.ServerMaintenanceManager;
 import net.pulsir.lunar.manager.*;
+import net.pulsir.lunar.offline.manager.OfflinePlayerManager;
 import net.pulsir.lunar.redis.RedisAdapter;
 import net.pulsir.lunar.session.manager.SessionPlayerManager;
 import net.pulsir.lunar.task.*;
@@ -68,7 +70,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private Data data;
     private RedisAdapter redisAdapter;
 
-    private Config configuration, language, inventory, messages, discord, maintenances;
+    private Config configuration, language, inventory, messages, discord, maintenances, offline;
 
     private IDatabase database;
     @Getter
@@ -79,6 +81,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final SessionPlayerManager sessionPlayerManager = new SessionPlayerManager();
     private final ServerMaintenanceManager serverMaintenanceManager = new ServerMaintenanceManager();
     private final CPSPlayerManager cpsPlayerManager = new CPSPlayerManager();
+    private final OfflinePlayerManager offlinePlayerManager = new OfflinePlayerManager();
 
     private final StaffManagerImpl staffManager = new StaffManagerImpl();
     private final SessionManagerImpl sessionManager = new SessionManagerImpl();
@@ -161,6 +164,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
         this.database.saveInventory();
+        this.getOfflinePlayerManager().saveAll();
         Lunar.getInstance().getServerMaintenanceManager().getMaintenances().forEach(maintenance -> this.database.saveMaintenance(maintenance));
 
         if (getData().getInventories().isEmpty()) return;
@@ -206,6 +210,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
                 new YamlConfiguration(), "discord.yml");
         this.maintenances = new Config(this, new File(getDataFolder(), "maintenances.yml"),
                 new YamlConfiguration(), "maintenances.yml");
+        this.offline = new Config(this, new File(getDataFolder(), "offline.yml"),
+                new YamlConfiguration(), "offline.yml");
 
         this.configuration.create();
         this.language.create();
@@ -213,6 +219,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         this.messages.create();
         this.discord.create();
         this.maintenances.create();
+        this.offline.create();
     }
 
     private void setupDatabase() {
@@ -308,6 +315,8 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         Objects.requireNonNull(getCommand("players")).setExecutor(new PlayersCommand());
 
         Objects.requireNonNull(getCommand("cps")).setExecutor(new CPSCommand());
+
+        Objects.requireNonNull(getCommand("offlineinventory")).setExecutor(new OfflineInventoryCommand());
 
         CommandManager chatCommandManager = new CommandManager(getCommand("chat"));
 
