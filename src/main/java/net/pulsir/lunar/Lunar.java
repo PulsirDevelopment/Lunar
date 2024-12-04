@@ -8,6 +8,7 @@ import net.pulsir.api.chat.ChatManager;
 import net.pulsir.api.cps.CPSManager;
 import net.pulsir.api.inventory.InventoryManager;
 import net.pulsir.api.maintenance.MaintenanceManager;
+import net.pulsir.api.offline.OfflineInventoryManager;
 import net.pulsir.api.redis.RedisManager;
 import net.pulsir.api.session.SessionManager;
 import net.pulsir.api.staff.StaffManager;
@@ -91,6 +92,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     private final BungeeManagerImpl bungeeManager = new BungeeManagerImpl();
     private final MaintenanceManagerImpl maintenanceManager = new MaintenanceManagerImpl();
     private final CPSManagerImpl cpsManager = new CPSManagerImpl();
+    private final OfflinePlayerManagerImpl offlineInventoryManager = new OfflinePlayerManagerImpl();
 
     @Getter
     private final NamespacedKey captchaKey = new NamespacedKey(this, "captcha");
@@ -345,6 +347,7 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
         pluginManager.registerEvents(new WorldListener(), this);
         pluginManager.registerEvents(new BlockedCommands(), this);
         pluginManager.registerEvents(new CPSListener(), this);
+        pluginManager.registerEvents(new OfflineInventoryListener(), this);
     }
 
     private void registerTasks() {
@@ -401,5 +404,10 @@ public final class Lunar extends JavaPlugin implements LunarPluginAPI {
     @Override
     public CPSManager getCPSManager() {
         return cpsManager;
+    }
+
+    @Override
+    public OfflineInventoryManager offlineInventoryManager() {
+        return offlineInventoryManager;
     }
 }

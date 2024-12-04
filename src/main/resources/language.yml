@@ -267,3 +267,6 @@ OFFLINE-INVENTORY:
     - ""
     - "&c/offlineinventory view <player/enderchest> <player>"
     - ""
+  FETCHING: "&a&oFetching {player} inventory..."
+  ONLINE-PLAYER: "&a{player} is online."
+  NO-PLAYER: "&cFailed to find {player} in database."

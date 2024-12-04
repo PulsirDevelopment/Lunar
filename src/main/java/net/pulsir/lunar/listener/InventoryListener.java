@@ -66,4 +66,26 @@ public class InventoryListener implements Listener {
             event.setCancelled(true);
         }
     }
+
+    @EventHandler
+    public void onOfflinePlayerInventory(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        if (MiniMessage.miniMessage().serialize(event.getView().title())
+                .equalsIgnoreCase(Lunar.getInstance().getConfiguration().getConfiguration().getString("offline-inventory.player.title"))
+                || LegacyComponentSerializer.legacyAmpersand().serialize(event.getView().title()).equalsIgnoreCase(Lunar.getInstance()
+                .getConfiguration().getConfiguration().getString("offline-inventory.player.title"))) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onOfflineEnderChestInventory(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        if (MiniMessage.miniMessage().serialize(event.getView().title())
+                .equalsIgnoreCase(Lunar.getInstance().getConfiguration().getConfiguration().getString("offline-inventory.enderchest.title"))
+                || LegacyComponentSerializer.legacyAmpersand().serialize(event.getView().title()).equalsIgnoreCase(Lunar.getInstance()
+                .getConfiguration().getConfiguration().getString("offline-inventory.enderchest.title"))) {
+            event.setCancelled(true);
+        }
+    }
 }

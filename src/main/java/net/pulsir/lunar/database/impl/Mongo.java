@@ -98,16 +98,17 @@ public class Mongo implements IDatabase {
 
     @Override
     public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
-        Inventory playerInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getPlayerInventory().length, "");
+        Inventory playerInventory = Bukkit.getServer().createInventory(null, 54, "");
         playerInventory.setContents(offlinePlayerInventory.getPlayerInventory());
 
-        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getEnderChestInventory().length, "");
+        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, 36, "");
         enderChestInventory.setContents(offlinePlayerInventory.getEnderChestInventory());
 
         String playerInventoryString = Base64.toBase64(playerInventory);
         String enderChestInventoryString = Base64.toBase64(enderChestInventory);
 
         Document document = new Document();
+        document.put("uuid", uuid.toString());
         document.put("playerInventory", playerInventoryString);
         document.put("enderChestInventory", enderChestInventoryString);
         mongoHandler.getOffline().replaceOne(Filters.eq("uuid", uuid.toString()), document, new ReplaceOptions().upsert(true));

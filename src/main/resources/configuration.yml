@@ -340,3 +340,11 @@ mine-alert:
   detect-amount: true
   block-trigger:
     - "DIAMOND_ORE"
+
+offline-inventory:
+  player:
+    title: "&eOffline Player Inventory"
+    size: 54
+  enderchest:
+    title: "&dOffline Enderchest Inventory"
+    size: 36

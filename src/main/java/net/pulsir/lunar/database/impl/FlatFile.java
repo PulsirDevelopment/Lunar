@@ -88,10 +88,10 @@ public class FlatFile implements IDatabase {
 
     @Override
     public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
-        Inventory playerInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getPlayerInventory().length, "");
+        Inventory playerInventory = Bukkit.getServer().createInventory(null, 54, "");
         playerInventory.setContents(offlinePlayerInventory.getPlayerInventory());
 
-        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getEnderChestInventory().length, "");
+        Inventory enderChestInventory = Bukkit.getServer().createInventory(null, 36, "");
         enderChestInventory.setContents(offlinePlayerInventory.getEnderChestInventory());
 
         String playerInventoryString = Base64.toBase64(playerInventory);
