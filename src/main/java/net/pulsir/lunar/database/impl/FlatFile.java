@@ -12,6 +12,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.*;
 
 public class FlatFile implements IDatabase {
@@ -70,8 +71,19 @@ public class FlatFile implements IDatabase {
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+    public void loadOfflineInventory(UUID uuid) {
+        String playerInventoryString = Lunar.getInstance().getOffline().getConfiguration().getString("player." + uuid.toString() + ".playerInventory");
+        String enderChestInventorString = Lunar.getInstance().getOffline().getConfiguration().getString("player." + uuid + ".enderChestInventory");
 
+        try {
+            ItemStack[] playerInventory = Base64.fromBase64(playerInventoryString).getContents();
+            ItemStack[] enderChestInventory = Base64.fromBase64(enderChestInventorString).getContents();
+
+            Lunar.getInstance().getOfflinePlayerManager().getOfflinePlayerInventoryMap().put(uuid,
+                    new OfflinePlayerInventory(playerInventory, enderChestInventory));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.pulsir.lunar.utils.base64.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -66,7 +67,17 @@ public class MySQL implements IDatabase {
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+    public void loadOfflineInventory(UUID uuid) {
+        try {
+            OfflinePlayerInventory offlinePlayerInventory = mySQLManager.findOfflineInventory(uuid);
+            Lunar.getInstance().getOfflinePlayerManager().getOfflinePlayerInventoryMap().put(uuid, offlinePlayerInventory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
         Inventory playerInventory = Bukkit.getServer().createInventory(null, offlinePlayerInventory.getPlayerInventory().length, "");
         playerInventory.setContents(offlinePlayerInventory.getPlayerInventory());
 
@@ -75,10 +86,8 @@ public class MySQL implements IDatabase {
 
         String playerInventoryString = Base64.toBase64(playerInventory);
         String enderChestInventoryString = Base64.toBase64(enderChestInventory);
-    }
 
-    @Override
-    public void saveOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
-
+        mySQLManager.deleteOfflineInventory(uuid);
+        mySQLManager.createOfflineInventory(uuid, playerInventoryString, enderChestInventoryString);
     }
 }

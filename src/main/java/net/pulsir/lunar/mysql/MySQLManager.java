@@ -6,8 +6,11 @@ import lombok.Getter;
 import net.pulsir.lunar.Lunar;
 import net.pulsir.lunar.inventories.InventoryPlayer;
 import net.pulsir.lunar.maintenance.Maintenance;
+import net.pulsir.lunar.offline.OfflinePlayerInventory;
 import net.pulsir.lunar.utils.base64.Base64;
+import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,6 +44,7 @@ public class MySQLManager {
             statement.execute("CREATE TABLE IF NOT EXISTS inventories(uuid varchar(36) primary key, inventory blob)");
             statement.execute("CREATE TABLE IF NOT EXISTS notes(noteId varchar(36) primary key, uuid varchar(36), staffUUID varchar(36), createdAt bigint, note varchar(256))");
             statement.execute("CREATE TABLE IF NOT EXISTS maintenances(name varchar(36), reason tinytext, duration int, endDate bigint)");
+            statement.execute("CREATE TABLE IF NOT EXISTS offline(uuid varchar(36) primary key, playerInventory tinytext, enderChestInventory tinytext)");
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -191,5 +195,54 @@ public class MySQLManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void createOfflineInventory(UUID uuid, String playerInventoryString, String enderChestInventoryString) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("INSERT INTO offline VALUES (?,?,?)");
+            preparedStatement.setString(1, uuid.toString());
+            preparedStatement.setString(2, playerInventoryString);
+            preparedStatement.setString(3, enderChestInventoryString);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteOfflineInventory(UUID uuid) {
+        try {
+            PreparedStatement preparedStatement = this.hikariDataSource.getConnection().prepareStatement("DELETE FROM offline WHERE uuid = ?");
+            preparedStatement.setString(1, uuid.toString());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public OfflinePlayerInventory findOfflineInventory(UUID uuid) throws IOException {
+        OfflinePlayerInventory offlinePlayerInventory;
+        try {
+            PreparedStatement preparedStatement = preparedStatement = this.hikariDataSource.getConnection().prepareStatement("SELECT * FROM offline WHERE uuid = ?");
+            preparedStatement.setString(1, uuid.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String playerInventoryString = resultSet.getString("playerInventory");
+                String enderChestInventoryString = resultSet.getString("enderChestInventory");
+                ItemStack[] playerInventory = Base64.fromBase64(playerInventoryString).getContents();
+                ItemStack[] enderChestInventory = Base64.fromBase64(enderChestInventoryString).getContents();
+
+                offlinePlayerInventory = new OfflinePlayerInventory(playerInventory, enderChestInventory);
+                preparedStatement.close();
+
+                return offlinePlayerInventory;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 }

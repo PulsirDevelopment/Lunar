@@ -78,7 +78,7 @@ public class Mongo implements IDatabase {
     }
 
     @Override
-    public void loadOfflineInventory(UUID uuid, OfflinePlayerInventory offlinePlayerInventory) {
+    public void loadOfflineInventory(UUID uuid) {
         Document document = mongoHandler.getOffline().find(Filters.eq("uuid", uuid.toString())).first();
         if (document != null) {
             String playerInventoryString = document.getString("playerInventory");
@@ -87,6 +87,9 @@ public class Mongo implements IDatabase {
             try {
                 ItemStack[] playerInventory = Base64.fromBase64(playerInventoryString).getContents();
                 ItemStack[] enderChestInventory = Base64.fromBase64(enderChestInventorString).getContents();
+
+                Lunar.getInstance().getOfflinePlayerManager().getOfflinePlayerInventoryMap().put(uuid,
+                        new OfflinePlayerInventory(playerInventory, enderChestInventory));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
